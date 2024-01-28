@@ -12,7 +12,7 @@ Clothing Database: The clothing database will be hosted on MongoDB, and updated 
 
 - An image of the clothing
 
-- Outfit Sizing
+- Outfit Sizing 
 
 Color Identifier: The color identifier will be written in Python and will utilize SciKit-Learn and OpenCV to scan the mongoDB periodically. Any element in the MongoDB that does not already have a list of colors as an attribute will have its image analyzed, and update the element to contain a list of, at most, 4 prominent colors from the piece of clothing.
 
