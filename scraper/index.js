@@ -1,2 +1,2 @@
-const funnyURL = "www.google.com"
+const funnyURL = "www.youtube.com"
 console.log(funnyURL);
