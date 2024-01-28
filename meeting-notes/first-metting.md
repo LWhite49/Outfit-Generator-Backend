@@ -2,7 +2,7 @@
 
 # Project Compoents
 
-Clothing Database: The clothing database will be hosted on MongoDB, and updated periodically by a NodeJS puppeteer cluster webscraping program. The clothing database will ideally be comprised of resale clothing, where the inital scrape grabs:
+Clothing Database: The clothing database will be hosted on MongoDB, and updated periodically by a NodeJS puppeteer cluster webscraping program. The clothing database will ideally be comprised of resale clothing, where the inital scrape grabs: 
 
 - A type of clothing e.g. "Top" "Bottom" "Shoe" "Accessory"
 
