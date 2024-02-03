@@ -16,6 +16,8 @@
 
     - A string summarizing the details of the listing like "Napapijri Vintage Long Sleeve Shirt". We could possible search this for keywords like "long sleeve" or "graphic tee". This is found in the p tag with class "ListingMetadata-module__title___Rsj55", though this may change from page to page.
 
+    - An array of keywords derived from the above string.
+
     - A string detailing the size of a listing like "M" or "36". This is found in the p tag with class "ListingMetadata-module__size___e9naE". Note that this class as well as the format of the data for this field may change form page to page.
 
 - To remove documents from the collection that no longer exist on grailed, we can check each product listing link. If there is a h2 tag with the class "FullPageError_heading__3OcRo", the listing no longer exists and we can remove the document from the collection.
