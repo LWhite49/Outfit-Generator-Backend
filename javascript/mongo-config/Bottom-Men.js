@@ -10,13 +10,9 @@ const bottomMenSchema = new Schema({
         type: String,
         required: true
     },
-    productSummary: {
+    productBrand: {
         type: String,
         required: true,
-        index: true
-    },
-    productKeywords: {
-        type: [{type: String, index: true}],
         index: true
     },
     productSize: {
