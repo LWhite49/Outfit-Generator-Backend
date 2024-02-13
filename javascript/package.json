@@ -4,7 +4,7 @@
   "description": "",
   "main": "mongooseConnect.js",
   "scripts": {
-    "scrape": "node grailedScraper.js"
+    "scrape": "node depopScraper.js"
   },
   "author": "",
   "license": "ISC",

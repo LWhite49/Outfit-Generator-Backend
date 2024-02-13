@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const connectMongoose = require('./mongo-config/connectMongoose');
+const connectMongoose = require('./mongo-config/connectMongoose.js');
 dotenv.config();
 const fsProm = require('fs').promises;
 const puppeteer = require('puppeteer-extra');
@@ -35,24 +35,25 @@ const jiggleMouse = async (page) => {
 // Define function that accepts a page and scrolls to the bottom of the content window
 const scrollToBottom = async (page) => {
     try {
-        // Get current page height
-        const LastHeight = await page.evaluate(() => {return document.body.scrollHeight;});
-        // Scroll a couple times
-        await page.evaluate(() => {window.scrollBy(0, 400 * Math.random() + 1400);});
-        await page.waitForTimeout(500 * Math.random() + 300);
-        await page.evaluate(() => {window.scrollBy(0, 400 * Math.random() + 1400);});
-        await page.waitForTimeout(500 * Math.random() + 300);
-        // While loop that scrolls until the page height does not change
-        while (LastHeight !== await page.evaluate(() => {return document.body.scrollHeight;})) {
-            LastHeight = await page.evaluate(() => {return document.body.scrollHeight;});
-            await page.evaluate(() => {window.scrollBy(0, 400 * Math.random() + 1400);});
-            await page.waitForTimeout(500 * Math.random() + 300);
-            await page.evaluate(() => {window.scrollBy(0, 400 * Math.random() + 1400);});
-            await page.waitForTimeout(500 * Math.random() + 300);
-            await jiggleMouse(page);
+        let lastHeight = await page.evaluate(() => document.body.scrollHeight);
+        let newHeight = lastHeight;
+        while (true) {
+            // Scroll to the bottom of the page
+            await page.evaluate(() => {
+                window.scrollBy(0, document.body.scrollHeight);
+            });
+            // Wait for a short delay after scrolling
+            await page.waitForTimeout(1300 + Math.random() * 500); // Adjust this delay as needed
+            // Get the new height of the page
+            newHeight = await page.evaluate(() => document.body.scrollHeight);
+            // Break the loop if no additional content is loaded
+            if (newHeight === lastHeight) break;
+            lastHeight = newHeight;
         }
-    } catch (err) { console.log(err);}
-}
+    } catch (err) {
+        console.error("Error while scrolling:", err);
+    }
+};
 // Define the GrailedScraper function that scrapes the Grailed website and returns an array of listings for the passed collection name. 
 // It accepts a puppeteer page generated for the cluster task, since this will be used in cluster.task().
 const scrapeCollectionListings = async (page, collectionName) => {
@@ -91,7 +92,7 @@ const scrapeCollectionListings = async (page, collectionName) => {
         await page.setCookie(...c);
         // Go to the Depop homepage
         await page.goto(scrapeUrl);
-        await page.waitForTimeout(1500 * Math.random() + 3000);
+        await page.waitForTimeout(1500 * Math.random() + 1000);
         await jiggleMouse(page);
         await page.waitForTimeout(1500 * Math.random() + 1000);
         // Accept cookies
@@ -99,6 +100,7 @@ const scrapeCollectionListings = async (page, collectionName) => {
         if (popup) {
             await page.click('button[data-testid="cookieBanner__acceptAllButton"]');
             await jiggleMouse(page);
+            console.log('Accepted cookies');
         }
         // Save cookies
         const cookies = await page.cookies();
@@ -131,8 +133,9 @@ const scrapeCollectionListings = async (page, collectionName) => {
                 break;
             }
         }
-        await page.waitForTimeout(1000 * Math.random() + 5000);
-
+        await page.waitForTimeout(1000 * Math.random() + 4000);
+        // Scroll to bottom of the page
+        
     } catch (err) { console.log(err);}
 }
 
