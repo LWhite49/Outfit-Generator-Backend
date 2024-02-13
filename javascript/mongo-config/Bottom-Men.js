@@ -18,6 +18,10 @@ const bottomMenSchema = new Schema({
     productSize: {
         type: String,
         index: true
+    },
+    productColors: {
+        type: [ String ], //Replace String with color object specifications, proabably as a subschema
+        index: true
     }
 });
 
