@@ -6,7 +6,6 @@ const fsProm = require('fs').promises;
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AnonymizeUAPlugin = require('puppeteer-extra-plugin-anonymize-ua');
-const { Cluster } = require('puppeteer-cluster');
 // Import the DB collections
 const TopMen = require('./mongo-config/Top-Men.js');
 const BottomMen = require('./mongo-config/Bottom-Men.js');
@@ -19,37 +18,25 @@ const collectionNames = ['topmens', 'bottommens', 'shoemens'];
 puppeteer.use(StealthPlugin());
 puppeteer.use(AnonymizeUAPlugin());
 
-// Define function that accepts a page and jiggles the mouse
-const jiggleMouse = async (page) => {
-    try {
-        await page.evaluate(async () => {
-            try {
-                window.scrollBy(400 * Math.random() + 50,-400 * Math.random() - 50);
-                await page.waitForTimeout(1000 * Math.random() + 300);
-                window.scrollBy(-400 * Math.random() - 50, 400 * Math.random() + 50);
-            } catch (err) { console.log(err); }
-        });
-    } catch (err) { console.log(err); }
-}
-
 // Define function that accepts a page and scrolls to the bottom of the content window
 const scrollToBottom = async (page) => {
     try {
-        let lastHeight = await page.evaluate(() => document.body.scrollHeight);
+        let bodyHandle = await page.$('body');
+        let lastHeight = await bodyHandle.evaluate(e => e.scrollHeight);
         let newHeight = lastHeight;
         while (true) {
             // Scroll to the bottom of the page
-            await page.evaluate(() => {
-                window.scrollBy(0, document.body.scrollHeight);
-            });
+            await page.evaluate(() => { window.scrollBy(0, 2500 + 500 * Math.random()); });
             // Wait for a short delay after scrolling
-            await page.waitForTimeout(1300 + Math.random() * 500); // Adjust this delay as needed
+            await page.waitForTimeout(1500 + Math.random() * 500); // Adjust this delay as needed
             // Get the new height of the page
-            newHeight = await page.evaluate(() => document.body.scrollHeight);
+            bodyHandle = await page.$('body')
+            newHeight = await bodyHandle.evaluate(e => e.scrollHeight);
             // Break the loop if no additional content is loaded
             if (newHeight === lastHeight) break;
             lastHeight = newHeight;
         }
+        await page.waitForTimeout(1000 * Math.random() + 1000);
     } catch (err) {
         console.error("Error while scrolling:", err);
     }
@@ -64,19 +51,22 @@ const scrapeCollectionListings = async (page, collectionName) => {
             case 'topmens':
                 elementTargetors = {
                     dropdownTargetor: 'menswear',
-                    dropdownElemTargetor: 'tops'
+                    dropdownElemTargetor: 'tops',
+                    collectionObj: TopMen
                 }
                 break;
             case 'bottommens':
                 elementTargetors = {
                     dropdownTargetor: 'menswear',
-                    dropdownElemTargetor: 'bottoms'
+                    dropdownElemTargetor: 'bottoms',
+                    collectionObj: BottomMen
                 }
                 break;
             case 'shoemens':
                 elementTargetors = {
                     dropdownTargetor: 'menswear',
-                    dropdownElemTargetor: 'shoes'
+                    dropdownElemTargetor: 'shoes',
+                    collectionObj: ShoeMen
                 }
                 break;
             default:
@@ -85,36 +75,33 @@ const scrapeCollectionListings = async (page, collectionName) => {
         }
         // Source URL and declare the array to store the listings
         let scrapeUrl = process.env.SCRAPE_URL;
-        const listings = [];
+        let listings = [];
         // Page config with cookies
         let c = await fsProm.readFile('./cookies/cookies.json');
         c = JSON.parse(c);
         await page.setCookie(...c);
         // Go to the Depop homepage
         await page.goto(scrapeUrl);
-        await page.waitForTimeout(1500 * Math.random() + 1000);
-        await jiggleMouse(page);
-        await page.waitForTimeout(1500 * Math.random() + 1000);
+        await page.waitForTimeout(500 * Math.random() + 1000);
         // Accept cookies
         const popup = await page.$('button[data-testid="cookieBanner__acceptAllButton"]');
         if (popup) {
             await page.click('button[data-testid="cookieBanner__acceptAllButton"]');
-            await jiggleMouse(page);
+            await page.waitForTimeout(500 * Math.random() + 1000);
             console.log('Accepted cookies');
         }
         // Save cookies
         const cookies = await page.cookies();
         await fsProm.writeFile('./cookies/cookies.json', JSON.stringify(cookies, null, 2));
-        // Hover relevant dropdown
-        await jiggleMouse(page);
-        await page.waitForTimeout(1000 * Math.random() + 1000);
+        // Hover relevant dropdown and click relevant element
+        await page.waitForTimeout(500 * Math.random() + 1000);
         const dropdowns = await page.$$('button[type="button"]');
         for (let dropdown of dropdowns) {
             let dropdownText = await dropdown.evaluate(e => e.innerText);
             dropdownText = dropdownText.toLowerCase()
             if (dropdownText == elementTargetors.dropdownTargetor) {
                 await dropdown.hover();
-                await page.waitForTimeout(1000 * Math.random() + 1000);
+                await page.waitForTimeout(500 * Math.random() + 1000);
                 console.log('Hovered over dropdown');
                 break;
             }
@@ -130,46 +117,60 @@ const scrapeCollectionListings = async (page, collectionName) => {
                 await dropdownElem.click();
                 await page.waitForTimeout(1000 * Math.random() + 1000);
                 console.log('Navigated to new page');
+                await page.waitForTimeout(1000 * Math.random() + 1000);
                 break;
             }
         }
-        await page.waitForTimeout(1000 * Math.random() + 4000);
+        
         // Scroll to bottom of the page
+        await page.waitForTimeout(500 * Math.random() + 500);
+        await scrollToBottom(page);
+        await page.waitForTimeout(1000 * Math.random() + 500);
+
+        // Get the product pods
+        listings = await page.evaluate(() => {
+            let productPods = Array.from(document.querySelectorAll('li[class="styles__ProductCardContainer-sc-9691b5f-7 NKdpy"]'));
+            console.log('Got product pods');
+            return productPods.map(pod => {
+                return {
+                    productListing: "https://www.depop.com" + pod.querySelector('a[data-testid="product__item"]').getAttribute('href'),
+                    productImg: pod.querySelector('img[class="sc-htehQK fmdgqI"]')?.getAttribute('src'),
+                    productBrand: pod.querySelector('p[class="sc-eDnWTT styles__StyledBrandNameText-sc-9691b5f-21 kcKICQ fAzsgR"]')?.innerText,
+                    productSize: pod.querySelector('p[class="sc-eDnWTT styles__StyledSizeText-sc-9691b5f-12 kcKICQ glohkc"]')?.innerText,
+                    productColors: []
+                }
+            });
+        })
+        console.log('Got listings');
+        console.log(listings);
+        // Update DB with the listings, formating and (lightly) validating each listing
         
     } catch (err) { console.log(err);}
 }
 
 // Define cluster scraping function that utlizes the functions defined above to scrape the website for each collection, simultaneously. 
 // Each thread of the collection will also update the DB with the listings it has scraped.
-const scrapeWithClusters = async () => {
+const scrapeAllCollections = async () => {
     try {
-        // Create cluster
-        const cluster = await Cluster.launch({
-            concurrency: Cluster.CONCURRENCY_CONTEXT,
-            maxConcurrency: 1,
-            puppeteerOptions: {
-                headless: false
-            }
-        });
-        // Define cluster task
-        cluster.task( async ( {page, data} ) => {
-            try {
-                // Scrape array of listings for passed collection name
-                let collectionName = data.collectionName;
-                const listings = await scrapeCollectionListings(page, collectionName);
-                console.log(listings);
+        // Iterate each collection name and scrape the listings
+        for (let collectionName of collectionNames) {
+            // Create a browser instance
+            const browser = await puppeteer.launch({ headless: false});
+            const page = await browser.newPage();
+            console.log(`Launched browser to scrape ${collectionName}`);
+            // Scrape array of listings for passed collection name
+            let listings = await scrapeCollectionListings(page, collectionName);
+            console.log(listings);
+            // Update the DB with the listings
 
-                // Update DB with new listings
-            } catch (err) { console.log(err); }
-        });
-        // Iterate through collection names to queue threads
-        for (let collectionName of collectionNames) { cluster.queue({collectionName: collectionName}); }
-        // Wait for threads to idel and close cluster
-        await cluster.idle();
-        await cluster.close();
+            // Close browser instance
+            await page.close();
+            await browser.close();
+        }
+
 
     } catch (err) { console.log(err); }
 }
 // Connect to DB
 connectMongoose();
-scrapeWithClusters();
+scrapeAllCollections();
