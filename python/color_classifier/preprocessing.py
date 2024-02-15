@@ -3,7 +3,7 @@ import pandas as pd
 def data() -> pd.DataFrame:
     '''Manipulate the csv file of color names, preserving just the RGB values and simplifying the names into a limited number of categories.'''
     # create dataframe
-    colors = pd.read_csv('color_classifier\color_names.csv')
+    colors = pd.read_csv('color_classifier\color_names_clustered.csv')
     # drop columns that won't be used
     colors.drop(columns=['Hex (24 bit)', 'Hue (degrees)', 'HSL.S (%)','HSL.L (%), HSV.S (%), HSV.V (%)'], inplace=True)
     # rename relevant columns for usability
