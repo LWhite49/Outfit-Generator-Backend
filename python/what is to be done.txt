@@ -1,3 +1,2 @@
-1. Tighten clustering a bit, mostly in hue and brightness
-2. Find what features to train on knn
-3. Find way to scale features and implement best distance measurement
+1. data must be rescaled either in describer or model
+2. clean up grouping, pull color functions to separate files
