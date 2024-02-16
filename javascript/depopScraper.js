@@ -132,19 +132,38 @@ const scrapeCollectionListings = async (page, collectionName) => {
             let productPods = Array.from(document.querySelectorAll('li[class="styles__ProductCardContainer-sc-9691b5f-7 NKdpy"]'));
             console.log('Got product pods');
             return productPods.map(pod => {
+                let tempDate = new Date();
+                tempDate.setDate(tempDate.getDate() + 28);
+                tempDate = tempDate.toISOString();
                 return {
                     productListing: "https://www.depop.com" + pod.querySelector('a[data-testid="product__item"]').getAttribute('href'),
                     productImg: pod.querySelector('img[class="sc-htehQK fmdgqI"]')?.getAttribute('src'),
                     productBrand: pod.querySelector('p[class="sc-eDnWTT styles__StyledBrandNameText-sc-9691b5f-21 kcKICQ fAzsgR"]')?.innerText,
                     productSize: pod.querySelector('p[class="sc-eDnWTT styles__StyledSizeText-sc-9691b5f-12 kcKICQ glohkc"]')?.innerText,
-                    productColors: []
+                    productColors: [],
+                    expiresAfter: tempDate
                 }
             });
         })
-        console.log('Got listings');
-        console.log(listings);
+
+        console.log(`Got listings - ${listings.length}`);
+
         // Update DB with the listings, formating and (lightly) validating each listing
-        
+        const collectionObj = elementTargetors.collectionObj;
+        for (let listing of listings) {
+            // Format listing
+            listing.productBrand = listing.productBrand?.trim();
+            listing.productSize = listing.productSize?.trim();
+            // Validate listing
+            if (!listing.productListing || !listing.productImg || !listing.productBrand) {
+                console.log('Invalid listing');
+                continue;
+            }
+            // Check if listing already exists in DB and skip if it does
+            if (await collectionObj.findOne({productListing: listing.productListing})) { continue }
+            // Add listing to DB
+            await collectionObj.create(listing);
+        }
     } catch (err) { console.log(err);}
 }
 
@@ -159,9 +178,7 @@ const scrapeAllCollections = async () => {
             const page = await browser.newPage();
             console.log(`Launched browser to scrape ${collectionName}`);
             // Scrape array of listings for passed collection name
-            let listings = await scrapeCollectionListings(page, collectionName);
-            console.log(listings);
-            // Update the DB with the listings
+            await scrapeCollectionListings(page, collectionName);
 
             // Close browser instance
             await page.close();

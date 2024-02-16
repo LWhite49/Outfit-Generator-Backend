@@ -23,6 +23,10 @@ const topMenSchema = new Schema({
     productColors: {
         type: [ String ], //Replace String with color object specifications, proabably as a subschema
         index: true
+    },
+    expiresAfter: {
+        type: Date,
+        required: true
     }
 });
 
