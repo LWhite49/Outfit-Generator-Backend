@@ -23,7 +23,7 @@ const shoeMenSchema = new Schema({
         type: [ String ], //Replace String with color object specifications, proabably as a subschema
         index: true
     },
-    expiresAfter: {
+    createdAt: {
         type: Date,
         required: true
     }

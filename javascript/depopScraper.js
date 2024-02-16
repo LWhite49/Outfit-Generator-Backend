@@ -12,8 +12,23 @@ const BottomMen = require('./mongo-config/Bottom-Men.js');
 const ShoeMen = require('./mongo-config/Shoe-Men.js');
 
 // Define array of collection names
-const collectionNames = ['topmens', 'bottommens', 'shoemens'];
+const collectionObjs = [TopMen, BottomMen, ShoeMen];
+// Define array of element targetors
+const elementTargetors = [
+    {
+        dropdownTargetor: 'menswear',
+        dropdownElemTargetor: 'tops'
+    },
+    {
+        dropdownTargetor: 'menswear',
+        dropdownElemTargetor: 'bottoms'
+    },
+    {
+        dropdownTargetor: 'menswear',
+        dropdownElemTargetor: 'shoes'
+    }
 
+]
 // Puppeteer middleware
 puppeteer.use(StealthPlugin());
 puppeteer.use(AnonymizeUAPlugin());
@@ -43,36 +58,8 @@ const scrollToBottom = async (page) => {
 };
 // Define the GrailedScraper function that scrapes the Grailed website and returns an array of listings for the passed collection name. 
 // It accepts a puppeteer page generated for the cluster task, since this will be used in cluster.task().
-const scrapeCollectionListings = async (page, collectionName) => {
+const scrapeCollectionListings = async (page, collectionObj, elementTargetor) => {
     try {
-        // Get the collection targetors
-        let elementTargetors = {};
-        switch(collectionName) {
-            case 'topmens':
-                elementTargetors = {
-                    dropdownTargetor: 'menswear',
-                    dropdownElemTargetor: 'tops',
-                    collectionObj: TopMen
-                }
-                break;
-            case 'bottommens':
-                elementTargetors = {
-                    dropdownTargetor: 'menswear',
-                    dropdownElemTargetor: 'bottoms',
-                    collectionObj: BottomMen
-                }
-                break;
-            case 'shoemens':
-                elementTargetors = {
-                    dropdownTargetor: 'menswear',
-                    dropdownElemTargetor: 'shoes',
-                    collectionObj: ShoeMen
-                }
-                break;
-            default:
-                console.log('Invalid collection name');
-                return;
-        }
         // Source URL and declare the array to store the listings
         let scrapeUrl = process.env.SCRAPE_URL;
         let listings = [];
@@ -99,21 +86,21 @@ const scrapeCollectionListings = async (page, collectionName) => {
         for (let dropdown of dropdowns) {
             let dropdownText = await dropdown.evaluate(e => e.innerText);
             dropdownText = dropdownText.toLowerCase()
-            if (dropdownText == elementTargetors.dropdownTargetor) {
+            if (dropdownText == elementTargetor.dropdownTargetor) {
                 await dropdown.hover();
                 await page.waitForTimeout(500 * Math.random() + 1000);
                 console.log('Hovered over dropdown');
                 break;
             }
         }
-        await page.waitForTimeout(1000 * Math.random() + 1000);
+        await page.waitForTimeout(1000 * Math.random() + 2000);
 
         // Click the dropdown element
         const dropdownElems = await page.$$('p[class="sc-eDnWTT NavigationCategoryList-styles__CategoryListItemText-sc-5e15d078-4 kcKICQ kjOAJZ"]');
         for (let dropdownElem of dropdownElems) {
             let dropdownElemText = await dropdownElem.evaluate(e => e.innerText);
             dropdownElemText = dropdownElemText.toLowerCase();
-            if (dropdownElemText == elementTargetors.dropdownElemTargetor) {
+            if (dropdownElemText == elementTargetor.dropdownElemTargetor) {
                 await dropdownElem.click();
                 await page.waitForTimeout(1000 * Math.random() + 1000);
                 console.log('Navigated to new page');
@@ -141,7 +128,7 @@ const scrapeCollectionListings = async (page, collectionName) => {
                     productBrand: pod.querySelector('p[class="sc-eDnWTT styles__StyledBrandNameText-sc-9691b5f-21 kcKICQ fAzsgR"]')?.innerText,
                     productSize: pod.querySelector('p[class="sc-eDnWTT styles__StyledSizeText-sc-9691b5f-12 kcKICQ glohkc"]')?.innerText,
                     productColors: [],
-                    expiresAfter: tempDate
+                    createdAt: new Date()
                 }
             });
         })
@@ -149,7 +136,8 @@ const scrapeCollectionListings = async (page, collectionName) => {
         console.log(`Got listings - ${listings.length}`);
 
         // Update DB with the listings, formating and (lightly) validating each listing
-        const collectionObj = elementTargetors.collectionObj;
+        // TTL so documents expire in one month
+        collectionObj.collection.createIndex({createdAt: 1}, {expireAfterSeconds: 2592000});
         for (let listing of listings) {
             // Format listing
             listing.productBrand = listing.productBrand?.trim();
@@ -171,14 +159,20 @@ const scrapeCollectionListings = async (page, collectionName) => {
 // Each thread of the collection will also update the DB with the listings it has scraped.
 const scrapeAllCollections = async () => {
     try {
+        let i = 0;
+        let elementTargetor;
         // Iterate each collection name and scrape the listings
-        for (let collectionName of collectionNames) {
+        for (let collectionObj of collectionObjs) {
             // Create a browser instance
             const browser = await puppeteer.launch({ headless: false});
             const page = await browser.newPage();
-            console.log(`Launched browser to scrape ${collectionName}`);
+            console.log(`Launched browser to scrape ${elementTargetors[i].dropdownTargetor + elementTargetors[i].dropdownElemTargetor}`);
+            // Assign elementTargetors
+            elementTargetor = elementTargetors[i];
             // Scrape array of listings for passed collection name
-            await scrapeCollectionListings(page, collectionName);
+            await scrapeCollectionListings(page, collectionObj, elementTargetor);
+            // Increment index
+            i += 1;
 
             // Close browser instance
             await page.close();
@@ -190,4 +184,5 @@ const scrapeAllCollections = async () => {
 }
 // Connect to DB
 connectMongoose();
+// Scrape the collections
 scrapeAllCollections();

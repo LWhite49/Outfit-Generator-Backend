@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+sconst mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 const mongoConnector = process.env.DB_CONNECTION_JS;
