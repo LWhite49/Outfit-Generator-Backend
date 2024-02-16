@@ -27,7 +27,6 @@ const elementTargetors = [
         dropdownTargetor: 'menswear',
         dropdownElemTargetor: 'shoes'
     }
-
 ]
 // Puppeteer middleware
 puppeteer.use(StealthPlugin());
@@ -128,7 +127,7 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
                     productBrand: pod.querySelector('p[class="sc-eDnWTT styles__StyledBrandNameText-sc-9691b5f-21 kcKICQ fAzsgR"]')?.innerText,
                     productSize: pod.querySelector('p[class="sc-eDnWTT styles__StyledSizeText-sc-9691b5f-12 kcKICQ glohkc"]')?.innerText,
                     productColors: [],
-                    createdAt: new Date()
+                    createdAt: new Date().toISOString()
                 }
             });
         })
@@ -186,3 +185,4 @@ const scrapeAllCollections = async () => {
 connectMongoose();
 // Scrape the collections
 scrapeAllCollections();
+process.exit(0);
