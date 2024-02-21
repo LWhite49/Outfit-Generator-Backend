@@ -22,6 +22,10 @@ const bottomMenSchema = new Schema({
     productColors: {
         type: [ String ], //Replace String with color object specifications, proabably as a subschema
         index: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
     }
 });
 
