@@ -10,9 +10,12 @@ const AnonymizeUAPlugin = require('puppeteer-extra-plugin-anonymize-ua');
 const TopMen = require('./mongo-config/Top-Men.js');
 const BottomMen = require('./mongo-config/Bottom-Men.js');
 const ShoeMen = require('./mongo-config/Shoe-Men.js');
+const TopWomen = require('./mongo-config/Top-Women.js');
+const BottomWomen = require('./mongo-config/Bottom-Women.js');
+const ShoeWomen = require('./mongo-config/Shoe-Women.js');
 
 // Define array of collection names
-const collectionObjs = [TopMen, BottomMen, ShoeMen];
+const collectionObjs = [TopMen, BottomMen, ShoeMen, TopWomen, BottomWomen, ShoeWomen];
 // Define array of element targetors
 const elementTargetors = [
     {
@@ -25,6 +28,18 @@ const elementTargetors = [
     },
     {
         dropdownTargetor: 'menswear',
+        dropdownElemTargetor: 'shoes'
+    },
+    {
+        dropdownTargetor: 'womenswear',
+        dropdownElemTargetor: 'tops'
+    },
+    {
+        dropdownTargetor: 'womenswear',
+        dropdownElemTargetor: 'bottoms'
+    },
+    {
+        dropdownTargetor: 'womenswear',
         dropdownElemTargetor: 'shoes'
     }
 ]
@@ -172,7 +187,6 @@ const scrapeAllCollections = async () => {
             await scrapeCollectionListings(page, collectionObj, elementTargetor);
             // Increment index
             i += 1;
-
             // Close browser instance
             await page.close();
             await browser.close();
