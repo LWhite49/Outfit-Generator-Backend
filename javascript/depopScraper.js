@@ -10,9 +10,12 @@ const AnonymizeUAPlugin = require('puppeteer-extra-plugin-anonymize-ua');
 const TopMen = require('./mongo-config/Top-Men.js');
 const BottomMen = require('./mongo-config/Bottom-Men.js');
 const ShoeMen = require('./mongo-config/Shoe-Men.js');
+const TopWomen = require('./mongo-config/Top-Women.js');
+const BottomWomen = require('./mongo-config/Bottom-Women.js');
+const ShoeWomen = require('./mongo-config/Shoe-Women.js');
 
 // Define array of collection names
-const collectionObjs = [TopMen, BottomMen, ShoeMen];
+const collectionObjs = [TopMen, BottomMen, ShoeMen, TopWomen, BottomWomen, ShoeWomen];
 // Define array of element targetors
 const elementTargetors = [
     {
@@ -25,6 +28,18 @@ const elementTargetors = [
     },
     {
         dropdownTargetor: 'menswear',
+        dropdownElemTargetor: 'shoes'
+    },
+    {
+        dropdownTargetor: 'womenswear',
+        dropdownElemTargetor: 'tops'
+    },
+    {
+        dropdownTargetor: 'womenswear',
+        dropdownElemTargetor: 'bottoms'
+    },
+    {
+        dropdownTargetor: 'womenswear',
         dropdownElemTargetor: 'shoes'
     }
 ]
@@ -138,14 +153,20 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
         // TTL so documents expire in one month
         collectionObj.collection.createIndex({createdAt: 1}, {expireAfterSeconds: 2592000});
         for (let listing of listings) {
-            // Format listing
-            listing.productBrand = listing.productBrand?.trim();
-            listing.productSize = listing.productSize?.trim();
             // Validate listing
             if (!listing.productListing || !listing.productImg || !listing.productBrand) {
                 console.log('Invalid listing');
                 continue;
             }
+
+            // Check for "other" size
+            if (listing.productSize?.toLowerCase() == "other" || listing.productSize?.toLowerCase() == "one size") { continue;}
+
+            // Format listing
+            listing.productBrand = listing.productBrand?.trim();
+            listing.productSize = listing.productSize?.trim();
+            listing.productSize = listing.productSize?.replace('"', '');
+
             // Check if listing already exists in DB and skip if it does
             if (await collectionObj.findOne({productListing: listing.productListing})) { continue }
             // Add listing to DB
@@ -172,7 +193,6 @@ const scrapeAllCollections = async () => {
             await scrapeCollectionListings(page, collectionObj, elementTargetor);
             // Increment index
             i += 1;
-
             // Close browser instance
             await page.close();
             await browser.close();
@@ -183,6 +203,7 @@ const scrapeAllCollections = async () => {
 }
 // Connect to DB
 connectMongoose();
+
 // Scrape the collections
 scrapeAllCollections();
 process.exit(0);
