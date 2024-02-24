@@ -153,14 +153,20 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
         // TTL so documents expire in one month
         collectionObj.collection.createIndex({createdAt: 1}, {expireAfterSeconds: 2592000});
         for (let listing of listings) {
-            // Format listing
-            listing.productBrand = listing.productBrand?.trim();
-            listing.productSize = listing.productSize?.trim();
             // Validate listing
             if (!listing.productListing || !listing.productImg || !listing.productBrand) {
                 console.log('Invalid listing');
                 continue;
             }
+
+            // Check for "other" size
+            if (listing.productSize?.toLowerCase() == "other" || listing.productSize?.toLowerCase() == "one size") { continue;}
+
+            // Format listing
+            listing.productBrand = listing.productBrand?.trim();
+            listing.productSize = listing.productSize?.trim();
+            listing.productSize = listing.productSize?.replace('"', '');
+
             // Check if listing already exists in DB and skip if it does
             if (await collectionObj.findOne({productListing: listing.productListing})) { continue }
             // Add listing to DB
@@ -197,6 +203,7 @@ const scrapeAllCollections = async () => {
 }
 // Connect to DB
 connectMongoose();
+
 // Scrape the collections
 scrapeAllCollections();
 process.exit(0);
