@@ -1,6 +1,7 @@
 import pandas as pd 
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
+
 from n_groups import n_groups
 from rgb_to_hex import rgb_to_hex
 
