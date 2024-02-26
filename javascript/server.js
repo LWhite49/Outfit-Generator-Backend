@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const connectToMongoose = require('./mongo-config/connectMongoose.js');
+const connectToMongoose = require('./connectMongoose.js');
 
 
 // Import the DB collections

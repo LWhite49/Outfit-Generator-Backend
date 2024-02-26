@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const connectMongoose = require('./mongo-config/connectMongoose.js');
+const process = require('process');
+const connectMongoose = require('./connectMongoose.js');
 dotenv.config();
 const fsProm = require('fs').promises;
 const puppeteer = require('puppeteer-extra');
@@ -14,39 +15,36 @@ const TopWomen = require('./mongo-config/Top-Women.js');
 const BottomWomen = require('./mongo-config/Bottom-Women.js');
 const ShoeWomen = require('./mongo-config/Shoe-Women.js');
 
+// Define array of names of each collection
+const collectionNames = ["TopMen", "BottomMen", "ShoeMen", "TopWomen", "BottomWomen", "ShoeWomen"];
+
 // Define array of collection names
 const collectionObjs = [TopMen, BottomMen, ShoeMen, TopWomen, BottomWomen, ShoeWomen];
-// Define array of element targetors
+
+// Define array of collection URL targetors
 const elementTargetors = [
-    {
-        dropdownTargetor: 'menswear',
-        dropdownElemTargetor: 'tops'
-    },
-    {
-        dropdownTargetor: 'menswear',
-        dropdownElemTargetor: 'bottoms'
-    },
-    {
-        dropdownTargetor: 'menswear',
-        dropdownElemTargetor: 'shoes'
-    },
-    {
-        dropdownTargetor: 'womenswear',
-        dropdownElemTargetor: 'tops'
-    },
-    {
-        dropdownTargetor: 'womenswear',
-        dropdownElemTargetor: 'bottoms'
-    },
-    {
-        dropdownTargetor: 'womenswear',
-        dropdownElemTargetor: 'shoes'
-    }
-]
+    "category/mens/tops/",
+    "category/mens/bottoms/",
+    "category/mens/shoes/",
+    "category/womens/tops/",
+    "category/womens/bottoms/",
+    "category/womens/shoes/"
+];
+
 // Puppeteer middleware
 puppeteer.use(StealthPlugin());
 puppeteer.use(AnonymizeUAPlugin());
 
+// Define function that initializes TTL for each collection
+const initTTL = async () => {
+    try {
+        for (let collectionObj of collectionObjs) {
+        // TTL so documents expire in 14 days
+        collectionObj.collection.createIndex({createdAt: 1}, {expireAfterSeconds: 1210000});
+        }
+    } catch (err) { console.log(err); }
+
+}
 // Define function that accepts a page and scrolls to the bottom of the content window
 const scrollToBottom = async (page) => {
     try {
@@ -75,13 +73,13 @@ const scrollToBottom = async (page) => {
 const scrapeCollectionListings = async (page, collectionObj, elementTargetor) => {
     try {
         // Source URL and declare the array to store the listings
-        let scrapeUrl = process.env.SCRAPE_URL;
+        let scrapeUrl = process.env.SCRAPE_URL + elementTargetor;
         let listings = [];
         // Page config with cookies
         let c = await fsProm.readFile('./cookies/cookies.json');
         c = JSON.parse(c);
         await page.setCookie(...c);
-        // Go to the Depop homepage
+        // Go to the Depop subpage for colleciton
         await page.goto(scrapeUrl);
         await page.waitForTimeout(500 * Math.random() + 1000);
         // Accept cookies
@@ -94,116 +92,131 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
         // Save cookies
         const cookies = await page.cookies();
         await fsProm.writeFile('./cookies/cookies.json', JSON.stringify(cookies, null, 2));
-        // Hover relevant dropdown and click relevant element
-        await page.waitForTimeout(500 * Math.random() + 1000);
-        const dropdowns = await page.$$('button[type="button"]');
-        for (let dropdown of dropdowns) {
-            let dropdownText = await dropdown.evaluate(e => e.innerText);
-            dropdownText = dropdownText.toLowerCase()
-            if (dropdownText == elementTargetor.dropdownTargetor) {
-                await dropdown.hover();
-                await page.waitForTimeout(500 * Math.random() + 1000);
-                console.log('Hovered over dropdown');
-                break;
-            }
-        }
-        await page.waitForTimeout(1000 * Math.random() + 2000);
 
-        // Click the dropdown element
-        const dropdownElems = await page.$$('p[class="sc-eDnWTT NavigationCategoryList-styles__CategoryListItemText-sc-5e15d078-4 kcKICQ kjOAJZ"]');
-        for (let dropdownElem of dropdownElems) {
-            let dropdownElemText = await dropdownElem.evaluate(e => e.innerText);
-            dropdownElemText = dropdownElemText.toLowerCase();
-            if (dropdownElemText == elementTargetor.dropdownElemTargetor) {
-                await dropdownElem.click();
-                await page.waitForTimeout(1000 * Math.random() + 1000);
-                console.log('Navigated to new page');
-                await page.waitForTimeout(1000 * Math.random() + 1000);
-                break;
-            }
-        }
-        
         // Scroll to bottom of the page
         await page.waitForTimeout(500 * Math.random() + 500);
         await scrollToBottom(page);
         await page.waitForTimeout(1000 * Math.random() + 500);
 
         // Get the product pods
-        listings = await page.evaluate(() => {
-            let productPods = Array.from(document.querySelectorAll('li[class="styles__ProductCardContainer-sc-9691b5f-7 NKdpy"]'));
-            console.log('Got product pods');
-            return productPods.map(pod => {
+
+        // Grab container
+        const container = await page.$('ul[class="styles__ProductListGrid-sc-b93c4262-1 eOxFnX"]');
+        if (!container) { console.log('No container found'); return; }
+
+        // Get listings from container
+        listings = await container.evaluate((c) =>{
+            // Map each product pod to an array of listings
+            return Array.from(c.querySelectorAll('li')).map(pod => {
                 let tempDate = new Date();
                 tempDate.setDate(tempDate.getDate() + 28);
                 tempDate = tempDate.toISOString();
+                
+                // Define the targetors for each listing attribute
+                const imgTarget = 'sc-htehQK fmdgqI'; 
+                const brandTarget = 'sc-eDnWTT styles__StyledBrandNameText-sc-b93c4262-21 kcKICQ jTTkla';
+                const sizeTarget = 'sc-eDnWTT styles__StyledSizeText-sc-b93c4262-12 kcKICQ fRjAkD';
+
                 return {
-                    productListing: "https://www.depop.com" + pod.querySelector('a[data-testid="product__item"]').getAttribute('href'),
-                    productImg: pod.querySelector('img[class="sc-htehQK fmdgqI"]')?.getAttribute('src'),
-                    productBrand: pod.querySelector('p[class="sc-eDnWTT styles__StyledBrandNameText-sc-9691b5f-21 kcKICQ fAzsgR"]')?.innerText,
-                    productSize: pod.querySelector('p[class="sc-eDnWTT styles__StyledSizeText-sc-9691b5f-12 kcKICQ glohkc"]')?.innerText,
+                    productListing: "https://www.depop.com" + pod.querySelector('a').getAttribute('href'),
+                    productImg: pod.querySelector(`img[class="${imgTarget}"]`)?.getAttribute('src'),
+                    productBrand: pod.querySelector(`p[class="${brandTarget}"]`)?.innerText,
+                    productSize: pod.querySelector(`p[class="${sizeTarget}"]`)?.innerText,
                     productColors: [],
                     createdAt: new Date().toISOString()
                 }
             });
-        })
+        });
 
+        // Log the number of listings scraped
         console.log(`Got listings - ${listings.length}`);
-
+        
         // Update DB with the listings, formating and (lightly) validating each listing
-        // TTL so documents expire in one month
-        collectionObj.collection.createIndex({createdAt: 1}, {expireAfterSeconds: 2592000});
+
+        // Validate, format, and add each listing to the DB
+        let invalid = 0;
+        let repeats = 0;
         for (let listing of listings) {
             // Validate listing
             if (!listing.productListing || !listing.productImg || !listing.productBrand) {
-                console.log('Invalid listing');
+                invalid += 1;
                 continue;
             }
 
             // Check for "other" size
-            if (listing.productSize?.toLowerCase() == "other" || listing.productSize?.toLowerCase() == "one size") { continue;}
-
+            if (listing.productSize?.toLowerCase() == "other" || listing.productSize?.toLowerCase() == "one size") {
+                 invalid += 1;
+                continue;}
+            
+            // Check if listing already exists in DB and skip if it does
+            if (await collectionObj.findOne({productListing: listing.productListing})) { 
+                repeats += 1;
+                continue }
+            
             // Format listing
             listing.productBrand = listing.productBrand?.trim();
             listing.productSize = listing.productSize?.trim();
             listing.productSize = listing.productSize?.replace('"', '');
-
-            // Check if listing already exists in DB and skip if it does
-            if (await collectionObj.findOne({productListing: listing.productListing})) { continue }
+            
             // Add listing to DB
             await collectionObj.create(listing);
         }
+        // Log the number of invalid and repeated listings
+        console.log(`Invalid listings: ${invalid}`);
+        console.log(`Repeated listings: ${repeats}`);
+        console.log(`New listings: ${listings.length - invalid - repeats}`);
     } catch (err) { console.log(err);}
 }
 
 // Define cluster scraping function that utlizes the functions defined above to scrape the website for each collection, simultaneously. 
 // Each thread of the collection will also update the DB with the listings it has scraped.
-const scrapeAllCollections = async () => {
+const scrapeAllCollections = async (l, u) => {
     try {
-        let i = 0;
+        let i = l;
         let elementTargetor;
+        let collectionObj;
         // Iterate each collection name and scrape the listings
-        for (let collectionObj of collectionObjs) {
-            // Create a browser instance
-            const browser = await puppeteer.launch({ headless: false});
+        while (i < u) {        
+            const browser = await puppeteer.launch({ headless: "new" });
             const page = await browser.newPage();
-            console.log(`Launched browser to scrape ${elementTargetors[i].dropdownTargetor + elementTargetors[i].dropdownElemTargetor}`);
-            // Assign elementTargetors
+            console.log(`Launched browser to scrape ${collectionNames[i]}`);
+
+            // Assign elementTargetor abd collectionObj from iteration
             elementTargetor = elementTargetors[i];
+            collectionObj = collectionObjs[i];
+
             // Scrape array of listings for passed collection name
             await scrapeCollectionListings(page, collectionObj, elementTargetor);
-            // Increment index
-            i += 1;
+
             // Close browser instance
+            await page.waitForTimeout(750);
             await page.close();
             await browser.close();
+
+            // Increment index
+            i += 1;
         }
+        console.log('Scraping complete!!!');
+        mongoose.connection.close();
+        return 0;
 
 
-    } catch (err) { console.log(err); }
+    } catch (err) { 
+        console.log(err);
+        return 1;}
 }
+
+// Main function
+
 // Connect to DB
 connectMongoose();
 
-// Scrape the collections
-scrapeAllCollections();
-process.exit(0);
+// Get collection to scrape range from command line
+const l = parseInt(process.argv[2]) || 0;
+const u = parseInt(process.argv[3]) || collectionObjs.length;
+
+// Initialize TTL for each collection
+// initTTL();
+
+// Scrape the collections from l to u
+scrapeAllCollections(l, u);
