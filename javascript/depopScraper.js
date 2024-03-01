@@ -198,7 +198,7 @@ const scrapeAllCollections = async (l, u) => {
         }
         console.log(`Scraping complete!!!`);
         // Stop runtimer and output runtime
-        const runtime = console.timeEnd('runtime');
+        console.timeEnd('runtime');
         mongoose.connection.close();
         return 0;
 

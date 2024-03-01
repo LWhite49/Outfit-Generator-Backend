@@ -26,8 +26,6 @@ img = cv.resize(img, (IM_HEIGHT, IM_WIDTH))
 
 # img = img[IM_WIDTH//3:(IM_WIDTH*2)//3, IM_HEIGHT//3:(IM_HEIGHT*2)//3]
 
-
-
 # change image to use rgb rather than bgr color space
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
@@ -56,9 +54,9 @@ votes = [0] * n_groups()
 for i in range(len(labels)):
     votes[labels[i]] += 1
 
-prevalent = [i for i, x in enumerate(votes) if x > 50]
+prevalent = [[x,i] for i, x in enumerate(votes) if x > 50]
 
-print(prevalent)
+print(sorted(prevalent, reverse=True))
 
 # print(m.predict(img[0][0]))
 # print(img[0][0])
