@@ -3,22 +3,20 @@ const mongoose = require('mongoose');
 const connectToMongoose = require('./connectMongoose.js');
 
 
-// Import the DB collections
-const TopMen = require('./mongo-config/Top-Men.js');
-const BottomMen = require('./mongo-config/Bottom-Men.js');
-const ShoeMen = require('./mongo-config/Shoe-Men.js');
-const TopWomen = require('./mongo-config/Top-Women.js');
-const BottomWomen = require('./mongo-config/Bottom-Women.js');
-const ShoeWomen = require('./mongo-config/Shoe-Women.js');
-
+// Import the route handlers
+const { generateRandomOutfits, generateRandomOutfitsByBrand } = require('./controllers/outfitGenerationHandlers.js');
 // Connect to MongoDB
 connectToMongoose();
 
-// Specify Routes for the App
-
-
 // Create App
 const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Specify Routes
+app.get("/getRandomOutfits", generateRandomOutfits);
+app.get("/getRandomOutfitsByBrand", generateRandomOutfitsByBrand);
 
 // Launch Server
 const PORT = 3500;
