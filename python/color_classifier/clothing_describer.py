@@ -1,4 +1,4 @@
-from color_classifier.model import ColorPredictor
+from color_model import ColorPredictor
 import cv2 as cv
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
@@ -6,9 +6,11 @@ import urllib.request
 import rembg
 import time
 
+from grouping.n_groups import n_groups
+
 # get the image data from the url
-response = urllib.request.urlopen('https://media-assets.grailed.com/prd/listing/temp/291dabc7cb384d4ab157bfecd69ec027?h=1400&fit=clip&q=20&auto=format')
-# response = urllib.request.urlopen('https://media-assets.grailed.com/prd/listing/temp/fa130eb6d61643b999fed6f5cd43dfef?h=1400&fit=clip&q=20&auto=format')
+# response = urllib.request.urlopen('https://media-assets.grailed.com/prd/listing/temp/291dabc7cb384d4ab157bfecd69ec027?h=1400&fit=clip&q=20&auto=format')
+response = urllib.request.urlopen('https://media-photos.depop.com/b1/29235888/1777365855_70ea0ea843e24453abbc993578db119c/P0.jpg')
 # response = urllib.request.urlopen('https://media-assets.grailed.com/prd/listing/47158833/2c4899ca3d8044b19ef3504ea97d3c96?w=1050&h=1400&fit=clip&q=20&auto=format')
 # response = urllib.request.urlopen('https://media-assets.grailed.com/prd/listing/temp/d04aba8a74604d58a0cae9d729706daf?h=1400&fit=clip&q=20&auto=format')
 img = cv.imdecode(np.asarray(bytearray(response.read())), cv.IMREAD_COLOR)
@@ -50,7 +52,7 @@ img = img[:, :3]
 m = ColorPredictor()
 labels = m.predict(img)
 
-votes = [0] * 180
+votes = [0] * n_groups()
 for i in range(len(labels)):
     votes[labels[i]] += 1
 

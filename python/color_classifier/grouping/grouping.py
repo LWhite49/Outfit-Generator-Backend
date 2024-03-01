@@ -16,12 +16,15 @@ def cluster_colors() -> None:
     X = ['Red', 'Green', 'Blue']
 
     # scaling values to [0, 1]
-    scaler = MinMaxScaler()
-    colors[X] = scaler.fit_transform(colors[X])
+    # scaler = MinMaxScaler()
+    # colors[X] = scaler.fit_transform(colors[X])
 
     # clustering colors and saving the labels into the dataframe
     kmeans = KMeans(n_clusters=n_groups(), random_state=255, n_init='auto', tol=1e-6)
     colors['Label'] = kmeans.fit_predict(colors[X])
+
+    # unscaler = MinMaxScaler((0, 255))
+    # colors[X] = unscaler.fit_transform(colors[X])
 
     # save dataframe to a new file
     colors.to_csv('color_names_clustered.csv')
@@ -33,8 +36,8 @@ def cluster_colors() -> None:
     clusters.set_index('Label', inplace=True)
 
     # bring center values back to 0-255 range
-    unscaler = MinMaxScaler((0, 255))
-    clusters[X] = unscaler.fit_transform(clusters[X])
+    # unscaler = MinMaxScaler((0, 255))
+    # clusters[X] = unscaler.fit_transform(clusters[X])
 
     # add hex value to the dataframe
     clusters['Hex'] = clusters.apply(lambda x: rgb_to_hex(x['Red'], x['Green'], x['Blue']), axis='columns')
