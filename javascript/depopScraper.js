@@ -196,7 +196,9 @@ const scrapeAllCollections = async (l, u) => {
             // Increment index
             i += 1;
         }
-        console.log('Scraping complete!!!');
+        console.log(`Scraping complete!!!`);
+        // Stop runtimer and output runtime
+        const runtime = console.timeEnd('runtime');
         mongoose.connection.close();
         return 0;
 
@@ -208,6 +210,8 @@ const scrapeAllCollections = async (l, u) => {
 
 // Main function
 
+// Start runtimer
+console.time('runtime');
 // Connect to DB
 connectMongoose();
 
