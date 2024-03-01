@@ -10,7 +10,9 @@ const mongooseConnect = async () => {
         await mongoose.connect(mongoConnector)
         console.log('Connected to DB');
     }
-    catch (err) {console.log(err);}
+    catch (err) {
+        console.log(err);
+        console.log('Failed to connect to DB');}
 }
 
 module.exports = mongooseConnect
