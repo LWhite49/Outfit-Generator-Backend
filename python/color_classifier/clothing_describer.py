@@ -3,7 +3,6 @@ import cv2 as cv
 import numpy as np
 import urllib.request
 import rembg
-import time
 
 from grouping.n_groups import n_groups
 
