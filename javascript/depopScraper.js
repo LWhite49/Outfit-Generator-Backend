@@ -120,7 +120,7 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
                 return {
                     productListing: "https://www.depop.com" + pod.querySelector('a').getAttribute('href'),
                     productImg: pod.querySelector(`img[class="${imgTarget}"]`)?.getAttribute('src'),
-                    productBrand: pod.querySelector(`p[class="${brandTarget}"]`)?.innerText,
+                    productBrand: pod.querySelector(`p[class="${brandTarget}"]`)?.innerText.toLowerCase(),
                     productSize: pod.querySelector(`p[class="${sizeTarget}"]`)?.innerText,
                     productColors: [],
                     createdAt: new Date().toISOString()
