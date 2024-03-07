@@ -1,2 +1,0 @@
-1. data must be rescaled either in describer or model
-2. clean up grouping, pull color functions to separate files
