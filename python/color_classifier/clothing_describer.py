@@ -10,8 +10,8 @@ from grouping.n_groups import n_groups
 n_groups = n_groups()
 IM_HEIGHT, IM_WIDTH = 200, 200
 
-def get_colors(url: str) -> list[list[int]]:
-    '''Takes in an image url and returns its predominant color groups in order. Failures will return -1.'''
+def get_colors(url: str) -> list[list[int, float, str]]:
+    '''Takes in an image url and returns its predominant color groups in order. Color grouping info has the label, its pixel percentage, and the label's hex, in that order. Failures will return -1.'''
     # get the image data from the url
     response = urllib.request.urlopen(url)
     img = cv.imdecode(np.asarray(bytearray(response.read())), cv.IMREAD_COLOR)
@@ -55,25 +55,46 @@ def get_colors(url: str) -> list[list[int]]:
 
     # order groups by pixel count
     prevalent = sorted([[x,i] for i, x in enumerate(votes) if x > 100], reverse=True)
-    prevalent_labels = [x[1] for x in prevalent]
+    prevalent = [x[1] for x in prevalent]
 
     # compress colors, taking only the dominant group for very similar colors
-    # for i in range(1,len(prevalent)):
-    #     # get hex values of index and previous labels
-    #     h0 = predictor.get_center_hex(prevalent_labels[i-1])
-    #     h1 = predictor.get_center_hex(prevalent_labels[i])
-    #     # convert to rgb tuples
-    #     c0 = (int(h0[:2], 16), int(h0[2:4], 16), int(h0[4:], 16))
-    #     c1 = (int(h1[:2], 16), int(h1[2:4], 16), int(h1[4:], 16))
+    compressed = []
+    count, most_dom = 0, 0
+    for i in range(1,len(prevalent)):
+        # get hex values of index and previous labels
+        h0 = predictor.get_center_hex(prevalent[i-1])
+        h1 = predictor.get_center_hex(prevalent[i])
+        # convert to rgb tuples
+        c0 = (int(h0[:2], 16), int(h0[2:4], 16), int(h0[4:], 16))
+        c1 = (int(h1[:2], 16), int(h1[2:4], 16), int(h1[4:], 16))
         
-    #     # calculate cosine similarity between the two colors
-    #     cos_sim = np.dot(c0, c1)/(np.linalg.norm(c0) * np.linalg.norm(c1))
+        # calculate cosine similarity between the two colors
+        cos_sim = np.dot(c0, c1)/(np.linalg.norm(c0) * np.linalg.norm(c1))
+        dist = np.linalg.norm(np.array(c0)-np.array(c1))
+        # if cosine similarity is greater than 0.99 and the points are close together then proceed to the next index
+        if cos_sim > 0.99 and dist < 100:
+            count += 1
+        else:
+            # otherwise add the most dominant shade in this group to the compressed list and reset the counter
+            compressed.append([prevalent[most_dom], 0, predictor.get_center_hex(prevalent[most_dom])])
+            count = 0
+            most_dom = i
+    
+    # update middle value of return array to include pixel counts
+    px = 0
+    for color in compressed:
+        color[1] = votes[color[0]]
+        px += color[1] # keep track of pixel count
+    
+    # middle value will be percentage of pixels
+    for color in compressed:
+        color[1] /= px
 
     # return just groups
-    return prevalent_labels
+    return compressed
 
 if __name__ == '__main__':
     # print(get_colors('https://media-photos.depop.com/b1/34570605/1777087976_f762224765eb4cbcb728b9f58ba11978/P0.jpg'))
     # print(get_colors('https://media-photos.depop.com/b1/29235888/1777365855_70ea0ea843e24453abbc993578db119c/P0.jpg'))
     # print(get_colors('https://media-photos.depop.com/b1/44686826/1775473394_0a2ebcb4c0cd413eb05559f51cddbc4e/P0.jpg'))
-    print(get_colors('https://media-photos.depop.com/b1/7787383/1783951893_56cb65a6aa574e95a53e58563888a43a/P0.jpg'))
+    print(get_colors('https://media-photos.depop.com/b1/44686826/1775473394_0a2ebcb4c0cd413eb05559f51cddbc4e/P0.jpg'))

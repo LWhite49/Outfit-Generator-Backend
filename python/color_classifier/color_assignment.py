@@ -8,11 +8,11 @@ from clothing_describer import get_colors
 load_dotenv()
 
 # Source ENV
-connectionString = getenv("DB_CONNECTION_JS")
+connectionString = getenv('DB_CONNECTION_JS')
 # Connect to Mongo
 client = MongoClient(connectionString)
 # Connect to DB
-db = client["test"]
+db = client['test']
 print('Connected to database')
 # Connect to Collections
 collections = ['topmens', 'topwomens', 'bottommens', 'bottomwomens', 'shoemens', 'shoewomens']
@@ -33,10 +33,11 @@ for name in collections:
         # get color array
         colors = get_colors(img_url)
 
-        #!add removal for colors == -1
+        if colors == -1:
+            c.delete_one({'_id': id})
 
         # add color array to listing
-        c.update_one({"_id": id}, {"$set": {"productColors": colors}})
+        c.update_one({'_id': id}, {'$set': {'productColors': colors}})
 
         counter += 1
         if counter > 20:
