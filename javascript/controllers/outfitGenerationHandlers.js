@@ -26,11 +26,11 @@ const generateRandomOutfits = async (req, res) => {
 
     // Define array to hold 30 random outfits
     let returnOutfits = [];
-    let randomShirts, randomPants, randomShoes;
+    let randomTops, randomBottoms, randomShoes;
     try {
         // Get 30 random documents from each collection in collections
-        randomShirts = await collections[0].aggregate([{$sample: {size: 30}}]);
-        randomPants = await collections[1].aggregate([{$sample: {size: 30}}]);
+        randomTops = await collections[0].aggregate([{$sample: {size: 30}}]);
+        randomBottoms = await collections[1].aggregate([{$sample: {size: 30}}]);
         randomShoes = await collections[2].aggregate([{$sample: {size: 30}}]);
     } catch (err) {
         console.log(err);
@@ -40,8 +40,8 @@ const generateRandomOutfits = async (req, res) => {
     // Populate returnOutfits via iteration
     for (let i = 0; i < 30; i++) {
         returnOutfits.push({
-            shirt: randomShirts[i],
-            pants: randomPants[i],
+            top: randomTops[i],
+            bottom: randomBottoms[i],
             shoes: randomShoes[i]
         });
     }

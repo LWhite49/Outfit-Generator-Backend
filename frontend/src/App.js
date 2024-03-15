@@ -38,7 +38,7 @@ function App() {
 
   // Function that requeries current settings for outfitFeed
   const requeryOutfitFeed = () => {
-    setSize(size);
+    setSize(size + "L");
     setBrand(brand);
     setTopGender(topGender);
     setBottomGender(bottomGender);
@@ -58,8 +58,18 @@ function App() {
       <FeedContext.Provider value={{outfitFeed, setOutfitFeed}}>
         <div className="App">
           <h1> Outfit Generator </h1>
-          <button onClick={requeryOutfitFeed}> All Sizes </button>
-          <p> {outfitFeed.length} </p>
+          <button onClick={requeryOutfitFeed}> Reload </button>
+          <div className="Display">
+            {outfitFeed.map((outfit, index) => {
+              return (
+                <div key={index} className="Outfit">
+                  <img src={outfit.top.productImg} alt="Top" className="TopDisplay" />
+                  <img src={outfit.bottom.productImg} alt="Bottom" className='BottomDisplay'/>
+                  <img src={outfit.shoes.productImg} alt="Shoes" className='ShoeDisplay'/>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </FeedContext.Provider>
     </QueryClientProvider>

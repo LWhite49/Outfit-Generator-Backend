@@ -3,5 +3,15 @@
   background-color: bisque;
   min-height: 100vh;
 }
+.Outfit{
+  display: flexbox;
+  flex-direction: row;
+  max-height: 200px;
+}
+.TopDisplay, .BottomDisplay, .ShoeDisplay{
+  max-height: 200px;
+  max-width: 200px;
+  margin: 10px;
+}
 
 
