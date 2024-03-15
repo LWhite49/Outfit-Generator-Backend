@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const connectToMongoose = require('./connectMongoose.js');
+const cors = require('cors');
 
 
 // Import the route handlers
 const { generateRandomOutfits, generateRandomOutfitsByBrand } = require('./controllers/outfitGenerationHandlers.js');
+
 // Connect to MongoDB
 connectToMongoose();
 
@@ -13,6 +15,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // Specify Routes
 app.get("/getRandomOutfits", generateRandomOutfits);

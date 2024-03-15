@@ -15,6 +15,8 @@ const generateRandomOutfits = async (req, res) => {
     const topGender = req.query.topGender;
     const bottomGender = req.query.bottomGender;
     const shoeGender = req.query.shoeGender;
+    const targetSize = req.query.size;
+    const targetBrand = req.query.brand;
 
     // Assign collections to target based on passed gender values
     let collections = [];
@@ -55,6 +57,7 @@ const generateRandomOutfitsByBrand = async (req, res) => {
     const bottomGender = req.query.bottomGender;
     const shoeGender = req.query.shoeGender;
     const targetBrand = req.query.brand;
+    const targetSize = req.query.size;
 
     // Assign collections to target based on gender values
     let collections = [];
@@ -93,5 +96,6 @@ const generateRandomOutfitsByBrand = async (req, res) => {
     // Send returnOutfits
     res.status(201).json(returnOutfits);
 }
+
 // Export route handlers
 module.exports = { generateRandomOutfits, generateRandomOutfitsByBrand }
