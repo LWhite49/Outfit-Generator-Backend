@@ -1,7 +1,18 @@
 import './App.css';
+import { Home } from './Home/Home';
+import { Generator } from './Generator/Generator';
 import { useState, createContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+
 import axios from 'axios';
+
+
+// Create a context for the outfitFeed array to avoid prop drilling
+export const FeedContext = createContext();
+
+// Create a query client for managing GET / POST requests
+const client = new QueryClient();
 
 function App() {
 
@@ -45,33 +56,22 @@ function App() {
     setShoeGender(shoeGender);
   }
 
-  // Create a context for the outfitFeed array to avoid prop drilling
-  const FeedContext = createContext();
-
-  // Create a query client for managing GET / POST requests
-  const client = new QueryClient();
-
-
-
   return (outfitFeed.length !== 0) ? (
     <QueryClientProvider client={client}>
-      <FeedContext.Provider value={{outfitFeed, setOutfitFeed}}>
-        <div className="App">
-          <h1> Outfit Generator </h1>
-          <button onClick={requeryOutfitFeed}> Reload </button>
-          <div className="Display">
-            {outfitFeed.map((outfit, index) => {
-              return (
-                <div key={index} className="Outfit">
-                  <img src={outfit.top.productImg} alt="Top" className="TopDisplay" />
-                  <img src={outfit.bottom.productImg} alt="Bottom" className='BottomDisplay'/>
-                  <img src={outfit.shoes.productImg} alt="Shoes" className='ShoeDisplay'/>
-                </div>
-              )
-            })}
+      <Router>
+        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, requeryOutfitFeed}}>
+          <div className="App">
+            <div className="Navbar">
+              <Link to="/home"> Home </Link>
+              <Link to="/generator"> Generator </Link>
+            </div>
+            <Routes>
+              <Route path="/home" element={<Home />}></Route>
+              <Route path="/generator" element={<Generator />}></Route>
+            </Routes>
           </div>
-        </div>
-      </FeedContext.Provider>
+        </FeedContext.Provider>
+      </Router>
     </QueryClientProvider>
   ) : (<p> Loading </p>);
 }
