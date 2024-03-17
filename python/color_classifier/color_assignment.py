@@ -39,9 +39,5 @@ for name in collections:
         # add color array to listing
         c.update_one({'_id': id}, {'$set': {'productColors': colors}})
 
-        counter += 1
-        if counter > 20:
-            print('Accessed 200 items in collection')
-            break
 
 client.close()
