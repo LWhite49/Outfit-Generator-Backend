@@ -4,6 +4,7 @@ import { FeedContext } from '../App';
 
 export const Generator = () => {
     const { outfitFeed, requeryOutfitFeed } = useContext(FeedContext);
+    console.log(outfitFeed);
 
     return (
         <div className="Generator">

@@ -101,7 +101,7 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
         // Get the product pods
 
         // Grab container
-        const container = await page.$('ul[class="styles__ProductListGrid-sc-b93c4262-1 eOxFnX"]');
+        const container = await page.$('ul[class="styles__ProductListGrid-sc-4aad5806-1 hGGFgp"]');
         if (!container) { console.log('No container found'); return; }
 
         // Get listings from container
@@ -114,8 +114,8 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
                 
                 // Define the targetors for each listing attribute
                 const imgTarget = 'sc-htehQK fmdgqI'; 
-                const brandTarget = 'sc-eDnWTT styles__StyledBrandNameText-sc-b93c4262-21 kcKICQ jTTkla';
-                const sizeTarget = 'sc-eDnWTT styles__StyledSizeText-sc-b93c4262-12 kcKICQ fRjAkD';
+                const brandTarget = 'sc-eDnWTT styles__StyledBrandNameText-sc-4aad5806-21 kcKICQ gGqiYg';
+                const sizeTarget = 'sc-eDnWTT styles__StyledSizeText-sc-4aad5806-12 kcKICQ cuCvzt';
 
                 return {
                     productListing: "https://www.depop.com" + pod.querySelector('a').getAttribute('href'),

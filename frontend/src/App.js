@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import axios from 'axios';
 
-
 // Create a context for the outfitFeed array to avoid prop drilling
 export const FeedContext = createContext();
 
@@ -20,7 +19,7 @@ function App() {
   const [outfitFeed, setOutfitFeed] = useState([]);
 
   // Create a state for size, brand, and genders
-  const [size, setSize] = useState("All");
+  const [size, setSize] = useState({topSizes: "All", bottomSizes: "All", shoeSizes: "All"});
   const [brand, setBrand] = useState("All");
   const [topGender, setTopGender] = useState("All");
   const [bottomGender, setBottomGender] = useState("All");
@@ -32,7 +31,7 @@ function App() {
     const updateFeed = async (size, brand, topGender, bottomGender, shoeGender) => {
     try {
       // Define target URL
-      let url = `http://localhost:3500/getRandomOutfits?size=${size}&brand=${brand}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
+      let url = `http://localhost:3500/generateOutfitFeed?size=${size}&brand=${brand}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
       
       // Get the outfitFeed from the server
       let res = await axios.get(url);
@@ -44,7 +43,7 @@ function App() {
       console.log(err);
     }
   }
-  updateFeed();
+  updateFeed(size, brand, topGender, bottomGender, shoeGender);
   }, [size, brand, topGender, bottomGender, shoeGender]);
 
   // Function that requeries current settings for outfitFeed
