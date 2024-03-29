@@ -15,8 +15,8 @@ const generateOutfitFeed = async (req, res) => {
     const topGender = req.query.topGender;
     const bottomGender = req.query.bottomGender;
     const shoeGender = req.query.shoeGender;
-    const targetSize = req.query.size;
-    const targetBrand = req.query.brand;
+    const sizeData = JSON.parse(req.query.size);
+    const brandData = JSON.parse(req.query.brand);
 
     // Assign collections to target based on passed gender values
     let collections = [];
@@ -29,24 +29,38 @@ const generateOutfitFeed = async (req, res) => {
     // We will use these to form the outfits, so call these "pallet" items
     let palletTops, palletBottoms, palletShoes;
 
-    // Check if each setting is "All" or not
-    const topSizes = (targetSize.topSizes == "All") ? 0 : [targetSize.topSizes];
-    const bottomSizes = (targetSize.bottomSizes == "All") ? 0 : [targetSize.bottomSizes];
-    const shoeSizes = (targetSize.shoeSizes == "All") ? 0 : [targetSize.shoeSizes];
-    const brands = (targetBrand == "All") ? 0 : [targetBrand];
+    console.log(sizeData.topSizes);
 
-    console.log(topSizes, bottomSizes, shoeSizes, brands);
     // Define options for each collection
     let topOptions = [ {$sample: {size: 200}} ];
     let bottomOptions = [ {$sample: {size: 200}} ];
     let shoeOptions = [ {$sample: {size: 200}} ];
 
     // Conditionally apply match specifications to each collection
+    if (sizeData.topSizes.length > 0 || brandData.length > 0) {
+        let match = {};
+        if (sizeData.topSizes.length > 0) { match.productSize = { $in: sizeData.topSizes }; }
+        if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
+        topOptions.unshift({$match: match});
+    }
+
+    if (sizeData.bottomSizes.length > 0 || brandData.length > 0) {
+        let match = {};
+        if (sizeData.bottomSizes.length > 0) { match.productSize = { $in: sizeData.bottomSizes }; }
+        if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
+        bottomOptions.unshift({$match: match});
+    }
+
+    if (sizeData.shoeSizes.length > 0 || brandData.length > 0) {
+        let match = {};
+        if (sizeData.shoeSizes.length > 0) { match.productSize = { $in: sizeData.shoeSizes }; }
+        if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
+        shoeOptions.unshift({$match: match});
+    }
 
     // Source the pallet items using rendered options
-    
     try {
-        // Get 30 random documents from each collection in collections
+        // Aggregate Pallets from each collection in collections
         palletTops = await collections[0].aggregate(topOptions);
         palletBottoms = await collections[1].aggregate(bottomOptions);
         palletShoes = await collections[2].aggregate(shoeOptions);

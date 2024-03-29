@@ -19,8 +19,8 @@ function App() {
   const [outfitFeed, setOutfitFeed] = useState([]);
 
   // Create a state for size, brand, and genders
-  const [size, setSize] = useState({topSizes: "All", bottomSizes: "All", shoeSizes: "All"});
-  const [brand, setBrand] = useState("All");
+  const [size, setSize] = useState({topSizes: [], bottomSizes: [], shoeSizes: []});
+  const [brand, setBrand] = useState([]);
   const [topGender, setTopGender] = useState("All");
   const [bottomGender, setBottomGender] = useState("All");
   const [shoeGender, setShoeGender] = useState("All");
@@ -31,7 +31,7 @@ function App() {
     const updateFeed = async (size, brand, topGender, bottomGender, shoeGender) => {
     try {
       // Define target URL
-      let url = `http://localhost:3500/generateOutfitFeed?size=${size}&brand=${brand}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
+      let url = `http://localhost:3500/generateOutfitFeed?size=${JSON.stringify(size)}&brand=${JSON.stringify(brand)}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
       
       // Get the outfitFeed from the server
       let res = await axios.get(url);
