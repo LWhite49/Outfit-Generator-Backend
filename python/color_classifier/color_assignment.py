@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from os import getenv
 import time
+import threading
 
 from clothing_describer import ClothingDescriber
 
@@ -20,12 +21,11 @@ collections = ['topmens', 'topwomens', 'bottommens', 'bottomwomens', 'shoemens',
 
 cd = ClothingDescriber()
 
-# iterate collections
-for name in collections:
-    c = db[name]
+def populate_collection(c_name):
+    c = db[c_name]
     # access all item in the collection which do not have the color array
     all_c = c.find({'productColors': []})
-    print('Connected to collection', name)
+    print('Connected to collection', c_name)
     
     counter = 0
     t0 = time.time()
@@ -44,10 +44,24 @@ for name in collections:
         c.update_one({'_id': id}, {'$set': {'productColors': colors}})
 
         counter += 1
-        # if counter > 100:
-        #     print('100 items updated in ', time.time()-t0, ' seconds')
-        #     break
-    print('Updated', counter, 'items in', time.time()-t0, 'seconds')
+        
+    print('Updated', counter, c_name, 'items in', time.time()-t0, 'seconds')
 
+
+# run a thread on each collection
+t0 = threading.Thread(target=populate_collection, args=('topmens',))
+t1 = threading.Thread(target=populate_collection, args=('topwomens',))
+t2 = threading.Thread(target=populate_collection, args=('bottommens',))
+t3 = threading.Thread(target=populate_collection, args=('bottomwomens',))
+t4 = threading.Thread(target=populate_collection, args=('shoemens',))
+t5 = threading.Thread(target=populate_collection, args=('shoewomens',))
+
+threads = [t0, t1, t2, t3, t4, t5]
+
+for t in threads:
+    t.start()
+
+for t in threads:
+    t.join()
 
 client.close()
