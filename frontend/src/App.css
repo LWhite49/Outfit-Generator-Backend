@@ -1,7 +1,21 @@
 .App {
   text-align: center;
-  background-color: bisque;
+  background-color: #F6ECFE;
   min-height: 100vh;
+}
+.Navbar {
+  background-color: #5D0B98;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: min(10vh, 180px);
+}
+.navbar-elem{
+  margin: 0 20px;
+  color: white;
+  font-size: 14pt;
+  text-decoration: none;
 }
 .Outfit{
   display: flexbox;

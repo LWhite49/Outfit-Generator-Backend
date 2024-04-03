@@ -1,6 +1,7 @@
 import './App.css';
 import { Home } from './Home/Home';
 import { Generator } from './Generator/Generator';
+import { About } from './About/About';
 import { useState, createContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -25,6 +26,9 @@ function App() {
   const [bottomGender, setBottomGender] = useState("All");
   const [shoeGender, setShoeGender] = useState("All");
 
+  // Create a state for current subpage used for conditional rendering of navbar
+  const [subPage, setSubPage] = useState("/home");
+
   // Create a useEffect that mounts the outfitFeed array from the server, and updates it when settings are changed
   useEffect(() => {
     // Define async funciton, since useaEffect cannot be async
@@ -48,7 +52,7 @@ function App() {
 
   // Function that requeries current settings for outfitFeed
   const requeryOutfitFeed = () => {
-    setSize(size + "L");
+    setSize({...size, topSizes: [...size.topSizes, "L"]});
     setBrand(brand);
     setTopGender(topGender);
     setBottomGender(bottomGender);
@@ -61,12 +65,14 @@ function App() {
         <FeedContext.Provider value={{outfitFeed, setOutfitFeed, requeryOutfitFeed}}>
           <div className="App">
             <div className="Navbar">
-              <Link to="/home"> Home </Link>
-              <Link to="/generator"> Generator </Link>
+              <Link to="/" className="navbar-elem" style={{color: (subPage === "/home") ? "#EDD7FF" : "white"}} onClick={() => {setSubPage("/home")}}> Home </Link>
+              <Link to="/generator" className="navbar-elem" style={{color: (subPage === "/generator") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/generator")}}> Generator </Link>
+              <Link to="/about" className="navbar-elem" style={{color: (subPage ==="/about") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/about")}}> About </Link>
             </div>
             <Routes>
-              <Route path="/home" element={<Home />}></Route>
+              <Route path="/" element={<Home />}></Route>
               <Route path="/generator" element={<Generator />}></Route>
+              <Route path="/about" element={<About />}></Route>
             </Routes>
           </div>
         </FeedContext.Provider>
