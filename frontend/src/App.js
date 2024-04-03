@@ -2,6 +2,7 @@ import './App.css';
 import { Home } from './Home/Home';
 import { Generator } from './Generator/Generator';
 import { About } from './About/About';
+import { Carousel } from './Carousel/Carousel';
 import { useState, createContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -69,6 +70,7 @@ function App() {
               <Link to="/generator" className="navbar-elem" style={{color: (subPage === "/generator") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/generator")}}> Generator </Link>
               <Link to="/about" className="navbar-elem" style={{color: (subPage ==="/about") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/about")}}> About </Link>
             </div>
+            <Carousel images={outfitFeed.map(v => v.top.productImg)} />
             <Routes>
               <Route path="/" element={<Home />}></Route>
               <Route path="/generator" element={<Generator />}></Route>
