@@ -1,16 +1,19 @@
 .carousel {
   width: 100%;
-  height: 20vw;
+  max-width: 100%;
+  height: 40vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-style:dashed;
   border-color: #5D0B98;
-  border-width: 2px;
+  border-width: 2px 0px 2px 0px;
 }
 .SlideImage{
-    height: 20vw;
+    height: 40vh;
     width:100%;
+    max-width: 100%;
     padding: 0px;
     margin:0px;
+    box-sizing: border-box;
 }

@@ -8,7 +8,7 @@ export const Carousel = ({images}) => {
         dots: false,
         infinite: true,
         speed: 800,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 4000,

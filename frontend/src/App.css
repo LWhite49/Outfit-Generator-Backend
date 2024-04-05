@@ -2,6 +2,11 @@
   text-align: center;
   background-color: #F6ECFE;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 .Navbar {
   background-color: #5D0B98;
