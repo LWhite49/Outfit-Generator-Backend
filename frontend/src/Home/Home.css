@@ -1,0 +1,13 @@
+.Home-Hero{
+    display: relative;
+}
+.Hero-Text{
+    font-size: 20pt;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-top: 10%;
+    display: inline-block;
+    z-index: 5;
+    margin: 0px;
+}
