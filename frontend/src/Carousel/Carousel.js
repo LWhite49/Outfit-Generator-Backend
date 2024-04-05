@@ -2,6 +2,7 @@ import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Carousel.css';
+import _ from 'lodash'
 
 export const Carousel = ({images}) => {
     const settings = {
@@ -11,15 +12,14 @@ export const Carousel = ({images}) => {
         slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 4500,
         draggable: false,
     };
     
     return (
         <div className="carousel">
             <Slider {...settings}>
-                <img src={images[0]} alt="outfit" className="SlideImage" />
-                {images.map((image, index) => {
+                {_.shuffle(images).map((image, index) => {
                 return (
                     <div key={index}>
                         <img src={image} alt="outfit" className="SlideImage" />

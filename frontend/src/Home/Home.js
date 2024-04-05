@@ -2,11 +2,15 @@ import "./Home.css";
 import { useContext } from 'react';
 import { FeedContext } from '../App';
 import { Link } from 'react-router-dom';
+import { Carousel } from '../Carousel/Carousel.js';
 
 export const Home = () => {
-    const { outfitFeed } = useContext(FeedContext);
+    const { outfitFeed, images } = useContext(FeedContext);
     return (
         <div className="Home">
+            <div className="Home-Hero">
+                <Carousel images={images}/>
+            </div>
             <div className="Home-Hero">
                 <h1> Home Page </h1>
                 <Link to="/generator"> Generator </Link>
