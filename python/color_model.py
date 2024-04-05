@@ -1,4 +1,5 @@
 import pandas as pd
+from pathlib import Path
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score
@@ -7,7 +8,7 @@ class ColorPredictor():
     '''Implements the functionality of the categorization model in a simple object'''
     def __init__(self):
         # get the processed data
-        colors = pd.read_csv('python\color_classifier\grouping\color_names_clustered.csv')
+        colors = pd.read_csv('grouping\color_names_clustered.csv')
         
         y = colors.Label
         X = colors[['Red', 'Green', 'Blue']]
@@ -20,14 +21,9 @@ class ColorPredictor():
         # self.model.fit(X_train.values, y_train)
         self.model.fit(X.values, y)
 
-        # allow access to cluster center info
-        self.centers = pd.read_csv('python\color_classifier\grouping\cluster_centers.csv')
     def predict(self, rgb: list[int]) -> str:
         '''The object takes in a list of rgb values and returns the predicted label from its model'''
         return self.model.predict(rgb)
-    def get_center_hex(self, label: int) -> str:
-        '''Returns the hex value for the given cluster label'''
-        return self.centers.loc[label]['Hex'][1:]
 
 # code for testing
 if __name__ == '__main__':    
@@ -35,7 +31,7 @@ if __name__ == '__main__':
     # h = c.get_center_hex(0)
     # c0 = (int(h[:2], 16), int(h[2:4], 16), int(h[4:], 16))
     
-    colors = pd.read_csv('python\color_classifier\grouping\color_names_clustered.csv')
+    colors = pd.read_csv('grouping\color_names_clustered.csv')
     
     y = colors.Label
     X = colors[['Red', 'Green', 'Blue']]

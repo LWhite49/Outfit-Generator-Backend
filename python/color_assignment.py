@@ -48,20 +48,7 @@ def populate_collection(c_name):
     print('Updated', counter, c_name, 'items in', time.time()-t0, 'seconds')
 
 
-# run a thread on each collection
-t0 = threading.Thread(target=populate_collection, args=('topmens',))
-t1 = threading.Thread(target=populate_collection, args=('topwomens',))
-t2 = threading.Thread(target=populate_collection, args=('bottommens',))
-t3 = threading.Thread(target=populate_collection, args=('bottomwomens',))
-t4 = threading.Thread(target=populate_collection, args=('shoemens',))
-t5 = threading.Thread(target=populate_collection, args=('shoewomens',))
-
-threads = [t0, t1, t2, t3, t4, t5]
-
-for t in threads:
-    t.start()
-
-for t in threads:
-    t.join()
+for c in collections:
+    populate_collection(c)
 
 client.close()

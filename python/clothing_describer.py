@@ -1,11 +1,11 @@
-from color_model import ColorPredictor
 import cv2 as cv
 import numpy as np
 import urllib.request
 import rembg
 import pandas as pd
-
+from color_model import ColorPredictor
 from grouping.n_groups import n_groups
+from grouping.cluster_access import get_hex
 
 n_groups = n_groups()
 IM_HEIGHT, IM_WIDTH = 200, 200
@@ -64,8 +64,8 @@ class ClothingDescriber():
         count, most_dom = 0, 0
         for i in range(1,len(prevalent)):
             # get hex values of index and previous labels
-            h0 = self.predictor.get_center_hex(prevalent[i-1])
-            h1 = self.predictor.get_center_hex(prevalent[i])
+            h0 = get_hex(prevalent[i-1])
+            h1 = get_hex(prevalent[i])
             # convert to rgb tuples
             c0 = (int(h0[:2], 16), int(h0[2:4], 16), int(h0[4:], 16))
             c1 = (int(h1[:2], 16), int(h1[2:4], 16), int(h1[4:], 16))
@@ -78,7 +78,7 @@ class ClothingDescriber():
                 count += 1
             else:
                 # otherwise add the most dominant shade in this group to the compressed list and reset the counter
-                compressed.append([prevalent[most_dom], 0, self.predictor.get_center_hex(prevalent[most_dom])])
+                compressed.append([prevalent[most_dom], 0, get_hex(prevalent[most_dom])])
                 count = 0
                 most_dom = i
         
