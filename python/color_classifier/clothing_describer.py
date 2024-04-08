@@ -1,3 +1,6 @@
+
+#given a link to an image, spits out an array of color label, percentage of pixels, hexadecimal value
+
 from color_model import ColorPredictor
 import cv2 as cv
 import numpy as np
