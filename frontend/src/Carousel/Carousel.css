@@ -11,6 +11,7 @@
   display: inline-block;
   z-index: 0;
 }
+
 .SlideImage{
     height: 50vh;
     width:100%;
@@ -19,4 +20,5 @@
     margin:0px;
     box-sizing: border-box;
     display: inline-block;
+    border: 0px none;
 }

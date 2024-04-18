@@ -12,7 +12,7 @@ export const Carousel = ({images}) => {
         slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4500,
+        autoplaySpeed: 4000,
         draggable: false,
     };
     
@@ -21,8 +21,8 @@ export const Carousel = ({images}) => {
             <Slider {...settings}>
                 {_.shuffle(images).map((image, index) => {
                 return (
-                    <div key={index}>
-                        <img src={image} alt="outfit" className="SlideImage" />
+                    <div key={index} >
+                        <img src={image} alt="Hero Image" className="SlideImage" />
                     </div>
                 )
                 })}
