@@ -3,7 +3,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 
 from n_groups import n_groups
-from rgb_to_hex import rgb_to_hex
+from python.grouping.conversions import rgb_to_hex
 
 def cluster_colors() -> None:
     '''Applies k-means clustering to .\color_names.csv and saves it into .\color_names_clustered.csv. Also saves cluster center information into .\cluster_centers.csv.'''
