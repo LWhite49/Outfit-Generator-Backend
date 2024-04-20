@@ -66,10 +66,10 @@ function App() {
   return (outfitFeed.length !== 0) ? (
     <QueryClientProvider client={client}>
       <Router>
-        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, requeryOutfitFeed, images}}>
+        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, requeryOutfitFeed, images, setSubPage}}>
           <div className="App">
             <div className="Navbar">
-              <Link to="/" className="navbar-elem" style={{color: (subPage === "/home") ? "#EDD7FF" : "white"}} onClick={() => {setSubPage("/home")}}> Home </Link>
+              <Link to="/" className="navbar-elem" style={{color: (subPage === "/home") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/home")}}> Home </Link>
               <Link to="/generator" className="navbar-elem" style={{color: (subPage === "/generator") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/generator")}}> Generator </Link>
               <Link to="/about" className="navbar-elem" style={{color: (subPage ==="/about") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/about")}}> About </Link>
             </div>
