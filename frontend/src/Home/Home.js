@@ -9,7 +9,13 @@ export const Home = () => {
     return (
         <div className="Home">
             <div className="Home-Hero">
-                <Carousel images={images}/>
+                <div className="Rel-Dummy">
+                    <div className="Hero-Overlay">
+                        <p className="Hero-Header">Outfit Generator</p>
+                        <p className="Hero-Subheader">Hundreds of fits from our image processing algorithm,<br/>curated for you.</p>
+                    </div>   
+                </div>
+                <Carousel className="Hero-Background" images={images}/>
             </div>
             <div className="Home-Hero">
                 <h1> Home Page </h1>

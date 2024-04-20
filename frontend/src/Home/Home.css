@@ -1,13 +1,60 @@
 .Home-Hero{
     display: relative;
 }
-.Hero-Text{
-    font-size: 20pt;
-    font-weight: 700;
-    color: #fff;
+.Hero-Background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+}
+.Rel-Dummy{
+    z-index: 5;
+    display: inline-block;
+    position: absolute;
+    left: 26%;
+    top: 14%;
+}
+.Hero-Overlay{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    opacity: 75%;
+    padding: 2vh 1.6vw 2vh 1.6vw;
+    background-color: black;
+
+}
+.Hero-Header{
+    font-family: 'Roboto', sans-serif;
+    font-size: 3.2vw;
+    text-align: left;
+    font-weight: bold;
+    margin:0px;
+    margin-bottom: .8vh;
+    text-shadow: -2px -2px 0 #5D0B98,  
+    2px -2px 0 #5D0B98,
+   -2px  2px 0 #5D0B98,
+    2px  2px 0 #5D0B98;
+    color: #F5E7FF;
+    opacity: 100%;
     text-align: center;
-    margin-top: 10%;
     display: inline-block;
     z-index: 5;
-    margin: 0px;
+}
+.Hero-Subheader{
+    font-family:'Courier New', Courier, monospace;
+    font-size: 1.3vw;
+    text-align: left;
+    opacity: 100%;
+    margin:0px;
+    padding: 0px;
+    display: inline-block;
+    z-index: 5;
+    color: #F5E7FF;
+    text-shadow: -1px -1px 0 #5D0B98,  
+    1px -1px 0 #5D0B98,
+   -1px  1px 0 #5D0B98,
+    1px  1px 0 #5D0B98;
+    opacity: 100%;
+    padding-left: 2.4vw;
 }

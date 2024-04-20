@@ -8,7 +8,7 @@ export const Carousel = ({images}) => {
     const settings = {
         dots: false,
         infinite: true,
-        speed: 800,
+        speed: 500,
         slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
@@ -22,7 +22,7 @@ export const Carousel = ({images}) => {
                 {_.shuffle(images).map((image, index) => {
                 return (
                     <div key={index} >
-                        <img src={image} alt="Hero Image" className="SlideImage" />
+                        <img src={image} alt="Outfit" className="SlideImage" />
                     </div>
                 )
                 })}
