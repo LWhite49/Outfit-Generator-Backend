@@ -38,7 +38,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 26px;
 }
 .Gender-Slider-Container{
   display: flex;
@@ -46,20 +46,36 @@
   justify-content: center;
   align-items: center;
 }
-.Slider-Label{
+.Slider-Label, .Size-Label{
+  display: inline-block;
   margin-bottom: 4px;
   color: black;
   font-weight: bold;
-  font-size: 14pt;
-
+  font-size: 14pt
 }
 .Top-Gender-Slider, .Bottom-Gender-Slider, .Shoe-Gender-Slider{
   position: relative;
   margin-top: 4px;
 }
-
+.Size-Input-Container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: max(1vw, 10px);
+}
+.Size-Label{
+  margin-right: 1vw;
+}
+.Size-Button{
+  position: relative;
+  top: 18%;
+  margin: 0px;
+  width: max(30px, 3vw);
+  height: max(10px, 2vh);
+}
 .Outfit{
-    display: flexbox;
+    display: flex;
     flex-direction: row;
     max-height: 200px;
   }

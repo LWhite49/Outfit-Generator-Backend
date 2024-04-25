@@ -59,8 +59,16 @@ export const Generator = () => {
                     </div>
                 </div>
                 <div className="Size-Container">
-                    <p>Top Size:</p>
-                    <p>Bottom Size:</p>
+                    <div className="Size-Input-Container">
+                        <p className="Size-Label">Top Sizes:</p>
+                        <button className="Size-Button">All</button>
+                        <button className="Size-Button">XS</button>
+                        <button className="Size-Button">S</button>
+                        <button className="Size-Button">M</button>
+                        <button className="Size-Button">L</button>
+                        <button className="Size-Button">XL</button>
+                        <button className="Size-Button">XXL</button>
+                    </div>
                     <p>Shoe Size:</p>
                 </div>
                 <div className="Brand-Container">
