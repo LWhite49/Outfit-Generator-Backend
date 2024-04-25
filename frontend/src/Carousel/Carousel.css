@@ -21,4 +21,5 @@
     box-sizing: border-box;
     display: inline-block;
     border: 0px none;
+    pointer-events: none;
 }
