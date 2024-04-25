@@ -4,7 +4,7 @@
     max-height: 200px;
   }
 .TopDisplay, .BottomDisplay, .ShoeDisplay{
-    max-height: 200px;
-    max-width: 200px;
     margin: 10px;
+    max-width: 200px;
+    max-height: 200px;
   }
