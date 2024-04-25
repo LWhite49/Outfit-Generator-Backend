@@ -109,7 +109,7 @@ class ClothingDescriber():
             c[1] /= total_px
 
         # if there are more than 4 colors, compress down to four
-        if len(prevalent) > 4:
+        if len(prevalent) >= 4:
             km = KMeans(4)
             labels = km.fit_predict([hex_to_rgb(c[2]) for c in prevalent])
             
@@ -120,7 +120,7 @@ class ClothingDescriber():
                     compressed.append(prevalent[i])
                     found.append(labels[i])
         else:
-            compressed = prevalent
+            return -1
 
         # return just groups
         return compressed
