@@ -5,8 +5,6 @@ import cv2 as cv
 import numpy as np
 import urllib.request
 import rembg
-import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from color_model import ColorPredictor
 from grouping.conversions import hex_to_rgb
@@ -110,26 +108,19 @@ class ClothingDescriber():
         for c in prevalent:
             c[1] /= total_px
 
-        km = KMeans(4)
-        labels = km.fit_predict([hex_to_rgb(c[2]) for c in prevalent])
-        
-        compressed = []
-        found = []
-        for i in range(len(labels)):
-            if labels[i] not in found:
-                compressed.append(prevalent[i])
-                found.append(labels[i])
-
-        row = []
-        for i in range(4):
-            row += [hex_to_rgb(compressed[i][2])] * round(1000 * compressed[i][1])
-        
-        new_img = [row] * 1000
-        # print(np.array(new_img).shape)
-        plt.imshow(new_img)
-        plt.show()
-        # cv.imshow('', np.array(new_img))
-        # cv.waitKey()
+        # if there are more than 4 colors, compress down to four
+        if len(prevalent) > 4:
+            km = KMeans(4)
+            labels = km.fit_predict([hex_to_rgb(c[2]) for c in prevalent])
+            
+            compressed = []
+            found = []
+            for i in range(len(labels)):
+                if labels[i] not in found:
+                    compressed.append(prevalent[i])
+                    found.append(labels[i])
+        else:
+            compressed = prevalent
 
         # return just groups
         return compressed

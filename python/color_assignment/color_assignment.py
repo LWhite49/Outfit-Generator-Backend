@@ -2,7 +2,6 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from os import getenv
 import time
-
 from clothing_describer import ClothingDescriber
 
 # Initiailize ENV
