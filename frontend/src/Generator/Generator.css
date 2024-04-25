@@ -1,0 +1,10 @@
+.Outfit{
+    display: flexbox;
+    flex-direction: row;
+    max-height: 200px;
+  }
+.TopDisplay, .BottomDisplay, .ShoeDisplay{
+    margin: 10px;
+    max-width: 200px;
+    max-height: 200px;
+  }

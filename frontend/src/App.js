@@ -6,6 +6,7 @@ import { useState, createContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
+import logo from './images/TempLogo.png';
 
 //Import Images using require.context
 const imageContext = require.context("./images/CarouselImages", false, /\.(png|jpe?g|svg)$/)
@@ -68,10 +69,13 @@ function App() {
       <Router>
         <FeedContext.Provider value={{outfitFeed, setOutfitFeed, requeryOutfitFeed, images, setSubPage}}>
           <div className="App">
-            <div className="Navbar">
-              <Link to="/" className="navbar-elem" style={{color: (subPage === "/home") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/home")}}> Home </Link>
-              <Link to="/generator" className="navbar-elem" style={{color: (subPage === "/generator") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/generator")}}> Generator </Link>
-              <Link to="/about" className="navbar-elem" style={{color: (subPage ==="/about") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/about")}}> About </Link>
+            <div className="Navbar-Container">
+              <div className="Navbar">
+                <Link to="/" className="NavbarElem" style={{color: (subPage === "/home") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/home")}}> Home </Link>
+                <Link to="/generator" className="NavbarElem" style={{color: (subPage === "/generator") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/generator")}}> Generator </Link>
+                <Link to="/about" className="NavbarElem" style={{color: (subPage ==="/about") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/about")}}> About </Link>
+              </div>
+              <img className="NavbarLogo" src={logo} alt="Logo"></img>
             </div>
             <Routes>
               <Route path="/" element={<Home />}></Route>

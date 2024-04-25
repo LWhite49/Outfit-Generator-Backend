@@ -1,36 +1,44 @@
 .App {
-  text-align: center;
+  box-sizing: border-box;
+  margin: 0px;
   background-color: #F6ECFE;
-  min-height: 100vh;
+  padding: 0px;
   width: 100%;
   max-width: 100%;
-  padding: 0px;
-  margin: 0px;
-  box-sizing: border-box;
+  min-height: 100vh;
+  text-align: center;
+}
+.Navbar-Container{
+  display: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  width: 100%;
 }
 .Navbar {
-  background-color: #5D0B98;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
+  background-color: #5D0B98;
   height: min(10vh, 180px);
+  color: white;
 }
-.navbar-elem{
+.NavbarElem{
   margin: 0 20px;
   color: white;
   font-size: 16pt;
   text-decoration: none;
 }
-.Outfit{
-  display: flexbox;
-  flex-direction: row;
-  max-height: 200px;
+.NavbarLogo{
+  position: relative;
+  top: -8vh;
+  left: -44vw;
+  z-index: 101;
+  width: 6vh;
+  height: 6vh;
 }
-.TopDisplay, .BottomDisplay, .ShoeDisplay{
-  max-height: 200px;
-  max-width: 200px;
-  margin: 10px;
-}
+
 
 

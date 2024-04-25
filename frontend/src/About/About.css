@@ -1,0 +1,36 @@
+.Project-Scale-Header{
+    display: inline-flex;
+    opacity: 100%;
+    margin: 2vh 0vw 1.8vh 0vw;
+    border-bottom: 2px ridge #5D0B98;
+    padding: 10vh 1vw 4px 1vw;
+    color: black;
+    font-weight: bold;
+    font-size: max(1.8vw, 34pt);
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    text-align: center;
+    text-shadow: -2px -2px 0 #F5E7FF,  
+    2px -2px 0 #F5E7FF,
+   -2px  2px 0 #F5E7FF,
+    4px  4px 0 #F5E7FF;
+}
+
+.Project-Scale-Text{
+    margin:0px;
+    margin-top: 2vh;
+    margin-left: 26vw;
+    padding: 0px;
+    color: black;
+    font-size: max(.8vw, 14pt);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; ;
+    text-align: left;
+    text-shadow: -1px -1px 0 #F5E7FF,  
+    1px -1px 0 #F5E7FF,
+   -1px  1px 0 #F5E7FF,
+    1px  1px 0 #F5E7FF;
+}
+
+.Project-Scale-Text-Emph{
+    font-weight: bold;
+}
