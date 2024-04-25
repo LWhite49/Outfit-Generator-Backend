@@ -1,3 +1,63 @@
+.Generator{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10vh;
+}
+.Generator-Settings{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4vh;
+  border: 2px ridge #5D0B98;
+  border-radius: 10px;
+  background-color: #E3C5FC;
+  width: 70%;
+}
+.Generator-Settings-Header{
+  display: inline-flex;
+  opacity: 100%;
+  margin: 0px 0vw 1.8vh 0vw;
+  border-bottom: 2px ridge #5D0B98;
+  padding: 1vh 1vw 4px 1vw;
+  color: black;
+  font-weight: bold;
+  font-size: max(1.8vw, 34pt);
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-align: center;
+  text-shadow: -2px -2px 0 #F5E7FF,  
+  2px -2px 0 #F5E7FF,
+ -2px  2px 0 #F5E7FF,
+  4px  4px 0 #F5E7FF;
+}
+.Gender-Container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.Gender-Slider-Container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Slider-Label{
+  margin-bottom: 4px;
+  color: black;
+  font-weight: bold;
+  font-size: 14pt;
+
+}
+.Top-Gender-Slider, .Bottom-Gender-Slider, .Shoe-Gender-Slider{
+  position: relative;
+  margin-top: 4px;
+}
+
 .Outfit{
     display: flexbox;
     flex-direction: row;
