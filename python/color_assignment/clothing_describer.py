@@ -100,14 +100,6 @@ class ClothingDescriber():
         # for color in compressed:
         #     color[1] /= px
 
-        # update pixel count to be a percentage instead
-        total_px = 0
-        for c in prevalent:
-            total_px += c[1]
-        
-        for c in prevalent:
-            c[1] /= total_px
-
         # if there are more than 4 colors, compress down to four
         if len(prevalent) >= 4:
             km = KMeans(4)
@@ -121,6 +113,14 @@ class ClothingDescriber():
                     found.append(labels[i])
         else:
             return -1
+        
+        # update pixel count to be a percentage instead
+        total_px = 0
+        for c in prevalent:
+            total_px += c[1]
+        
+        for c in prevalent:
+            c[1] /= total_px
 
         # return just groups
         return compressed
