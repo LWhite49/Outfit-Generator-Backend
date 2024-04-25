@@ -1,3 +1,6 @@
+.Home{
+    cursor:default;
+}
 .Home-Hero{
     display: relative;
     padding-top: min(10vh, 180px);

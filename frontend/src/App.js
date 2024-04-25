@@ -27,9 +27,9 @@ function App() {
   // Create a state for size, brand, and genders
   const [size, setSize] = useState({topSizes: [], bottomSizes: [], shoeSizes: []});
   const [brand, setBrand] = useState([]);
-  const [topGender, setTopGender] = useState("All");
-  const [bottomGender, setBottomGender] = useState("All");
-  const [shoeGender, setShoeGender] = useState("All");
+  const [topGender, setTopGender] = useState("male");
+  const [bottomGender, setBottomGender] = useState("male");
+  const [shoeGender, setShoeGender] = useState("male");
 
   // Create a state for current subpage used for conditional rendering of navbar
   const [subPage, setSubPage] = useState("/home");
@@ -55,19 +55,11 @@ function App() {
   updateFeed(size, brand, topGender, bottomGender, shoeGender);
   }, [size, brand, topGender, bottomGender, shoeGender]);
 
-  // Function that requeries current settings for outfitFeed
-  const requeryOutfitFeed = () => {
-    setSize({...size, topSizes: [...size.topSizes, "L"]});
-    setBrand(brand);
-    setTopGender(topGender);
-    setBottomGender(bottomGender);
-    setShoeGender(shoeGender);
-  }
 
   return (outfitFeed.length !== 0) ? (
     <QueryClientProvider client={client}>
       <Router>
-        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, requeryOutfitFeed, images, setSubPage}}>
+        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, images, setSubPage, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, brand, size}}>
           <div className="App">
             <div className="Navbar-Container">
               <div className="Navbar">
