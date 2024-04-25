@@ -5,8 +5,6 @@ import cv2 as cv
 import numpy as np
 import urllib.request
 import rembg
-import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from color_model import ColorPredictor
 from grouping.conversions import hex_to_rgb
@@ -123,17 +121,6 @@ class ClothingDescriber():
                     found.append(labels[i])
         else:
             compressed = prevalent
-
-        # row = []
-        # for i in range(4):
-        #     row += [hex_to_rgb(compressed[i][2])] * round(1000 * compressed[i][1])
-        
-        # new_img = [row] * 1000
-        # # print(np.array(new_img).shape)
-        # plt.imshow(new_img)
-        # plt.show()
-        # cv.imshow('', np.array(new_img))
-        # cv.waitKey()
 
         # return just groups
         return compressed
