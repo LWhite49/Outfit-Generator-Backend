@@ -39,6 +39,11 @@
   justify-content: center;
   align-items: center;
   gap: 26px;
+  margin-top: 6px;
+  border: 1px ridge #5D0B98;
+  border-radius: 10px;
+  background-color: #F5E7FF; 
+  padding: 10px 40px 10px 40px;
 }
 .Gender-Slider-Container{
   display: flex;
@@ -65,14 +70,64 @@
   gap: max(1vw, 10px);
 }
 .Size-Label{
-  margin-right: 1vw;
+  position:relative;
+  bottom: 13%;
+  margin-right: 20px;
 }
-.Size-Button{
-  position: relative;
-  top: 18%;
-  margin: 0px;
-  width: max(30px, 3vw);
-  height: max(10px, 2vh);
+.Size-Button, .Size-Button-Small{
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s, border-radius, text-shadow 0.3s, border-width 0.3s;
+  cursor: pointer;
+  margin:18px 0 18px 0;
+  border: 1px ridge #5D0B98;
+  border-radius: 5px;
+  background-color: #F5E7FF;
+  padding: 6px 10px 6px 10px;
+  color: #F5E7FF;
+  font-weight: bold;
+  font-size: 11pt;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-shadow: -1px -1px 0 black,  
+  1px -1px 0 black,
+ -1px  1px 0 black,
+  1px  1px 0 black;
+}
+.Size-Button-Small{
+  padding: 6px 6px 6px 6px;
+}
+.Size-Button:hover, .Size-Button-Small:hover{
+  border-color: #F5E7FF;
+  background-color: black;
+  color: #5D0B98;
+  text-shadow:
+  -1px -1px 0 #F5E7FF,
+  1px -1px 0px #F5E7FF,
+  -1px 1px 0 #F5E7FF,
+  1px 1px 0 #F5E7FF;
+}
+.Size-Button-Selected, .Size-Button-Small-Selected{
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s, border-radius, text-shadow 0.3s, border-width 0.3s;
+  cursor: pointer;
+  margin:18px 0 18px 0;
+  border: 1px ridge #5D0B98;
+  border-radius: 5px;
+  background-color: black;
+  padding: 6px 10px 6px 10px;
+  color: #5D0B98;
+  font-weight: bold;
+  font-size: 11pt;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-shadow:
+  -1px -1px 0 #F5E7FF,
+  1px -1px 0px #F5E7FF,
+  -1px 1px 0 #F5E7FF,
+  1px 1px 0 #F5E7FF;
+}
+.Size-Button-Small-Selected{
+  padding: 6px 6px 6px 6px;
 }
 .Outfit{
     display: flex;

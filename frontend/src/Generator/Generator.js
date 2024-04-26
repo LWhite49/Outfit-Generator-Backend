@@ -40,6 +40,60 @@ export const Generator = () => {
         padding: "5px",
         paddingLeft: "7px"
     }
+
+    // Define state for size button rendering
+    const [sizeButtonState, setSizeButtonState] = useState({
+        all: true,
+        XS: false,
+        S: false,
+        M: false,
+        L: false,
+        XL: false,
+        XXL: false
+    });
+
+    // Define a function that toggles the size button state 
+    const toggleSizeButton = (sizeStr) => {
+        // Branch for if All button is picked
+        if (sizeStr === "all") {
+            if (sizeButtonState["all"] === false) {
+                setSizeButtonState({
+                    all: true,
+                    XS: false,
+                    S: false,
+                    M: false,
+                    L: false,
+                    XL: false,
+                    XXL: false
+                });
+                setSize({...size, topSizes: []}); 
+            }
+            else {
+                setSizeButtonState({
+                    all: false,
+                    XS: false,
+                    S: false,
+                    M: false,
+                    L: false,
+                    XL: false,
+                    XXL: false
+                });
+                setSize({...size, topSizes: []})
+            }
+        }
+        // Branch for if any other button is picked
+        else {
+            if (sizeButtonState[sizeStr] === false) {
+                setSizeButtonState({...sizeButtonState, all: false, [sizeStr]: true});
+                setSize({...size, topSizes: [...size.topSizes, sizeStr]});
+            }
+            else {
+                setSizeButtonState({...sizeButtonState, all: false, [sizeStr]: false});
+                setSize({...size, topSizes: size.topSizes.filter((size) => size !== sizeStr)});
+            }
+        }
+    }
+
     return (
         <div className="Generator">
             <div className="Generator-Settings">
@@ -61,13 +115,13 @@ export const Generator = () => {
                 <div className="Size-Container">
                     <div className="Size-Input-Container">
                         <p className="Size-Label">Top Sizes:</p>
-                        <button className="Size-Button">All</button>
-                        <button className="Size-Button">XS</button>
-                        <button className="Size-Button">S</button>
-                        <button className="Size-Button">M</button>
-                        <button className="Size-Button">L</button>
-                        <button className="Size-Button">XL</button>
-                        <button className="Size-Button">XXL</button>
+                        <button className={sizeButtonState["all"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("all")}}>All</button>
+                        <button className={sizeButtonState["XS"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("XS")}}>XS</button>
+                        <button className={sizeButtonState["S"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("S")}}>S</button>
+                        <button className={sizeButtonState["M"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("M")}}>M</button>
+                        <button className={sizeButtonState["L"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("L")}}>L</button>
+                        <button className={sizeButtonState["XL"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("XL")}}>XL</button>
+                        <button className={sizeButtonState["XXL"] === true ? "Size-Button-Small-Selected" : "Size-Button-Small"} onClick={() => {toggleSizeButton("XXL")}}>XXL</button>
                     </div>
                     <p>Shoe Size:</p>
                 </div>
