@@ -28,7 +28,6 @@ const generateOutfitFeed = async (req, res) => {
 
     // We will use these to form the outfits, so call these "pallet" items
     let palletTops, palletBottoms, palletShoes;
-
     console.log(sizeData.topSizes);
 
     // Define options for each collection

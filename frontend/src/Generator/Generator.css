@@ -43,7 +43,9 @@
   border: 1px ridge #5D0B98;
   border-radius: 10px;
   background-color: #F5E7FF; 
-  padding: 10px 40px 10px 40px;
+  padding: 10px 0px 10px 0px;
+  width: max(24vw, 400px);
+  max-width: max(24vw, 400px);
 }
 .Gender-Slider-Container{
   display: flex;
@@ -51,7 +53,7 @@
   justify-content: center;
   align-items: center;
 }
-.Slider-Label, .Size-Label{
+.Slider-Label{
   display: inline-block;
   margin-bottom: 4px;
   color: black;
@@ -62,17 +64,25 @@
   position: relative;
   margin-top: 4px;
 }
+.Size-Container{
+  width: max(24vw, 400px);
+  max-width: max(24vw, 400px);
+}
 .Size-Input-Container{
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: max(1vw, 10px);
+  width: max(24vw, 400px);
+  max-width: max(24vw, 400px);
 }
 .Size-Label{
-  position:relative;
-  bottom: 13%;
+  display: inline-block;
   margin-right: 20px;
+  color: black;
+  font-weight: bold;
+  font-size: 14pt
 }
 .Size-Button, .Size-Button-Small{
   display: inline-block;

@@ -42,7 +42,7 @@ export const Generator = () => {
     }
 
     // Define state for size button rendering
-    const [sizeButtonState, setSizeButtonState] = useState({
+    const [topSizeButtonState, setTopSizeButtonState] = useState({
         all: true,
         XS: false,
         S: false,
@@ -56,8 +56,8 @@ export const Generator = () => {
     const toggleSizeButton = (sizeStr) => {
         // Branch for if All button is picked
         if (sizeStr === "all") {
-            if (sizeButtonState["all"] === false) {
-                setSizeButtonState({
+            if (topSizeButtonState["all"] === false) {
+                setTopSizeButtonState({
                     all: true,
                     XS: false,
                     S: false,
@@ -69,7 +69,7 @@ export const Generator = () => {
                 setSize({...size, topSizes: []}); 
             }
             else {
-                setSizeButtonState({
+                setTopSizeButtonState({
                     all: false,
                     XS: false,
                     S: false,
@@ -83,12 +83,12 @@ export const Generator = () => {
         }
         // Branch for if any other button is picked
         else {
-            if (sizeButtonState[sizeStr] === false) {
-                setSizeButtonState({...sizeButtonState, all: false, [sizeStr]: true});
+            if (topSizeButtonState[sizeStr] === false) {
+                setTopSizeButtonState({...topSizeButtonState, all: false, [sizeStr]: true});
                 setSize({...size, topSizes: [...size.topSizes, sizeStr]});
             }
             else {
-                setSizeButtonState({...sizeButtonState, all: false, [sizeStr]: false});
+                setTopSizeButtonState({...topSizeButtonState, all: false, [sizeStr]: false});
                 setSize({...size, topSizes: size.topSizes.filter((size) => size !== sizeStr)});
             }
         }
@@ -115,13 +115,13 @@ export const Generator = () => {
                 <div className="Size-Container">
                     <div className="Size-Input-Container">
                         <p className="Size-Label">Top Sizes:</p>
-                        <button className={sizeButtonState["all"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("all")}}>All</button>
-                        <button className={sizeButtonState["XS"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("XS")}}>XS</button>
-                        <button className={sizeButtonState["S"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("S")}}>S</button>
-                        <button className={sizeButtonState["M"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("M")}}>M</button>
-                        <button className={sizeButtonState["L"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("L")}}>L</button>
-                        <button className={sizeButtonState["XL"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("XL")}}>XL</button>
-                        <button className={sizeButtonState["XXL"] === true ? "Size-Button-Small-Selected" : "Size-Button-Small"} onClick={() => {toggleSizeButton("XXL")}}>XXL</button>
+                        <button className={topSizeButtonState["all"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("all")}}>All</button>
+                        <button className={topSizeButtonState["XS"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("XS")}}>XS</button>
+                        <button className={topSizeButtonState["S"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("S")}}>S</button>
+                        <button className={topSizeButtonState["M"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("M")}}>M</button>
+                        <button className={topSizeButtonState["L"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("L")}}>L</button>
+                        <button className={topSizeButtonState["XL"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleSizeButton("XL")}}>XL</button>
+                        <button className={topSizeButtonState["XXL"] === true ? "Size-Button-Small-Selected" : "Size-Button-Small"} onClick={() => {toggleSizeButton("XXL")}}>XXL</button>
                     </div>
                     <p>Shoe Size:</p>
                 </div>
