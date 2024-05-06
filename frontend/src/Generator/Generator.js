@@ -187,6 +187,7 @@ export const Generator = () => {
                         <button className={bottomSizeButtonState["L"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("L")}}>L</button>
                         <button className={bottomSizeButtonState["XL"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("XL")}}>XL</button>
                         <button className={bottomSizeButtonState["XXL"] === true ? "Size-Button-Small-Selected" : "Size-Button-Small"} onClick={() => {toggleBottomSizeButton("XXL")}}>XXL</button>
+                        <p className="Size-Label">Waist (inches):</p>
                     </div>
                 </div>
                 <div className="Brand-Container">
