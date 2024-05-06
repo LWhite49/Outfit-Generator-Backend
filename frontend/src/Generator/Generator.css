@@ -44,7 +44,7 @@
   border: 1px ridge #5D0B98;
   border-radius: 10px;
   background-color: #F5E7FF; 
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 14px 0px;
   width: max(24vw, 400px);
   max-width: max(24vw, 400px);
 }

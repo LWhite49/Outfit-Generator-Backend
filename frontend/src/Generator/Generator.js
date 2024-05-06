@@ -155,15 +155,15 @@ export const Generator = () => {
                 <p className="Generator-Settings-Header">Generator Settings</p>
                 <div className="Gender-Container">
                     <div className="Gender-Slider-Container">
-                        <label forHTML="Top-Gender-Slider" className="Slider-Label">Top Gender:</label>
+                        <label forHTML="Top-Gender-Slider" className="Slider-Label">Top Style:</label>
                         <Switch id="Top-Gender-Slider" onChange={() => {toggleGender(topGender, setTopGender, setTopChecked)}} checked={topChecked} offColor={"#6FAFEC"} onColor={"#F5B7C2"} uncheckedIcon={<img style={sliderImgMale} src={maleIcon} alt="M"/>} checkedIcon={<img style={sliderImgFemale} src={femaleIcon} alt="W"/>}></Switch>
                     </div>
                     <div className="Gender-Slider-Container">
-                        <label forHTML="Bottom-Gender-Slider" className="Slider-Label">Bottom Gender:</label>
+                        <label forHTML="Bottom-Gender-Slider" className="Slider-Label">Bottom Style:</label>
                         <Switch id="Bottom-Gender-Slider" onChange={() => {toggleGender(bottomGender, setBottomGender, setBottomChecked)}} checked={bottomChecked} offColor={"#6FAFEC"} onColor={"#F5B7C2"} uncheckedIcon={<img style={sliderImgMale} src={maleIcon} alt="M"/>} checkedIcon={<img style={sliderImgFemale} src={femaleIcon} alt="W"/>}></Switch>
                     </div>
                     <div className="Gender-Slider-Container">
-                        <label forHTML="Shoe-Gender-Slider" className="Slider-Label">Shoe Gender:</label>
+                        <label forHTML="Shoe-Gender-Slider" className="Slider-Label">Shoe Style:</label>
                         <Switch id="Shoe-Gender-Slider" onChange={() => {toggleGender(shoeGender, setShoeGender, setShoeChecked)}} checked={shoeChecked} offColor={"#6FAFEC"} onColor={"#F5B7C2"} uncheckedIcon={<img style={sliderImgMale} src={maleIcon} alt="M"/>} checkedIcon={<img style={sliderImgFemale} src={femaleIcon} alt="W"/>}></Switch>
                     </div>
                 </div>
