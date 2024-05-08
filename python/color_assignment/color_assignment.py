@@ -4,7 +4,7 @@ from os import getenv
 import time
 from clothing_describer import ClothingDescriber
 
-# Initiailize ENV
+# Initialize ENV
 load_dotenv()
 
 # Source ENV

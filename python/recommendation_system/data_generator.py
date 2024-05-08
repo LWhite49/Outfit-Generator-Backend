@@ -10,9 +10,9 @@ from random import choice
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button, Slider
 import pandas as pd
-from color_assignment.grouping.conversions import hex_to_rgb
 import numpy as np
-
+from color_assignment.grouping.conversions import hex_to_rgb
+from color_calculator import outfit_comparison
 
 def on_stop_click(event):
     global stop_flag
@@ -31,34 +31,6 @@ def on_button_click(event):
     global user_score
     print(f"Slider value selected: {user_score}")
     plt.close()
-
-def comp_sim_neut_probability(colors1, colors2):
-    complementary_score = 0
-    similar_score = 0
-    neutral_score = 0
-    # Iterate over each subset array in the first array
-    for subset1 in colors1:
-        rgb_value1 = hex_to_rgb(subset1[2])  # Get the hex value from the first array
-        for subset2 in colors2:
-            rgb_value2 = hex_to_rgb(subset2[2])  # Get the hex value from the second array
-
-            # Calculate the probability that two rgb colors are complementary
-            distance = np.linalg.norm((np.array(rgb_value1) + np.array(rgb_value2)) - 255)
-            complementary_prob = 1 - (distance / np.sqrt(3 * (255 ** 2)))
-
-            # Calulate the similarity between the two colors
-            cos_sim = np.dot(rgb_value1, rgb_value2) / (np.linalg.norm(rgb_value1) * np.linalg.norm(rgb_value2))
-
-            # Calculate the neutral probability
-            neutral_prob = 1 - (np.linalg.norm(rgb_value1) - np.linalg.norm(rgb_value2)) / np.linalg.norm(rgb_value1)
-
-            # Compare hex values
-            complementary_score += 0.625 * complementary_prob
-            similar_score += 0.625 * cos_sim
-            neutral_score += 0.625 * neutral_prob
-
-    return complementary_score, similar_score, neutral_score
-
     
 def calm_lil_color_weighting(colors1, colors2, user_score):
     # get complementary, similarity, and relative neutrality scores
@@ -116,6 +88,8 @@ while not stop_flag:
     while not colors2 or len(colors2) < 4:
         colors2 = random_item()
     
+    print(outfit_comparison(colors1, colors2))
+
     # create an image which will be a 1000*1000 matrix of the image colors, proportioned according to their percentage
     # simultaneously build the row to add to the dataframe
     row = []
@@ -149,7 +123,7 @@ while not stop_flag:
 
     # Create a slider widget
     ax_slider = plt.axes([0.2, 0.1, 0.6, 0.03])  # [left, bottom, width, height]
-    slider = Slider(ax_slider, 'Slider', 0, 10, valinit=0.5, valstep=0.1)  # A slider from 1 to 10
+    slider = Slider(ax_slider, 'Slider', 0, 10, valinit=5, valstep=0.1)  # A slider from 1 to 10
     slider.on_changed(update)
 
     # Create a button widget
@@ -167,8 +141,9 @@ while not stop_flag:
     if stop_flag:
         break
 
-    aesthetic_score = calm_lil_color_weighting(colors1, colors2, float(user_score))
-    df_row.append(aesthetic_score)
-    training_data = pd.concat([pd.DataFrame([df_row], columns=training_data.columns), training_data], ignore_index=1)
+    # aesthetic_score = calm_lil_color_weighting(colors1, colors2, float(user_score))
+    # df_row.append(aesthetic_score)
+    # training_data = pd.concat([pd.DataFrame([df_row], columns=training_data.columns), training_data], ignore_index=1)
 
 training_data.to_csv('training_data.csv', mode='a', index=False, header=False)
+client.close()
