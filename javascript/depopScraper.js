@@ -155,8 +155,13 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
             
             // Format listing
             listing.productBrand = listing.productBrand?.trim();
-            listing.productSize = listing.productSize?.trim();
-            listing.productSize = listing.productSize?.replace('"', '');
+            let tempProductSize = listing.productSize?.trim(' ');
+            tempProductSize = tempProductSize?.replace('"',"");
+            tempProductSize = tempProductSize?.replace('US',"");
+            tempProductSize = tempProductSize?.replace('UK',"");
+            tempProductSize = tempProductSize?.replace('EU',"");
+            tempProductSize = tempProductSize?.replace(' ',"");
+            listing.productSize = tempProductSize;
             
             // Add listing to DB
             await collectionObj.create(listing);
