@@ -4,4 +4,6 @@ def rgb_to_hex(r: float, g: float, b: float) -> str:
 
 def hex_to_rgb(hex: str) -> list[int, int, int]:
     '''Takes in a hexadecimal string and returns its rgb values.'''
+    if hex[0] == '#':
+        hex = hex[1:]
     return list(int(hex[i:i+2], 16) for i in [0, 2, 4])
