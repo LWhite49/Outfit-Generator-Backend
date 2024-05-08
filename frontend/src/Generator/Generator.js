@@ -4,6 +4,8 @@ import { FeedContext } from '../App';
 import Switch from 'react-switch';
 import maleIcon from '../images/maleIcon.svg';
 import femaleIcon from '../images/femaleIcon.svg';
+import waistSizeIncrementIcon from '../images/waistIncrementIcon.svg';
+import waistSizeMax from '../images/waistMaxIcon.svg';
 
 export const Generator = () => {
     // Source elements from provider
@@ -16,7 +18,7 @@ export const Generator = () => {
 
     // Define a function that accepts a gender and SetGender and toggles accordingly
     const toggleGender = (gender, setGender, setChecked) => {
-        if (gender == "male") { 
+        if (gender === "male") { 
             setGender("female");
             setChecked(true);
         }
@@ -63,6 +65,57 @@ export const Generator = () => {
         XXL: false
     });
 
+    // Define state for the waist size, which initializes as N/A
+    const [waistSize, setWaistSize] = useState("---");
+
+    // Define a function that accepts a bool, decrementing waist size if 0 and incrementing if 1
+    const updateWaistSize = (bool) => {
+        if (waistSize === 28 && bool === 0) { return; }
+        if (waistSize === 44 && bool === 1) { return; }
+        if (bool) {
+            if (waistSize === "---") { 
+                setWaistSize(32);
+                setBottomSizeButtonState({
+                    all: false,
+                    XS: false,
+                    S: false,
+                    M: false,
+                    L: false,
+                    XL: false,
+                    XXL: false
+                }); 
+            }
+            else { setWaistSize(Math.min(waistSize + 2, 44)); }
+        }
+        else {
+            if (waistSize === "---") { 
+                setWaistSize(32);
+                setBottomSizeButtonState({
+                    all: false,
+                    XS: false,
+                    S: false,
+                    M: false,
+                    L: false,
+                    XL: false,
+                    XXL: false
+                });
+             }
+            else { setWaistSize(Math.max(waistSize - 2, 28)); } 
+        }
+        
+        if (waistSize !== "---") {
+            setBottomSizeButtonState({
+                all: false,
+                XS: false,
+                S: false,
+                M: false,
+                L: false,
+                XL: false,
+                XXL: false
+            });
+            setSize({...size, bottomSizes: [String(waistSize)]});
+        }
+    }
     // Define a function that toggles the top size button state 
     const toggleTopSizeButton = (sizeStr) => {
         // Branch for if All button is picked
@@ -120,7 +173,8 @@ export const Generator = () => {
                     XL: false,
                     XXL: false
                 });
-                setSize({...size, bottomSizes: []}); 
+                setSize({...size, bottomSizes: []});
+                setWaistSize("---"); 
             }
         }
         // Branch for if any other button is picked
@@ -149,6 +203,29 @@ export const Generator = () => {
             }
         }
     }
+    // Define state for the shoe size, which stores an interval of sizes
+    const [shoeSizeRange, setShoeSizeRange] = useState([6, 15]);
+
+    // Define a function that updates the shoe size range, where a passed 0 means the min size is updated and 1 means the max size is updated
+    const updateShoeSizeRange = (event, bool) => {
+        if (bool === 0) {
+                let calcMin = Math.max(6, Number(event.target.value));
+                calcMin = Math.min(calcMin, shoeSizeRange[1] -.5);
+                setShoeSizeRange([calcMin, shoeSizeRange[1]]);
+        }
+        else {
+            let calcMax = Math.min(15, Number(event.target.value));
+            calcMax = Math.max(calcMax, shoeSizeRange[0] + .5);
+            setShoeSizeRange([shoeSizeRange[0], calcMax]);
+        }
+        // Update the size state
+        const shoeSizeArr = [];
+        for (let i = shoeSizeRange[1]; i >= shoeSizeRange[0]; i-=.5) {
+            shoeSizeArr.push(String(i));
+        }
+        setSize({...size, shoeSizes: shoeSizeArr});
+    }
+
     return (
         <div className="Generator">
             <div className="Generator-Settings">
@@ -187,8 +264,26 @@ export const Generator = () => {
                         <button className={bottomSizeButtonState["L"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("L")}}>L</button>
                         <button className={bottomSizeButtonState["XL"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("XL")}}>XL</button>
                         <button className={bottomSizeButtonState["XXL"] === true ? "Size-Button-Small-Selected" : "Size-Button-Small"} onClick={() => {toggleBottomSizeButton("XXL")}}>XXL</button>
-                        <p className="Size-Label">Waist (inches):</p>
+                        <div className="Waist-Container">
+                            <p className="Waist-Size-Label">Waist (in.):</p>
+                            <button className="Waist-Size-Down" onClick={() => {updateWaistSize(0)}}>
+                                <img className="Waist-Size-Down-Icon" src={(waistSize === 28 ? waistSizeMax : waistSizeIncrementIcon)} alt="Decrease Waist Size"/>
+                            </button>
+                            <p className="Waist-Size-Display">{waistSize}</p>
+                            <button className="Waist-Size-Up" onClick={() => {updateWaistSize(1)}}>
+                                <img className="Waist-Size-Up-Icon" src={(waistSize === 44 ? waistSizeMax : waistSizeIncrementIcon)} alt="Increase Waist Size"/>
+                            </button>
+                        </div>
                     </div>
+                    <div className="Size-Input-Container">
+                        <p className='Size-Label'>Shoe Sizes:</p>
+                        <p className="Waist-Size-Label">Min:</p>
+                        <input type="text" className="Shoe-Size-Input" placeholder={shoeSizeRange[0]} onChange={(e) => updateShoeSizeRange(e, 0)}/>
+                        <p className="Waist-Size-Label">Max:</p>
+                        <input type="text" className="Shoe-Size-Input" placeholder={shoeSizeRange[1]} onChange={(e) => updateShoeSizeRange(e, 1)} />
+                        <p className="Shoe-Size-Label"><span className="Shoe-Size-Range-Emph">{"["}</span>{shoeSizeRange[0]}<span className="Shoe-Size-Range-Emph">{","}</span>{shoeSizeRange[1]}<span className="Shoe-Size-Range-Emph">{"]"}</span></p>
+                    </div>
+
                 </div>
                 <div className="Brand-Container">
                     <p>Brand:</p>
@@ -207,4 +302,4 @@ export const Generator = () => {
             </div>
         </div>
     )
-}
+    }

@@ -15,7 +15,7 @@ client = MongoClient(connectionString)
 db = client['test']
 print('Connected to database')
 # Connect to Collections
-collections = ['topmens', 'topwomens', 'bottommens', 'bottomwomens', 'shoemens', 'shoewomens']
+collections = ['shoemens', 'topwomens', 'topmens', 'bottomwomens', 'bottommens', 'shoewomens']
 
 cd = ClothingDescriber()
 
