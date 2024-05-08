@@ -14,7 +14,7 @@
   border: 2px ridge #5D0B98;
   border-radius: 10px;
   background-color: #E3C5FC;
-  width: 70%;
+  width: 80%;
 }
 .Generator-Settings-Header{
   display: inline-flex;
@@ -38,7 +38,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 26px;
+  gap: max(30px, 2vw);
   margin-top: 6px;
   margin-bottom: 16px;
   border: 1px ridge #5D0B98;
@@ -66,6 +66,10 @@
   margin-top: 4px;
 }
 .Size-Container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: max(24vw, 400px);
   max-width: max(24vw, 400px);
 }
@@ -76,11 +80,12 @@
   align-items: center;
   gap: max(1vw, 10px);
   border-bottom: 2px ridge #5D0B98;
+  padding: 0px 4vw 0px 4vw;
   width: max(24vw, 400px);
   max-width: max(24vw, 400px);
 }
 
-.Size-Label{
+.Size-Label, .Waist-Size-Label, .Shoe-Size-Label{
   display: inline-block;
   margin: 10px 20px 10px 10px;
   width: min(60px, 10vw);
@@ -88,7 +93,17 @@
   font-weight: bold;
   font-size: 14pt;
 }
-
+.Waist-Size-Label{
+  margin-right: 6px;
+  font-size: 12pt;
+}
+.Shoe-Size-Label{
+  font-size: 22pt;
+  text-shadow: #F5E7FF 2px 2px 1px;
+}
+.Shoe-Size-Range-Emph{
+  color:#5D0B98;
+}
 .Size-Button, .Size-Button-Small{
   display: inline-block;
   transition: background-color 0.3s, color 0.3s, border-radius, text-shadow 0.3s, border-width 0.3s;
@@ -141,10 +156,56 @@
   -1px 1px 0 #F5E7FF,
   1px 1px 0 #F5E7FF;
 }
+.Waist-Container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 12px;
+  border: 1px ridge #5D0B98;
+  border-radius: 10px;
+  background-color: #F5E7FF;
+  padding: 0px 10px 0px 0px;
+  width: max(24vw, 400px);
+  max-width: max(24vw, 400px);
+
+}
 .Size-Button-Small-Selected{
   padding: 6px 6px 6px 6px;
 }
 
+.Waist-Size-Up, .Waist-Size-Down{
+  border: none;
+  background-color: #F5E7FF;
+  padding: 0px;
+}
+
+.Waist-Size-Up-Icon, .Waist-Size-Down-Icon{
+  cursor: pointer;
+  margin: 0px;
+  width: max(1vw, 20px);
+}
+
+.Waist-Size-Up-Icon{
+  rotate: 180deg;
+}
+.Waist-Size-Display{
+  display: inline-block;
+  margin: 0px 10px 0px 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 16pt;
+  text-shadow: #E3C5FC 2px 2px 0px;
+}
+
+.Shoe-Size-Input{
+  box-shadow: #5D0B98 1px 1px 2px;
+  padding: 2px 4px 2px 2px;
+  width: max(3vw, 50px);
+}
 .Outfit{
     display: flex;
     flex-direction: row;
