@@ -286,7 +286,7 @@ export const Generator = () => {
 
                 </div>
                 <div className="Brand-Container">
-                    <p>Brand:</p>
+                    <p className="Size-Label">Brand:</p>
                 </div>
             </div>
             <div className="Display">

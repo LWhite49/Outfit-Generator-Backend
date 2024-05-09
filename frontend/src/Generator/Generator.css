@@ -73,7 +73,7 @@
   width: max(24vw, 400px);
   max-width: max(24vw, 400px);
 }
-.Size-Input-Container{
+.Size-Input-Container, .Brand-Container{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -83,6 +83,10 @@
   padding: 0px 4vw 0px 4vw;
   width: max(24vw, 400px);
   max-width: max(24vw, 400px);
+}
+.Brand-Container{
+  border-bottom: none;
+
 }
 
 .Size-Label, .Waist-Size-Label, .Shoe-Size-Label{
