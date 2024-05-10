@@ -2,6 +2,7 @@ import './Generator.css'
 import { useContext, useState } from 'react';
 import { FeedContext } from '../App';
 import Switch from 'react-switch';
+import { Keywords } from '../Keywords/Keywords.js';
 import maleIcon from '../images/maleIcon.svg';
 import femaleIcon from '../images/femaleIcon.svg';
 import waistSizeIncrementIcon from '../images/waistIncrementIcon.svg';
@@ -9,7 +10,7 @@ import waistSizeMax from '../images/waistMaxIcon.svg';
 
 export const Generator = () => {
     // Source elements from provider
-    const { outfitFeed, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, brand} = useContext(FeedContext);
+    const { outfitFeed, setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -287,6 +288,7 @@ export const Generator = () => {
                 </div>
                 <div className="Brand-Container">
                     <p className="Size-Label">Brand:</p>
+                    <Keywords/>
                 </div>
             </div>
             <div className="Display">

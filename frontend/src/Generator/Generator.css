@@ -85,6 +85,7 @@
   max-width: max(24vw, 400px);
 }
 .Brand-Container{
+  margin-bottom: max(2vh, 60px);
   border-bottom: none;
 
 }
@@ -207,8 +208,13 @@
 
 .Shoe-Size-Input{
   box-shadow: #5D0B98 1px 1px 2px;
+  background-color: #f6ecfe;
   padding: 2px 4px 2px 2px;
   width: max(3vw, 50px);
+}
+.Shoe-Size-Input:focus{
+  outline: none;
+  box-shadow: 1px 1px 1px 2px #5D0B98;
 }
 .Outfit{
     display: flex;
