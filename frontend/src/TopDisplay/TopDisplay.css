@@ -1,0 +1,40 @@
+.TopDislay{ 
+    display: flex;
+    position:relative;
+    flex-direction: row;
+    border-bottom: 1px solid #e9ecef;
+    padding: 0 20px;
+    max-width: 300px;
+    height: 300px;
+    max-height: 300px;
+}
+.TopBackgroundImg{
+    display: inline-block;
+    z-index: 1;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.ColorPalletWrap{
+    position: relative;
+    top: 296px;
+
+}
+.ColorPallet{
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    z-index: 10;
+    width: 30px;
+    height: 300px;
+
+}
+.ColorDisplay{
+    margin: 0px;
+    border-top: black 1px solid;
+    border-right: black 1px solid;
+    border-bottom: black 1px solid;
+    padding: 0px;
+    min-width: 12px;
+    min-height: 75px;
+}

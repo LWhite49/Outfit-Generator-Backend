@@ -79,7 +79,6 @@ const generateOutfitFeed = async (req, res) => {
     };
 
     // Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
-    let wasRandom = false;
     if (palletTops.length < palletSize) {
         palletTops = palletTops.concat(await collections[0].aggregate([{$sample: {size: palletSize - palletTops.length}, match: {productSize: {$in : sizeData.topSizes}}}]));
         palletTops = palletTops.concat(await collections[0].aggregate([{$sample: {size: palletSize - palletTops.length}}]));

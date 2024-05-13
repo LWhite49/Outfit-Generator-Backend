@@ -7,10 +7,13 @@ import maleIcon from '../images/maleIcon.svg';
 import femaleIcon from '../images/femaleIcon.svg';
 import waistSizeIncrementIcon from '../images/waistIncrementIcon.svg';
 import waistSizeMax from '../images/waistMaxIcon.svg';
+import { TopDisplay } from '../TopDisplay/TopDisplay.js'; 
+import { BottomDisplay } from '../BottomDisplay/BottomDisplay.js';
+import { ShoeDisplay } from '../ShoeDisplay/ShoeDisplay.js';
 
 export const Generator = () => {
     // Source elements from provider
-    const { outfitFeed, setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size } = useContext(FeedContext);
+    const { outfitFeed, setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -227,6 +230,8 @@ export const Generator = () => {
         setSize({...size, shoeSizes: shoeSizeArr});
     }
 
+    // Define a state for the feed context which will be referenced by the feed components
+
     return (
         <div className="Generator">
             <div className="Generator-Settings">
@@ -294,9 +299,9 @@ export const Generator = () => {
                 {outfitFeed.pallet.map((outfit, index) => {
                     return (
                     <div key={index} className="Outfit">
-                        <img src={outfit.top.productImg} alt="Top" className="TopDisplay" />
-                        <img src={outfit.bottom.productImg} alt="Bottom" className="BottomDisplay"/>
-                        <img src={outfit.shoes.productImg} alt="Shoes" className='ShoeDisplay'/>
+                        <TopDisplay topItem={outfit.top}/>
+                        <BottomDisplay bottomItem={outfit.bottom}/>
+                        <ShoeDisplay shoeItem={outfit.shoes}/>
                     </div>
                     )
                 })}
