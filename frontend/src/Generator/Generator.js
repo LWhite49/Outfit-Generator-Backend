@@ -292,7 +292,7 @@ export const Generator = () => {
                 </div>
             </div>
             <div className="Display">
-                {outfitFeed.map((outfit, index) => {
+                {outfitFeed.pallet.map((outfit, index) => {
                     return (
                     <div key={index} className="Outfit">
                         <img src={outfit.top.productImg} alt="Top" className="TopDisplay" />
