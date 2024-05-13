@@ -284,7 +284,6 @@ export const Generator = () => {
                         <input type="text" className="Shoe-Size-Input" placeholder={shoeSizeRange[1]} onChange={(e) => updateShoeSizeRange(e, 1)} />
                         <p className="Shoe-Size-Label"><span className="Shoe-Size-Range-Emph">{"["}</span>{shoeSizeRange[0]}<span className="Shoe-Size-Range-Emph">{","}</span>{shoeSizeRange[1]}<span className="Shoe-Size-Range-Emph">{"]"}</span></p>
                     </div>
-
                 </div>
                 <div className="Brand-Container">
                     <p className="Size-Label">Brand:</p>

@@ -216,6 +216,22 @@
   outline: none;
   box-shadow: 1px 1px 1px 2px #5D0B98;
 }
+.Random-Warning-Visible, .Random-Warning-Invisible{
+  margin-top: 10px;
+  margin-bottom: 14px;
+  color: red;
+  font-weight: bold;
+  font-size: 12pt;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  text-align: center;
+}
+.Random-Warning-Invisible{
+  visibility: hidden;
+  opacity: 0px;
+  max-width: 0px;
+  max-height: 0px;
+}
+
 .Outfit{
     display: flex;
     flex-direction: row;

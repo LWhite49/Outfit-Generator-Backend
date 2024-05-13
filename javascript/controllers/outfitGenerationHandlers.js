@@ -75,25 +75,24 @@ const generateOutfitFeed = async (req, res) => {
     // Define returnOutfits object to be populated with the pallet, the wasRandom flag, and the outfitIndices
     let returnOutfits = {
         pallet: [],
-        wasRandom: false,
         outfitIndices: []
     };
 
-    // Populate any pallets with less than palletSize items with random items from the collection
+    // Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
     let wasRandom = false;
     if (palletTops.length < palletSize) {
-        (palletSize - palletTops.length > palletSize / 6) ? wasRandom = true : wasRandom = wasRandom;
+        palletTops = palletTops.concat(await collections[0].aggregate([{$sample: {size: palletSize - palletTops.length}, match: {productSize: {$in : sizeData.topSizes}}}]));
         palletTops = palletTops.concat(await collections[0].aggregate([{$sample: {size: palletSize - palletTops.length}}]));
         
     }
 
     if (palletBottoms.length < palletSize) {
-        (palletSize - palletTops.length > palletSize / 6) ? wasRandom = true : wasRandom = wasRandom;
+        palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}, match: {productSize: {$in : sizeData.bottomSizes}}}]));
         palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}}]));
     }
 
     if (palletShoes.length < palletSize) {
-        (palletSize - palletTops.length > palletSize / 6) ? wasRandom = true : wasRandom = wasRandom;
+        palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}, match: {productSize: {$in : sizeData.shoeSizes}}}]));
         palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}}]));
     }
 
@@ -108,7 +107,7 @@ const generateOutfitFeed = async (req, res) => {
 
     // Send returnOutfits
     res.status(201).json(returnOutfits);
-    
+
     /* Psuedocode for the creation of outfits
         Note that this process will not create a new returnObject, only add objects of INDICES to the returnOutfits.outfitIndices array
 

@@ -21,7 +21,7 @@ const client = new QueryClient();
 
 function App() {
 
-  // Create a state for the outfitFeed array
+  // Create a state for the outfitFeed array as well as a bool telling if the feed is randomly generated
   const [outfitFeed, setOutfitFeed] = useState([]);
 
   // Create a state for size, brand, and genders
@@ -47,7 +47,6 @@ function App() {
 
       // Set the outfitFeed state
       setOutfitFeed(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
