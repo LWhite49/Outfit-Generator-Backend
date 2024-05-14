@@ -6,7 +6,7 @@ export const TopDisplay = (props) => {
 
     return (
         <div className="TopDisplay">
-            <div className="ColorPallet">
+            <div className="Color-Pallet">
                 <div className="ColorDisplay" style={{backgroundColor: (topItem.productColors.length > 0 ? `#${topItem.productColors[0][2]}` : "red") }}></div>
                 <div className="ColorDisplay" style={{backgroundColor: (topItem.productColors.length > 1 ? `#${topItem.productColors[1][2]}` : "orange") }}></div>
                 <div className="ColorDisplay" style={{backgroundColor: (topItem.productColors.length > 2 ? `#${topItem.productColors[2][2]}` : "yellow") }}></div>

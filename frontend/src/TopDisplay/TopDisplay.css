@@ -4,23 +4,26 @@
     justify-content: flex-start;
     align-items: center;
     gap: 0px;
+    margin: calc( var(--componentHeight) / 20) 0px calc( var(--componentHeight) / 20) 0px;
     max-height: var(--componentHeight);
 }
-.ColorPallet{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
+.Color-Pallet{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 0px;
     margin: 0px;
     padding: 0px;
-    max-width: 20px;
+    max-width: 25px;
+    height: var(--componentHeight);
     max-height: var(--componentHeight);
 }
 .ColorDisplay{
-    width: 20px;
-    height: calc( var(--componentHeight) / 4);
-    min-height: calc( var(--componentHeight) / 4);
+    display: flex;
+    margin: 0px;
+    border: none;
+    padding: 0px;
+    width: 25px;
+    height: calc( (var(--componentHeight) / 4) - 2px);
 }
 .TopImage{
     width: var(--componentHeight);
