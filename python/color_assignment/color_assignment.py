@@ -5,6 +5,10 @@ import time
 import sys
 from clothing_describer import ClothingDescriber
 
+# get command line arguments
+target_collection = sys.argv[1] # the collection to be targeted by this run
+num_entries = int(sys.argv[2]) # how many entries to populate
+
 # Initialize ENV
 load_dotenv()
 
@@ -16,38 +20,36 @@ client = MongoClient(connectionString)
 db = client['test']
 print('Connected to database')
 # Connect to Collections
-collections = ['shoemens', 'topwomens', 'topmens', 'bottomwomens', 'bottommens', 'shoewomens']
+collections = ['topwomens', 'topmens', 'bottomwomens', 'bottommens', 'shoewomens', 'shoemens']
 
 cd = ClothingDescriber()
 
-def populate_collection(c_name):
-    c = db[c_name]
-    # access all item in the collection which do not have the color array
-    all_c = c.find({'productColors': []})
-    print('Connected to collection', c_name)
-    
-    counter = 0
-    t0 = time.time()
-    for item in all_c:
-        # source image and item id
-        img_url = item['productImg']
-        id = item['_id']
+c = db[target_collection]
 
-        # get color array
-        colors = cd.get_colors(img_url)
+# access all item in the collection which do not have the color array
+all_c = c.find({'productColors': []})
+print('Connected to collection', target_collection)
 
-        if colors == -1:
-            c.delete_one({'_id': id})
+counter = 0
+t0 = time.time()
+for item in all_c:
+    # source image and item id
+    img_url = item['productImg']
+    id = item['_id']
 
-        # add color array to listing
-        c.update_one({'_id': id}, {'$set': {'productColors': colors}})
+    # get color array
+    colors = cd.get_colors(img_url)
 
-        counter += 1
-        
-    print('Updated', counter, c_name, 'items in', time.time()-t0, 'seconds')
+    if colors == -1:
+        c.delete_one({'_id': id})
 
+    # add color array to listing
+    c.update_one({'_id': id}, {'$set': {'productColors': colors}})
 
-for c in collections:
-    populate_collection(c)
+    counter += 1
+
+    if counter == num_entries:
+        print('Updated', counter, target_collection, 'items in', time.time()-t0, 'seconds')
+        break
 
 client.close()
