@@ -6,7 +6,8 @@
   "scripts": {
     "scrape": "node depopScraper.js",
     "serve": "node server.js",
-    "connect": "node connectMongoose.js"
+    "connect": "node connectMongoose.js",
+    "clear": "node clearCollections.js"
   },
   "author": "",
   "license": "ISC",
