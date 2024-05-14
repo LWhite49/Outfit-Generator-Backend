@@ -5,14 +5,14 @@ import cv2 as cv
 import numpy as np
 import urllib.request
 import rembg
-from sklearn.cluster import KMeans
+from sklearn.cluster import AgglomerativeClustering
 from color_model import ColorPredictor
 from grouping.conversions import hex_to_rgb
 from grouping.n_groups import n_groups
 from grouping.cluster_access import get_hex
 
 n_groups = n_groups()
-IM_HEIGHT, IM_WIDTH = 200, 200
+IM_HEIGHT, IM_WIDTH = 100, 100
 
 class ClothingDescriber():
     def __init__(self):
@@ -102,8 +102,8 @@ class ClothingDescriber():
 
         # if there are more than 4 colors, compress down to four
         if len(prevalent) >= 4:
-            km = KMeans(4)
-            labels = km.fit_predict([hex_to_rgb(c[2]) for c in prevalent])
+            cl = AgglomerativeClustering(n_clusters=4)
+            labels = cl.fit_predict([hex_to_rgb(c[2]) for c in prevalent])
             
             compressed = []
             found = []
