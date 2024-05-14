@@ -217,3 +217,18 @@
   box-shadow: 1px 1px 1px 2px #5D0B98;
 }
 
+.Outfit-Display{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+}
+.Outfit-Feed-Display{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 10px;
+}

@@ -163,6 +163,11 @@ const scrapeCollectionListings = async (page, collectionObj, elementTargetor) =>
             tempProductSize = tempProductSize?.replace(' ',"");
             listing.productSize = tempProductSize;
             
+            // If the prodcut size is still longer than 6 characters, skip the listing
+            if (listing.productSize?.length > 4) {
+                invalid += 1;
+                continue;
+            }
             // Add listing to DB
             await collectionObj.create(listing);
         }

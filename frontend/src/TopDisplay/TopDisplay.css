@@ -6,7 +6,7 @@
     align-items: center;
     gap: 0px;
     z-index: 10;
-    margin: calc( var(--componentHeight) / 20) 0px calc( var(--componentHeight) / 20) 0px;
+    margin: calc( var(--componentHeight) / 25) 0px calc( var(--componentHeight) / 25) 0px;
     border: black solid 3px;
     border-radius: 10px;
     max-height: var(--componentHeight);
@@ -46,7 +46,7 @@
     width: var(--componentHeight);
     height: var(var(--componentHeight));
 }
-/* Position this contianer by moving down a twenth of the component height, and left a tenth of container height */
+/* Position this contianer by moving down a twenth of the component height, and left an eigth of container height */
 .Top-Display-Size-Container{
     display: inline-block;
     position: absolute;

@@ -297,13 +297,13 @@ export const Generator = () => {
                     <Keywords/>
                 </div>
             </div>
-            <div className="Display">
+            <div className="Outfit-Feed-Display">
                 {outfitFeed.pallet.map((outfit, index) => {
                     return (
-                    <div key={index} className="Outfit">
+                    <div key={index} className="Outfit-Display">
                         <TopDisplay topItem={outfit.top}/>
-                        {/* <BottomDisplay bottomItem={outfit.bottom}/>
-                        <ShoeDisplay shoeItem={outfit.shoes}/> */}
+                        <BottomDisplay bottomItem={outfit.bottom}/>
+                        <ShoeDisplay shoeItem={outfit.shoes}/>
                     </div>
                     )
                 })}
