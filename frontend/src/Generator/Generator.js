@@ -212,13 +212,15 @@ export const Generator = () => {
 
     // Define a function that updates the shoe size range, where a passed 0 means the min size is updated and 1 means the max size is updated
     const updateShoeSizeRange = (event, bool) => {
+        const input = Number(event.target.value);
+        if (isNaN(input)) { return; }
         if (bool === 0) {
-                let calcMin = Math.max(6, Number(event.target.value));
+                let calcMin = Math.max(6, input);
                 calcMin = Math.min(calcMin, shoeSizeRange[1] -.5);
                 setShoeSizeRange([calcMin, shoeSizeRange[1]]);
         }
         else {
-            let calcMax = Math.min(15, Number(event.target.value));
+            let calcMax = Math.min(15, input);
             calcMax = Math.max(calcMax, shoeSizeRange[0] + .5);
             setShoeSizeRange([shoeSizeRange[0], calcMax]);
         }
@@ -300,8 +302,8 @@ export const Generator = () => {
                     return (
                     <div key={index} className="Outfit">
                         <TopDisplay topItem={outfit.top}/>
-                        <BottomDisplay bottomItem={outfit.bottom}/>
-                        <ShoeDisplay shoeItem={outfit.shoes}/>
+                        {/* <BottomDisplay bottomItem={outfit.bottom}/>
+                        <ShoeDisplay shoeItem={outfit.shoes}/> */}
                     </div>
                     )
                 })}

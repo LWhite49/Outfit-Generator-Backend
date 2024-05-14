@@ -79,20 +79,34 @@ const generateOutfitFeed = async (req, res) => {
     };
 
     // Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
-    if (palletTops.length < palletSize) {
-        palletTops = palletTops.concat(await collections[0].aggregate([{$sample: {size: palletSize - palletTops.length}, match: {productSize: {$in : sizeData.topSizes}}}]));
-        palletTops = palletTops.concat(await collections[0].aggregate([{$sample: {size: palletSize - palletTops.length}}]));
-        
-    }
+    try {
+        if (palletTops.length < palletSize) {
+            palletTops = palletTops.concat(await collections[0].aggregate([
+                { $sample: {size: palletSize - palletTops.length}}, 
+                { $match: {productSize: {$in : sizeData.topSizes}}}
+            ]));
+            palletTops = palletTops.concat(await collections[0].aggregate([{ $sample: {size: palletSize - palletTops.length} }]));
+            
+        }
 
-    if (palletBottoms.length < palletSize) {
-        palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}, match: {productSize: {$in : sizeData.bottomSizes}}}]));
-        palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}}]));
-    }
+        if (palletBottoms.length < palletSize) {
+            palletBottoms = palletBottoms.concat(await collections[1].aggregate([
+                { $sample: {size: palletSize - palletBottoms.length} },
+                { $match: {productSize: {$in : sizeData.bottomSizes}}}
+            ]));
+            palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}}]));
+        }
 
-    if (palletShoes.length < palletSize) {
-        palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}, match: {productSize: {$in : sizeData.shoeSizes}}}]));
-        palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}}]));
+        if (palletShoes.length < palletSize) {
+            palletShoes = palletShoes.concat(await collections[2].aggregate([
+                { $sample: {size: palletSize - palletShoes.length} },
+                { $match: {productSize: {$in : sizeData.shoeSizes}}}
+            ]));
+            palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}}]));
+        }
+    } catch (err) {
+        console.log(err, `Error in populating pallets with random items`);
+        res.status(401).json({err: `${err}`});
     }
 
     // Populate returnOutfits.pallet with the pallet items
