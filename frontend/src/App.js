@@ -21,7 +21,7 @@ const client = new QueryClient();
 
 function App() {
 
-  // Create a state for the outfitFeed array
+  // Create a state for the outfitFeed array as well as a bool telling if the feed is randomly generated
   const [outfitFeed, setOutfitFeed] = useState([]);
 
   // Create a state for size, brand, and genders
@@ -31,6 +31,9 @@ function App() {
   const [bottomGender, setBottomGender] = useState("male");
   const [shoeGender, setShoeGender] = useState("male");
 
+  // Create a state for the current index displayed by feed
+  const { feedStatus, setFeedStatus } = useState({feedLength: 30, currOutfit: 0 });
+  
   // Create a state for current subpage used for conditional rendering of navbar
   const [subPage, setSubPage] = useState("/home");
 
@@ -47,13 +50,12 @@ function App() {
 
       // Set the outfitFeed state
       setOutfitFeed(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
   }
   updateFeed(size, brand, topGender, bottomGender, shoeGender);
-  }, [size, brand, topGender, bottomGender, shoeGender]);
+  }, [size, brand, topGender, bottomGender, shoeGender, feedStatus, setFeedStatus]);
 
 
   return (outfitFeed.length !== 0) ? (

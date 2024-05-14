@@ -2,14 +2,18 @@ import './Generator.css'
 import { useContext, useState } from 'react';
 import { FeedContext } from '../App';
 import Switch from 'react-switch';
+import { Keywords } from '../Keywords/Keywords.js';
 import maleIcon from '../images/maleIcon.svg';
 import femaleIcon from '../images/femaleIcon.svg';
 import waistSizeIncrementIcon from '../images/waistIncrementIcon.svg';
 import waistSizeMax from '../images/waistMaxIcon.svg';
+import { TopDisplay } from '../TopDisplay/TopDisplay.js'; 
+import { BottomDisplay } from '../BottomDisplay/BottomDisplay.js';
+import { ShoeDisplay } from '../ShoeDisplay/ShoeDisplay.js';
 
 export const Generator = () => {
     // Source elements from provider
-    const { outfitFeed, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, brand} = useContext(FeedContext);
+    const { outfitFeed, setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -208,13 +212,15 @@ export const Generator = () => {
 
     // Define a function that updates the shoe size range, where a passed 0 means the min size is updated and 1 means the max size is updated
     const updateShoeSizeRange = (event, bool) => {
+        const input = Number(event.target.value);
+        if (isNaN(input)) { return; }
         if (bool === 0) {
-                let calcMin = Math.max(6, Number(event.target.value));
+                let calcMin = Math.max(6, input);
                 calcMin = Math.min(calcMin, shoeSizeRange[1] -.5);
                 setShoeSizeRange([calcMin, shoeSizeRange[1]]);
         }
         else {
-            let calcMax = Math.min(15, Number(event.target.value));
+            let calcMax = Math.min(15, input);
             calcMax = Math.max(calcMax, shoeSizeRange[0] + .5);
             setShoeSizeRange([shoeSizeRange[0], calcMax]);
         }
@@ -225,6 +231,8 @@ export const Generator = () => {
         }
         setSize({...size, shoeSizes: shoeSizeArr});
     }
+
+    // Define a state for the feed context which will be referenced by the feed components
 
     return (
         <div className="Generator">
@@ -283,19 +291,19 @@ export const Generator = () => {
                         <input type="text" className="Shoe-Size-Input" placeholder={shoeSizeRange[1]} onChange={(e) => updateShoeSizeRange(e, 1)} />
                         <p className="Shoe-Size-Label"><span className="Shoe-Size-Range-Emph">{"["}</span>{shoeSizeRange[0]}<span className="Shoe-Size-Range-Emph">{","}</span>{shoeSizeRange[1]}<span className="Shoe-Size-Range-Emph">{"]"}</span></p>
                     </div>
-
                 </div>
                 <div className="Brand-Container">
-                    <p>Brand:</p>
+                    <p className="Size-Label">Brand:</p>
+                    <Keywords/>
                 </div>
             </div>
-            <div className="Display">
-                {outfitFeed.map((outfit, index) => {
+            <div className="Outfit-Feed-Display">
+                {outfitFeed.pallet.map((outfit, index) => {
                     return (
-                    <div key={index} className="Outfit">
-                        <img src={outfit.top.productImg} alt="Top" className="TopDisplay" />
-                        <img src={outfit.bottom.productImg} alt="Bottom" className="BottomDisplay"/>
-                        <img src={outfit.shoes.productImg} alt="Shoes" className='ShoeDisplay'/>
+                    <div key={index} className="Outfit-Display">
+                        <TopDisplay topItem={outfit.top}/>
+                        <BottomDisplay bottomItem={outfit.bottom}/>
+                        <ShoeDisplay shoeItem={outfit.shoes}/>
                     </div>
                     )
                 })}

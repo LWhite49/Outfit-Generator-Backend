@@ -1,0 +1,74 @@
+.TopDisplay{
+    --componentHeight: 300px;
+    display: flex;
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0px;
+    z-index: 10;
+    margin: calc( var(--componentHeight) / 25) 0px calc( var(--componentHeight) / 25) 0px;
+    border: black solid 3px;
+    border-radius: 10px;
+    max-height: var(--componentHeight);
+}
+.Color-Pallet{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 0px;
+    z-index: 11;
+    margin: 0px;
+    padding: 0px;
+    max-width: 25px;
+    height: var(--componentHeight);
+    max-height: var(--componentHeight);
+}
+.Color-Display{
+    display: flex;
+    cursor: pointer;
+    margin: 0px;
+    border: none;
+    padding: 0px;
+    width: 25px;
+    height: calc( (var(--componentHeight) / 4));
+}
+
+.Color-Display-First{
+    cursor: pointer;
+    border-top-left-radius: 6px;
+}
+.Color-Display-Last{
+    cursor: pointer;
+    border-bottom-left-radius: 6px;
+}
+
+.TopImage{
+    cursor: pointer;
+    width: var(--componentHeight);
+    height: var(var(--componentHeight));
+}
+/* Position this contianer by moving down a twenth of the component height, and left an eigth of container height */
+.Top-Display-Size-Container{
+    display: inline-block;
+    position: absolute;
+    top: calc((var(--componentHeight) / 20));
+    left: calc(var(--componentHeight) / 8);
+    z-index: 101;
+    border: black solid 2px;
+    border-radius: 14px;
+    background-color: #5D0B98;
+    padding: 0px;
+    padding-bottom: calc(var(--componentHeight) / 100);
+    width: calc( var(--componentHeight) / 8);
+    max-width: calc( var(--componentHeight) / 8);
+    height: calc(var(--componentHeight) / 12);
+    max-height: calc(var(--componentHeight / 12));
+}
+.Top-Display-Size-Text{
+    display: inline-block;
+    cursor: default;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 14pt;
+}
