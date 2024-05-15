@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # each row will have the four labels and the percentage of the image they take up for the two images compared, as well as the score given by the user
     training_data = pd.DataFrame(columns=['Img1_Label1', 'Img1_Area%1', 'Img1_Label2', 'Img1_Area%2', 'Img1_Label3', 'Img1_Area%3', 'Img1_Label4', 'Img1_Area%4', \
                                         'Img2_Label1', 'Img2_Area%1', 'Img2_Label2', 'Img2_Area%2', 'Img2_Label3', 'Img2_Area%3', 'Img2_Label4', 'Img2_Area%4', \
-                                        ''])
+                                        'Img1_Neutrality','Img2_Neutrality','Similarity','Complementariness','User_Score'])
 
     stop_flag = False
     while not stop_flag:
@@ -122,6 +122,7 @@ if __name__ == "__main__":
         button_stop = Button(ax_button_stop, 'Stop')
         button_stop.on_clicked(on_stop_click)
 
+        # calculate outfit comparison criteria
         complementariness, similarity, neutrality1, neutrality2 = outfit_comparison(colors1, colors2)
 
         print('Palette 1 neutrality: ', neutrality1)
@@ -135,8 +136,10 @@ if __name__ == "__main__":
         if stop_flag:
             break
         
-        # df_row.append(aesthetic_score)
-        # training_data = pd.concat([pd.DataFrame([df_row], columns=training_data.columns), training_data], ignore_index=1)
+        # add outfit comparison details to the dataframe
+        df_row.append(neutrality1, neutrality2, similarity, complementariness, user_score)
+        training_data = pd.concat([pd.DataFrame([df_row], columns=training_data.columns), training_data], ignore_index=1)
     
+    # add new training data to the csv
     training_data.to_csv('training_data.csv', mode='a', index=False, header=False)
     client.close()
