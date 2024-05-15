@@ -77,35 +77,25 @@ export const Generator = () => {
         if (bool) {
             if (waistSize === "---") { 
                 setWaistSize(32);
-                setBottomSizeButtonState({
-                    all: false,
-                    XS: false,
-                    S: false,
-                    M: false,
-                    L: false,
-                    XL: false,
-                    XXL: false
-                }); 
+                setSize({...size, bottomSizes: [String(32)]}); 
             }
-            else { setWaistSize(Math.min(waistSize + 2, 44)); }
+            else { 
+                setWaistSize(Math.min(waistSize + 2, 44));
+                setSize({...size, bottomSizes: [String(Math.min(waistSize + 2, 44))]});
+            }
         }
         else {
             if (waistSize === "---") { 
                 setWaistSize(32);
-                setBottomSizeButtonState({
-                    all: false,
-                    XS: false,
-                    S: false,
-                    M: false,
-                    L: false,
-                    XL: false,
-                    XXL: false
-                });
+                setSize({...size, bottomSizes: [String(32)]});
              }
-            else { setWaistSize(Math.max(waistSize - 2, 28)); } 
+            else { 
+                setWaistSize(Math.max(waistSize - 2, 28));
+                setSize({...size, bottomSizes: [String(Math.max(waistSize - 2, 28))]}); 
+            }
         }
         
-        if (waistSize !== "---") {
+        if (!isNaN(waistSize)) {
             setBottomSizeButtonState({
                 all: false,
                 XS: false,
@@ -115,7 +105,6 @@ export const Generator = () => {
                 XL: false,
                 XXL: false
             });
-            setSize({...size, bottomSizes: [String(waistSize)]});
         }
     }
     // Define a function that toggles the top size button state 
