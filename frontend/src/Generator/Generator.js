@@ -284,7 +284,7 @@ export const Generator = () => {
                     <Keywords/>
                 </div>
             </div>
-            <OutfitFeedDisplay displayCount={3}/>
+            <OutfitFeedDisplay displayCount={4}/>
         </div>
     )
     }

@@ -30,11 +30,14 @@ export const OutfitFeedDisplay = (props) => {
     // Create a function that increments the feed index
     const incrementFeed = () => {
         setFeedStatus({feedLength: feedStatus.feedLength, currIndex: feedStatus.currIndex + 1});
-        if (feedStatus.currIndex + 4 >= feedStatus.feedLength) { expandFeed(); }
+        if (feedStatus.currIndex + displayCount + 5 >= feedStatus.feedLength) {expandFeed();}
     }
 
     // Create a function that decrements the feed index
-    const decrementFeed = () => { setFeedStatus({feedLength: feedStatus.feedLength, currIndex: feedStatus.currIndex - 1}); }
+    const decrementFeed = () => {
+        if (feedStatus.currIndex === 0) { return; } 
+        setFeedStatus({feedLength: feedStatus.feedLength, currIndex: feedStatus.currIndex - 1});
+     }
 
     return (
         <div className="Outfit-Feed-Display">
@@ -64,7 +67,7 @@ export const OutfitFeedDisplay = (props) => {
                 <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + 3].shoes} />
             </div>}
             <button className="Outfit-Feed-Button" onClick={incrementFeed}>
-                <img className="Outfit-Feed-Button-Right" src={(feedStatus.currIndex + displayCount >= feedStatus.feedLength) ? feedButtonMax : feedButton} alt={"+"}/>
+                <img className="Outfit-Feed-Button-Right" src={(feedStatus.currIndex + displayCount > feedStatus.feedLength - 1) ? feedButtonMax : feedButton} alt={"+"}/>
             </button>
             
             
