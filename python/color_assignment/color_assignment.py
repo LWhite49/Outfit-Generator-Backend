@@ -5,10 +5,6 @@ import time
 import sys
 from clothing_describer import ClothingDescriber
 
-# get command line arguments
-target_collection = sys.argv[1] # the collection to be targeted by this run
-num_entries = int(sys.argv[2]) # how many entries to populate
-
 # Initialize ENV
 load_dotenv()
 
@@ -24,32 +20,48 @@ collections = ['topwomens', 'topmens', 'bottomwomens', 'bottommens', 'shoewomens
 
 cd = ClothingDescriber()
 
-c = db[target_collection]
+def populate_collection(target_collection):
+    c = db[target_collection]
 
-# access all item in the collection which do not have the color array
-all_c = c.find({'productColors': []})
-print('Connected to collection', target_collection)
+    # access all item in the collection which do not have the color array
+    all_c = c.find({'productColors': []})
+    
+    # exit if there aren't any to be updated
+    if len(list(all_c.clone())) == 0:
+        print('No unpopulated items in this collection.')
+        return
 
-counter = 0
-t0 = time.time()
-for item in all_c:
-    # source image and item id
-    img_url = item['productImg']
-    id = item['_id']
+    print('Connected to collection', target_collection)
 
-    # get color array
-    colors = cd.get_colors(img_url)
+    counter = 0
+    t0 = time.time()
+    # iterate through items
+    for item in all_c:
+        # source image and item id
+        img_url = item['productImg']
+        id = item['_id']
 
-    if colors == -1:
-        c.delete_one({'_id': id})
+        # get color array
+        colors = cd.get_colors(img_url)
 
-    # add color array to listing
-    c.update_one({'_id': id}, {'$set': {'productColors': colors}})
+        if colors == -1:
+            c.delete_one({'_id': id})
 
-    counter += 1
+        # add color array to listing
+        c.update_one({'_id': id}, {'$set': {'productColors': colors}})
 
-    if counter == num_entries:
-        print('Updated', counter, target_collection, 'items in', time.time()-t0, 'seconds')
-        break
+        counter += 1
+
+        if len(sys.argv) > 1 and counter == int(sys.argv[-1]): # allow setting a break number in the command line
+            break
+
+    print('Updated', counter, target_collection, 'items in', time.time()-t0, 'seconds')
+
+if len(sys.argv) > 1:
+    for name in sys.argv[1:-1]:
+        populate_collection(name)
+else:
+    for name in collections:
+        populate_collection(name)
 
 client.close()
