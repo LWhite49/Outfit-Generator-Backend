@@ -116,10 +116,10 @@ class ClothingDescriber():
         
         # update pixel count to be a percentage instead
         total_px = 0
-        for c in prevalent:
+        for c in compressed:
             total_px += c[1]
         
-        for c in prevalent:
+        for c in compressed:
             c[1] /= total_px
 
         # return just groups

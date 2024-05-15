@@ -19,8 +19,8 @@ const generateOutfitFeed = async (req, res) => {
     const brandData = JSON.parse(req.query.brand);
 
     // Specify length of pallets and number of outfits
-    const palletSize = 20;
-    const outfitCount = 20;
+    const palletSize = 60;
+    const outfitCount = 30;
 
     // Parse gender queries to determine which collections to use
     let collections = [];
@@ -110,7 +110,7 @@ const generateOutfitFeed = async (req, res) => {
     }
 
     // Populate returnOutfits.pallet with the pallet items
-    for (let i = 0; i < palletSize; i++) {
+    for (let i = 0; i < 30; i++) {
         returnOutfits.pallet.push({
             top: palletTops[i],
             bottom: palletBottoms[i],
@@ -120,6 +120,44 @@ const generateOutfitFeed = async (req, res) => {
 
     // Send returnOutfits
     res.status(201).json(returnOutfits);
+
+    outfit_maker_count = 20;
+    // grab copies of the items in the clothing pallet to ensure that we grab unique clothes
+    let topsCopy = [...returnOutfits.pallet.map(item => item.top)];
+    let bottomCopy = [...returnOutfits.pallet.map(item => item.bottom)];
+    let shoesCopy = [...returnOutfits.pallet.map(item => item.shoes)];
+    // store index values of the items in the pallet
+    const tempIndexObj = {top: 0, bottom: 0, shoes: 0};
+
+
+    while (returnOutfits.outfitIndices.length < outfitCount) {
+
+      for (let i = 0; i < outfit_maker_count; i++) { 
+        //
+        randomIndexTop = Math.floor(Math.random() * palletSize);
+        // Get the top at the random index
+        const randomTop = topsCopy[randomIndexTop];
+        // Remove the selected top from the array
+        topsCopy = topsCopy.filter((item, index) => index !== randomIndexTop);
+        // Go through 6 bottoms
+        for (let j = 0; j < 6; j++) {
+          randomIndexBottom = Math.floor(Math.random() * palletSize);
+          const randomBottom = bottomCopy[randomIndexBottom];
+          
+          for (let k = 0; k < 6; k++) {
+            randomIndexShoes = Math.floor(Math.random() * palletSize);
+            const randomShoes = shoesCopy[randomIndexShoes];
+            shoesCopy = shoesCopy.filter((item, index) => index !== randomIndexShoes);
+            const colorScore = colorMatch(randomTop.productColor, randomBottom.productColor, randomShoes.productColor);
+            if (colorScore > 0.5) {
+              returnOutfits.outfitIndices.push({top: randomIndexTop, bottom: randomIndexBottom, shoes: randomIndexShoes});
+            }
+          }
+        }
+
+
+
+
 
     
 
