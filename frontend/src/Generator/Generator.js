@@ -7,13 +7,11 @@ import maleIcon from '../images/maleIcon.svg';
 import femaleIcon from '../images/femaleIcon.svg';
 import waistSizeIncrementIcon from '../images/waistIncrementIcon.svg';
 import waistSizeMax from '../images/waistMaxIcon.svg';
-import { TopDisplay } from '../TopDisplay/TopDisplay.js'; 
-import { BottomDisplay } from '../BottomDisplay/BottomDisplay.js';
-import { ShoeDisplay } from '../ShoeDisplay/ShoeDisplay.js';
+import { OutfitFeedDisplay } from '../OutfitFeedDisplay/OutfitFeedDisplay.js';
 
 export const Generator = () => {
     // Source elements from provider
-    const { outfitFeed, setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
+    const { setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -297,17 +295,7 @@ export const Generator = () => {
                     <Keywords/>
                 </div>
             </div>
-            <div className="Outfit-Feed-Display">
-                {outfitFeed.pallet.map((outfit, index) => {
-                    return (
-                    <div key={index} className="Outfit-Display">
-                        <TopDisplay topItem={outfit.top}/>
-                        <BottomDisplay bottomItem={outfit.bottom}/>
-                        <ShoeDisplay shoeItem={outfit.shoes}/>
-                    </div>
-                    )
-                })}
-            </div>
+            <OutfitFeedDisplay displayCount={3}/>
         </div>
     )
     }

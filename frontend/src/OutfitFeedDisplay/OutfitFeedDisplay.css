@@ -1,0 +1,20 @@
+.Outfit-Feed-Display{
+    display: flex;
+    flex-direction: row;
+    gap: 36px;
+    margin-top: max(5vh, 60px);
+}
+.Outfit-Feed-Item{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+}
+.Outfit-Feed-Button-Left, .Outfit-Feed-Button-Right{
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}

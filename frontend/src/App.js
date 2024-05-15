@@ -30,9 +30,6 @@ function App() {
   const [topGender, setTopGender] = useState("male");
   const [bottomGender, setBottomGender] = useState("male");
   const [shoeGender, setShoeGender] = useState("male");
-
-  // Create a state for the current index displayed by feed
-  const { feedStatus, setFeedStatus } = useState({feedLength: 30, currOutfit: 0 });
   
   // Create a state for current subpage used for conditional rendering of navbar
   const [subPage, setSubPage] = useState("/home");
@@ -55,7 +52,7 @@ function App() {
     }
   }
   updateFeed(size, brand, topGender, bottomGender, shoeGender);
-  }, [size, brand, topGender, bottomGender, shoeGender, feedStatus, setFeedStatus]);
+  }, [size, brand, topGender, bottomGender, shoeGender]);
 
 
   return (outfitFeed.length !== 0) ? (

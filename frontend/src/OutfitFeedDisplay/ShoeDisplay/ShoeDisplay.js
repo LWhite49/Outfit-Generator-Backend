@@ -2,7 +2,7 @@ import './ShoeDisplay.css';
 // One individual itemDisplay Component will display that item by accepting an index state and a feed state
 export const ShoeDisplay = (props) => {
     // Source the top item to display
-    const shoeItem = props.shoeItem;
+    const shoeItem = props.item;
 
     return (
         <div className="ShoeDisplay">
