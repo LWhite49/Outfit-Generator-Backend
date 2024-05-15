@@ -57,7 +57,7 @@ def populate_collection(target_collection):
 
     print('Updated', counter, target_collection, 'items in', time.time()-t0, 'seconds')
 
-if len(sys.argv) > 1:
+if len(sys.argv) > 2:
     for name in sys.argv[1:-1]:
         populate_collection(name)
 else:
