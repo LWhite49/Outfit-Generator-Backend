@@ -7,13 +7,11 @@ import maleIcon from '../images/maleIcon.svg';
 import femaleIcon from '../images/femaleIcon.svg';
 import waistSizeIncrementIcon from '../images/waistIncrementIcon.svg';
 import waistSizeMax from '../images/waistMaxIcon.svg';
-import { TopDisplay } from '../TopDisplay/TopDisplay.js'; 
-import { BottomDisplay } from '../BottomDisplay/BottomDisplay.js';
-import { ShoeDisplay } from '../ShoeDisplay/ShoeDisplay.js';
+import { OutfitFeedDisplay } from '../OutfitFeedDisplay/OutfitFeedDisplay.js';
 
 export const Generator = () => {
     // Source elements from provider
-    const { outfitFeed, setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
+    const { setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -79,35 +77,25 @@ export const Generator = () => {
         if (bool) {
             if (waistSize === "---") { 
                 setWaistSize(32);
-                setBottomSizeButtonState({
-                    all: false,
-                    XS: false,
-                    S: false,
-                    M: false,
-                    L: false,
-                    XL: false,
-                    XXL: false
-                }); 
+                setSize({...size, bottomSizes: [String(32)]}); 
             }
-            else { setWaistSize(Math.min(waistSize + 2, 44)); }
+            else { 
+                setWaistSize(Math.min(waistSize + 2, 44));
+                setSize({...size, bottomSizes: [String(Math.min(waistSize + 2, 44))]});
+            }
         }
         else {
             if (waistSize === "---") { 
                 setWaistSize(32);
-                setBottomSizeButtonState({
-                    all: false,
-                    XS: false,
-                    S: false,
-                    M: false,
-                    L: false,
-                    XL: false,
-                    XXL: false
-                });
+                setSize({...size, bottomSizes: [String(32)]});
              }
-            else { setWaistSize(Math.max(waistSize - 2, 28)); } 
+            else { 
+                setWaistSize(Math.max(waistSize - 2, 28));
+                setSize({...size, bottomSizes: [String(Math.max(waistSize - 2, 28))]}); 
+            }
         }
         
-        if (waistSize !== "---") {
+        if (!isNaN(waistSize)) {
             setBottomSizeButtonState({
                 all: false,
                 XS: false,
@@ -117,7 +105,6 @@ export const Generator = () => {
                 XL: false,
                 XXL: false
             });
-            setSize({...size, bottomSizes: [String(waistSize)]});
         }
     }
     // Define a function that toggles the top size button state 
@@ -297,17 +284,7 @@ export const Generator = () => {
                     <Keywords/>
                 </div>
             </div>
-            <div className="Outfit-Feed-Display">
-                {outfitFeed.pallet.map((outfit, index) => {
-                    return (
-                    <div key={index} className="Outfit-Display">
-                        <TopDisplay topItem={outfit.top}/>
-                        <BottomDisplay bottomItem={outfit.bottom}/>
-                        <ShoeDisplay shoeItem={outfit.shoes}/>
-                    </div>
-                    )
-                })}
-            </div>
+            <OutfitFeedDisplay displayCount={3}/>
         </div>
     )
     }

@@ -2,7 +2,7 @@ import './BottomDisplay.css';
 // One individual itemDisplay Component will display that item by accepting an index state and a feed state
 export const BottomDisplay = (props) => {
     // Source the top item to display
-    const bottomItem = props.bottomItem;
+    const bottomItem = props.item;
 
     return (
         <div className="BottomDisplay">

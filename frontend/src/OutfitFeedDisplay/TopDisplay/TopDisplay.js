@@ -2,7 +2,7 @@ import './TopDisplay.css';
 // One individual itemDisplay Component will display that item by accepting an index state and a feed state
 export const TopDisplay = (props) => {
     // Source the top item to display
-    const topItem = props.topItem;
+    const topItem = props.item;
 
     return (
         <div className="TopDisplay">

@@ -19,8 +19,8 @@ const generateOutfitFeed = async (req, res) => {
     const brandData = JSON.parse(req.query.brand);
 
     // Specify length of pallets and number of outfits
-    const palletSize = 60;
-    const outfitCount = 30;
+    const palletSize = 20;
+    const outfitCount = 20;
 
     // Parse gender queries to determine which collections to use
     let collections = [];
@@ -110,7 +110,7 @@ const generateOutfitFeed = async (req, res) => {
     }
 
     // Populate returnOutfits.pallet with the pallet items
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < palletSize; i++) {
         returnOutfits.pallet.push({
             top: palletTops[i],
             bottom: palletBottoms[i],
