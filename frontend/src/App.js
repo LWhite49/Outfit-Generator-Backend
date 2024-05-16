@@ -24,6 +24,9 @@ function App() {
   // Create a state for the outfitFeed array as well as a bool telling if the feed is randomly generated
   const [outfitFeed, setOutfitFeed] = useState([]);
 
+  // Create state for feed status, used for conditional rendering and feed expansion
+  const [feedStatus, setFeedStatus] = useState({feedLength: 20, currIndex: 0, expanded: false});
+
   // Create a state for size, brand, and genders
   const [size, setSize] = useState({topSizes: [], bottomSizes: [], shoeSizes: []});
   const [brand, setBrand] = useState([]);
@@ -54,11 +57,24 @@ function App() {
   updateFeed(size, brand, topGender, bottomGender, shoeGender);
   }, [size, brand, topGender, bottomGender, shoeGender]);
 
+  // Define function that extends the feed by 20 outfits
+  const expandFeed = async () => {
+    try {
+      let url = `http://localhost:3500/generateOutfitFeed?size=${JSON.stringify(size)}&brand=${JSON.stringify(brand)}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
+      let res = await axios.get(url);
+      setOutfitFeed((prev) => ({
+        ...prev,
+        pallet: prev.pallet.concat(res.data.pallet)
+      }));
+    } catch (err) {
+      console.log(err, "Error expanding feed");
+    }
+  }
 
   return (outfitFeed.length !== 0) ? (
     <QueryClientProvider client={client}>
       <Router>
-        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, images, setSubPage, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, brand, size}}>
+        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, expandFeed, feedStatus, setFeedStatus, images, setSubPage, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, brand, size}}>
           <div className="App">
             <div className="Navbar-Container">
               <div className="Navbar">

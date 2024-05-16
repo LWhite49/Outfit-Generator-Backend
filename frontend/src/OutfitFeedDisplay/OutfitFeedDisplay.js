@@ -1,5 +1,5 @@
 import "./OutfitFeedDisplay.css"
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { FeedContext } from '../App';
 import { TopDisplay } from './TopDisplay/TopDisplay';
 import { BottomDisplay } from './BottomDisplay/BottomDisplay';
@@ -8,29 +8,23 @@ import feedButtonMax from '../images/waistMaxIcon.svg';
 import feedButton from '../images/waistIncrementIcon.svg';
 export const OutfitFeedDisplay = (props) => {
     // Source feed from provider
-    const { outfitFeed, setOutfitFeed } = useContext(FeedContext);
+    const { outfitFeed, expandFeed, feedStatus, setFeedStatus, size, brand, topGender, bottomGender, shoeGender } = useContext(FeedContext);
 
     // Define variable for feedDisplayCount
     let displayCount = props.displayCount || 3;
 
-    // Create state for feed status, used for conditional rendering and feed expansion
-    const [feedStatus, setFeedStatus] = useState({feedLength: 20, currIndex: 0});
-
     // Create useEffect that sets sets the feedStatus to its default value each time outfitFeed is updated
     useEffect(() => {
         setFeedStatus({feedLength: 20, currIndex: 0});
-    }, [outfitFeed]);
-
-    // Create a function that expands the feed by 20 outfits
-    const expandFeed = () => {
-        setFeedStatus({feedLength: feedStatus.feedLength + 20, currIndex: feedStatus.currIndex});
-        // setOutfitFeed(outfitFeed.concat());
-    }
+    }, [size, brand, topGender, bottomGender, shoeGender, setFeedStatus]);
 
     // Create a function that increments the feed index
     const incrementFeed = () => {
         setFeedStatus({feedLength: feedStatus.feedLength, currIndex: feedStatus.currIndex + 1});
-        if (feedStatus.currIndex + displayCount + 5 >= feedStatus.feedLength) {expandFeed();}
+        if (feedStatus.currIndex + displayCount + 5 >= feedStatus.feedLength) {
+            setFeedStatus({feedLength: feedStatus.feedLength + 20, currIndex: feedStatus.currIndex + 1, expanded: true});
+            expandFeed();
+        }
     }
 
     // Create a function that decrements the feed index
@@ -68,6 +62,7 @@ export const OutfitFeedDisplay = (props) => {
             </div>}
             <button className="Outfit-Feed-Button" onClick={incrementFeed}>
                 <img className="Outfit-Feed-Button-Right" src={(feedStatus.currIndex + displayCount > feedStatus.feedLength - 1) ? feedButtonMax : feedButton} alt={"+"}/>
+                <p>{feedStatus.currIndex} + {feedStatus.feedLength}</p>
             </button>
             
             
