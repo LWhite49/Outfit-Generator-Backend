@@ -20,28 +20,9 @@ def cluster_colors() -> None:
     colors.rename(columns={'Hex (24 bit)':'Hex', 'Red (8 bit)': 'Red', 'Green (8 bit)': 'Green', 'Blue (8 bit)':'Blue'}, inplace=True)
     X = ['Red', 'Green', 'Blue']
 
-    # scaling values to [0, 1]
-    # scaler = MinMaxScaler()
-    # colors[X] = scaler.fit_transform(colors[X])
-    
-    # sse = {}
-    # for k in range(12, 200):
-    #     kmeans = KMeans(n_clusters=k, max_iter=1000, random_state=255, n_init='auto', tol=1e-6).fit(data)
-    #     data["clusters"] = kmeans.labels_
-    #     #print(data["clusters"])
-    #     sse[k] = kmeans.inertia_ # Inertia: Sum of distances of samples to their closest cluster center
-    # plt.figure()
-    # plt.plot(list(sse.keys()), list(sse.values()))
-    # plt.xlabel("Number of cluster")
-    # plt.ylabel("SSE")
-    # plt.show()
-
     # clustering colors and saving the labels into the dataframe
     kmeans = KMeans(n_clusters=n_groups(), random_state=255, n_init='auto', tol=1e-6)
     colors['Label'] = kmeans.fit_predict(colors[X])
-
-    # unscaler = MinMaxScaler((0, 255))
-    # colors[X] = unscaler.fit_transform(colors[X])
 
     # save dataframe to a new file
     colors.to_csv('color_names_clustered.csv')
@@ -51,10 +32,6 @@ def cluster_colors() -> None:
     # save centers to a new dataframe with the label as the index
     clusters = pd.DataFrame({'Label': range(n_groups()), 'Red': centers[:,0], 'Green': centers[:,1], 'Blue': centers[:,2]})
     clusters.set_index('Label', inplace=True)
-
-    # bring center values back to 0-255 range
-    # unscaler = MinMaxScaler((0, 255))
-    # clusters[X] = unscaler.fit_transform(clusters[X])
 
     # add hex value to the dataframe
     clusters['Hex'] = clusters.apply(lambda x: rgb_to_hex(x['Red'], x['Green'], x['Blue']), axis='columns')

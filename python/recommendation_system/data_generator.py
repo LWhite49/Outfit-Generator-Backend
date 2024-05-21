@@ -43,6 +43,8 @@ client = MongoClient(connectionString)
 db = client['test']
 collections = ['topmens', 'topwomens', 'bottommens', 'bottomwomens', 'shoemens', 'shoewomens']
 
+# used to control the loop
+
 def random_item():
     '''Returns the color array of a random item selected from the database.'''
     c = db[choice(collections)] # select a random collection
@@ -55,6 +57,7 @@ def random_item():
         colors = random_item['productColors']
         return colors
     else:
+        print('No items available with color array.')
         return None
         
 if __name__ == "__main__":
@@ -64,9 +67,8 @@ if __name__ == "__main__":
     training_data = pd.DataFrame(columns=['Img1_Label1', 'Img1_Area%1', 'Img1_Label2', 'Img1_Area%2', 'Img1_Label3', 'Img1_Area%3', 'Img1_Label4', 'Img1_Area%4', \
                                         'Img2_Label1', 'Img2_Area%1', 'Img2_Label2', 'Img2_Area%2', 'Img2_Label3', 'Img2_Area%3', 'Img2_Label4', 'Img2_Area%4', \
                                         'Img1_Neutrality','Img2_Neutrality','Similarity','Complementariness','User_Score'])
-
     stop_flag = False
-    while not stop_flag:
+    while not stop_flag and random_item():
         # get random colors
         colors1 = random_item()
         while not colors1 or len(colors1) < 4:
