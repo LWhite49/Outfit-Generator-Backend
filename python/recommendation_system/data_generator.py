@@ -129,7 +129,6 @@ if __name__ == "__main__":
         print('Palette 2 neutrality: ', neutrality2)
         print('Complementariness: ', complementariness)
         print('Similarity: ', similarity)
-        print('User Score:', user_score)
 
         plt.show()
 
@@ -137,7 +136,7 @@ if __name__ == "__main__":
             break
         
         # add outfit comparison details to the dataframe
-        df_row.append(neutrality1, neutrality2, similarity, complementariness, user_score)
+        df_row.extend([neutrality1, neutrality2, similarity, complementariness, user_score])
         training_data = pd.concat([pd.DataFrame([df_row], columns=training_data.columns), training_data], ignore_index=1)
     
     # add new training data to the csv

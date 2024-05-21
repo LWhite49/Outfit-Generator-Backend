@@ -14,6 +14,7 @@ def complementariness(color1: str, color2: str)->float:
     
     # compute absolute difference in Hue
     hue_diff = abs(h1 - h2)
+    print(hue_diff)
     # score will be the hue difference normalized by 180 degrees, because perfectly complementary colors 
     complementariness = hue_diff / 180.0
     return round(complementariness, 1)
@@ -63,7 +64,6 @@ def outfit_comparison(palette1: list[list[int, float, str], list[int, float, str
     return complementary_score, similarity_score, neutrality_score1, neutrality_score2
 
 if __name__ == "__main__":
-    print(neutrality('#708b8c'))
     # print(complementariness('#287280', '#803528'))
-    # print(complementariness('#3DADC2', '#C2523D'))
+    print(complementariness('#3DADC2', '#C2523D'))
     # print(complementariness('#ffffff', '#ffffff'))

@@ -12,7 +12,7 @@ from grouping.n_groups import n_groups
 from grouping.cluster_access import get_hex
 
 n_groups = n_groups()
-IM_HEIGHT, IM_WIDTH = 100, 100
+IM_HEIGHT, IM_WIDTH = 150, 150
 
 class ClothingDescriber():
     def __init__(self):
@@ -65,40 +65,6 @@ class ClothingDescriber():
         # order groups by pixel count, only noting colors that take up more than 1%
         # list will contain label, pixel count, hex value
         prevalent = sorted([[i,x,get_hex(i)] for i, x in enumerate(votes) if x > img.size // 500], key=lambda x: x[1], reverse=True)
-        # prevalent = [x[1] for x in prevalent]
-
-        # # compress colors, taking only the dominant group for very similar colors
-        # compressed = []
-        # count, most_dom = 0, 0
-        # for i in range(1,len(prevalent)):
-        #     # get hex values of index and previous labels
-        #     h0 = get_hex(prevalent[i-1])
-        #     h1 = get_hex(prevalent[i])
-        #     # convert to rgb tuples
-        #     c0 = (int(h0[:2], 16), int(h0[2:4], 16), int(h0[4:], 16))
-        #     c1 = (int(h1[:2], 16), int(h1[2:4], 16), int(h1[4:], 16))
-            
-        #     # calculate cosine similarity between the two colors
-        #     cos_sim = np.dot(c0, c1)/(np.linalg.norm(c0) * np.linalg.norm(c1))
-        #     dist = np.linalg.norm(np.array(c0)-np.array(c1))
-        #     # if cosine similarity is greater than 0.99 and the points are close together then proceed to the next index
-        #     if cos_sim > 0.98 and dist < 100:
-        #         count += 1
-        #     else:
-        #         # otherwise add the most dominant shade in this group to the compressed list and reset the counter
-        #         compressed.append([prevalent[most_dom], 0, get_hex(prevalent[most_dom])])
-        #         count = 0
-        #         most_dom = i
-        
-        # update middle value of return array to include pixel counts
-        # px = 0
-        # for color in compressed:
-        #     color[1] = votes[color[0]]
-        #     px += color[1] # keep track of pixel count
-        
-        # # middle value will be percentage of pixels
-        # for color in compressed:
-        #     color[1] /= px
 
         # if there are more than 4 colors, compress down to four
         if len(prevalent) >= 4:

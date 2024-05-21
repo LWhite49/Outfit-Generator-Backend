@@ -743,9 +743,9 @@ Middle Green,#4D8C57,77,140,87,130,29,43
 Middle Green Yellow,#ACBF60,172,191,96,72,43,56
 Middle Purple,#D982B5,217,130,181,325,53,68
 Middle Red,#E58E73,229,144,115,15,69,68
-Middle Red Purple,#A55353,0,83,83,165,100,16
+Middle Red Purple,#A55353,165,83,83,0,50,49
 Middle Yellow,#FFEB00,255,235,0,55,100,50
-Middle Yellow Red,#ECB176,166,58,121,236,48,44
+Middle Yellow Red,#ECB176,236,177,118,30,76,69
 Midnight,#702670,112,38,112,300,49,29
 Midnight blue,#191970,25,25,112,240,64,27
 Midnight green (eagle green),#004953,0,73,83,187,100,16
@@ -857,7 +857,7 @@ Pale taupe,#BC987E,188,152,126,25,32,62
 Pale turquoise,#AFEEEE,175,238,238,180,65,81
 Pale violet,#CC99FF,204,153,255,270,100,80
 Pale violet-red,#DB7093,219,112,147,340,60,65
-Palm Leaf,#6F9940,130,142,132,88,5,53
+Palm Leaf,#6F9940,111,153,64,88,58,43
 Pansy purple,#78184A,120,24,74,329,67,28
 Paolo Veronese green,#009B7D,0,155,125,168,100,30
 Papaya whip,#FFEFD5,255,239,213,37,100,92

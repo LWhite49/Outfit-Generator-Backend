@@ -2,6 +2,11 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 
+from sklearn import metrics
+from scipy.spatial.distance import cdist
+import numpy as np
+import matplotlib.pyplot as plt
+
 from n_groups import n_groups
 from conversions import rgb_to_hex
 
@@ -18,6 +23,18 @@ def cluster_colors() -> None:
     # scaling values to [0, 1]
     # scaler = MinMaxScaler()
     # colors[X] = scaler.fit_transform(colors[X])
+    
+    # sse = {}
+    # for k in range(12, 200):
+    #     kmeans = KMeans(n_clusters=k, max_iter=1000, random_state=255, n_init='auto', tol=1e-6).fit(data)
+    #     data["clusters"] = kmeans.labels_
+    #     #print(data["clusters"])
+    #     sse[k] = kmeans.inertia_ # Inertia: Sum of distances of samples to their closest cluster center
+    # plt.figure()
+    # plt.plot(list(sse.keys()), list(sse.values()))
+    # plt.xlabel("Number of cluster")
+    # plt.ylabel("SSE")
+    # plt.show()
 
     # clustering colors and saving the labels into the dataframe
     kmeans = KMeans(n_clusters=n_groups(), random_state=255, n_init='auto', tol=1e-6)
@@ -46,3 +63,4 @@ def cluster_colors() -> None:
 
 if __name__ == '__main__':
     cluster_colors()
+    print('Groups created!')
