@@ -43,6 +43,8 @@
 
 .ShoeImage{
     cursor: pointer;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     width: var(--componentHeight);
     height: var(var(--componentHeight));
 }

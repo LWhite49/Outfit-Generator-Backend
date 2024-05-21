@@ -11,7 +11,7 @@ import { OutfitFeedDisplay } from '../OutfitFeedDisplay/OutfitFeedDisplay.js';
 
 export const Generator = () => {
     // Source elements from provider
-    const { setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, feedStatus, setFeedStatus } = useContext(FeedContext);
+    const { setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -284,7 +284,7 @@ export const Generator = () => {
                     <Keywords/>
                 </div>
             </div>
-            <OutfitFeedDisplay displayCount={3}/>
+            <OutfitFeedDisplay displayCount={4}/>
         </div>
     )
     }
