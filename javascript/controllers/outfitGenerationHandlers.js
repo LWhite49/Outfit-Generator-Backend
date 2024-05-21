@@ -39,22 +39,22 @@ const generateOutfitFeed = async (req, res) => {
     let shoeOptions = [ {$sample: {size: palletSize}} ];
 
     // Conditionally apply match specifications to each collection
-    if (sizeData.topSizes.length > 0 || brandData.length > 0) {
-        let match = {};
+    if (true) {
+        let match = {$expr: {$gt: [{$size: "$productColors"}, 0]}};
         if (sizeData.topSizes.length > 0) { match.productSize = { $in: sizeData.topSizes }; }
         if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
         topOptions.unshift({$match: match});
     }
 
-    if (sizeData.bottomSizes.length > 0 || brandData.length > 0) {
-        let match = {};
+    if (true) {
+        let match = {$expr: {$gt: [{$size: "$productColors"}, 0]}};
         if (sizeData.bottomSizes.length > 0) { match.productSize = { $in: sizeData.bottomSizes }; }
         if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
         bottomOptions.unshift({$match: match});
     }
 
-    if (sizeData.shoeSizes.length > 0 || brandData.length > 0) {
-        let match = {};
+    if (true) {
+        let match = {$expr: {$gt: [{$size: "$productColors"}, 0]}};
         if (sizeData.shoeSizes.length > 0) { match.productSize = { $in: sizeData.shoeSizes }; }
         if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
         shoeOptions.unshift({$match: match});
@@ -83,7 +83,7 @@ const generateOutfitFeed = async (req, res) => {
         if (palletTops.length < palletSize) {
             palletTops = palletTops.concat(await collections[0].aggregate([
                 { $sample: {size: palletSize - palletTops.length}}, 
-                { $match: {productSize: {$in : sizeData.topSizes}}}
+                { $match: {productSize: {$in : sizeData.bottomSizes}, $expr: {$gt: [{$size: "$productColors"}, 0]}}}
             ]));
             palletTops = palletTops.concat(await collections[0].aggregate([{ $sample: {size: palletSize - palletTops.length} }]));
             
@@ -92,7 +92,7 @@ const generateOutfitFeed = async (req, res) => {
         if (palletBottoms.length < palletSize) {
             palletBottoms = palletBottoms.concat(await collections[1].aggregate([
                 { $sample: {size: palletSize - palletBottoms.length} },
-                { $match: {productSize: {$in : sizeData.bottomSizes}}}
+                { $match: {productSize: {$in : sizeData.bottomSizes}, $expr: {$gt: [{$size: "$productColors"}, 0]}}}
             ]));
             palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}}]));
         }
@@ -100,7 +100,7 @@ const generateOutfitFeed = async (req, res) => {
         if (palletShoes.length < palletSize) {
             palletShoes = palletShoes.concat(await collections[2].aggregate([
                 { $sample: {size: palletSize - palletShoes.length} },
-                { $match: {productSize: {$in : sizeData.shoeSizes}}}
+                { $match: {productSize: {$in : sizeData.bottomSizes}, $expr: {$gt: [{$size: "$productColors"}, 0]}}}
             ]));
             palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}}]));
         }
