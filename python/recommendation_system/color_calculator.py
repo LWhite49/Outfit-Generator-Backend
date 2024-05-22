@@ -4,8 +4,18 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
+import numpy as np
+from colormath.color_objects import XYZColor, sRGBColor, LabColor
+from colormath.color_conversions import convert_color
+from colormath.color_diff import delta_e_cie2000
+
+# code to fix an problem with colormath that hasn't been updated
+def patch_asscalar(a):
+    return a.item()
+setattr(np, 'asscalar', patch_asscalar)
+
 from hsv import *
-from color_assignment.grouping.conversions import hex_to_rgb
+from color_assignment.conversions import hex_to_rgb
 
 def complementariness(color1: str, color2: str)->float:
     '''Return a value from 0-1 indicating how complementary two colors are.'''
@@ -24,14 +34,25 @@ def complementariness(color1: str, color2: str)->float:
     return round(complementariness, 1)
 
 def similarity(color1: str, color2: str)->float:
-    '''Return a value indicating how similar two colors are, from 0 (indicating perfectly complementary colors) to 1 (indicating identical colors).'''
-    return 1 - complementariness(color1, color2)
+    '''Return a value indicating how similar two colors are from 0 to 1 (indicating identical colors).'''
+    rgb_list1 = np.array(hex_to_rgb(color1)) / 255
+    rgb_list2 = np.array(hex_to_rgb(color2)) / 255
+    rgb1 = sRGBColor(rgb_list1[0], rgb_list1[1], rgb_list1[2])
+    rgb2 = sRGBColor(rgb_list2[0], rgb_list2[1], rgb_list2[2])
+
+    lab1 = convert_color(convert_color(rgb1, XYZColor), LabColor)
+    lab2 = convert_color(convert_color(rgb2, XYZColor), LabColor)
+
+    dist = delta_e_cie2000(lab1, lab2)
+
+    return 1 - (dist / 100)
+    # https://stackoverflow.com/questions/35113979/calculate-distance-between-colors-in-hsv-space
 
 def neutrality(color: str)->float:
     '''Returns the inverse of saturation, indicating how neutral a color is.'''
     return 1 - (saturation(color) / 100)
 
-def outfit_comparison(palette1: list[list[int, float, str], list[int, float, str], list[int, float, str], list[int, float, str]], palette2: list[list[int, float, str], list[int, float, str], list[int, float, str], list[int, float, str]])->list[float, float, float, float]:
+def outfit_comparison(palette1: list[list[str, float], list[str, float], list[str, float], list[str, float]], palette2: list[list[str, float], list[str, float], list[str, float], list[str, float]])->list[float, float, float, float]:
     '''Takes in the color arrays from two database items (which are formatted as [color label, pixel percentage, hex value]) and produce scores for their relative complementariness, similarity, and neutrality, in that order.'''
     complementary_score = 0
     similarity_score = 0
@@ -39,14 +60,14 @@ def outfit_comparison(palette1: list[list[int, float, str], list[int, float, str
     neutrality_score2 = 0
 
     for subset1 in palette1:
-        hex1 = subset1[2]  # Get the hex value from the first array
+        hex1 = subset1[0]  # Get the hex value from the first array
         area1 = subset1[1] # get the pixel percentage of this color
         ratio = 10 * area1 # because we are scoring based on 10, we partition the maximum score of 10 based on the color percentage
 
         neutrality_score1 += neutrality(hex1) * ratio
 
         for subset2 in palette2:
-            hex2 = subset2[2]  # Get the hex value from the second array
+            hex2 = subset2[0]  # Get the hex value from the second array
             area2 = subset2[1] # get the pixel percentage of this color
 
             # Calculate the complementariness score, based on the relative percentages which the two colors take up
@@ -60,7 +81,7 @@ def outfit_comparison(palette1: list[list[int, float, str], list[int, float, str
 
     # calculate neutrality score of outfit 2
     for subset2 in palette2:
-        hex2 = subset2[2] 
+        hex2 = subset2[0] 
         area2 = subset2[1]
         ratio = 10 * area2
         neutrality_score2 += neutrality(hex2) * ratio
@@ -68,6 +89,7 @@ def outfit_comparison(palette1: list[list[int, float, str], list[int, float, str
     return complementary_score, similarity_score, neutrality_score1, neutrality_score2
 
 if __name__ == "__main__":
-    # print(complementariness('#287280', '#803528'))
-    print(complementariness('#9740bf', '#bf4240'))
-    # print(complementariness('#ffffff', '#ffffff'))
+    # print(similarity('#287280', '#286e80'))
+    print(similarity('#ff0000', '#00ff00'))
+    # print(similarity('#aaaaaa', '#ffffff'))
+    # print(complementariness('#9740bf', '#bf4240'))

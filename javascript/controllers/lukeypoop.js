@@ -150,28 +150,78 @@ const generateOutfitFeed = async (req, res) => {
 
         // Remove the selected top from the array
         outfitPallets[randomOutfitPalletOne] = outfitPallets[randomOutfitPalletOne].filter((item, index) => index !== randomIndexFirst);
+
         // Go through 6 of the next set of clothing
         let randomSetsPair = [];
+
+        // grabs the index for the next set
+        randomOutfitPalletIndex =  randomOutfitPalletIndex === 2 ? 0 :  randomOutfitPalletIndex + 1;
+
+        // select the amount of clothing to compare with the first set
+        let selectionCountTwo = 6;
+
         // grab 6 random indices from the second set of clothing
-        for (let j = 0; j < 6; j++) {
-        let randomIndex = Math.floor(Math.random() * tempPalletSize);
+        for (let j = 0; j < selectionCountTwo; j++) {
+        let randomIndexSecond = Math.floor(Math.random() * PalletSizeTwo);
         // ensure that the random index is unique
-        while (randomSetsPair.includes(randomIndex)) {
-            randomIndex = Math.floor(Math.random() * tempPalletSize);
+        while (randomSetsPair.includes(randomIndexSecond)) {
+            // grab a second random index if the first one is already in the array
+            randomIndexSecond = Math.floor(Math.random() * tempPalletSizeTwo);
         }
+        // grab the second clothing option at the random index
+        const randomSecond = outfitPallets[randomOutfitPallet][randomIndexSecond];
         // add the random index to the array
-        randomSetsPair.push(randomIndex);
+        randomSetsPair.push(randomSecond);
         }
+
         /* add compare function that will return two matches of the best second set of clothing
         to the first clothing */
-        // i.e.  let bestMatches = compare(randomFirst, randomSetsPair)
+        // i.e.  let list bestMatches = compare(randomFirst, randomSetsPair)
 
-          // grab a random index from the second set of clothing
-          randomIndexSecond = Math.floor(Math.random() * tempPalletSize);
 
-          // grabs the index for the next set
-          randomOutfitPalletIndex =  randomOutfitPalletIndex === 2 ? 0 :  randomOutfitPalletIndex + 1;
-          
+        // grabs the index for the next set
+        randomOutfitPalletIndex =  randomOutfitPalletIndex === 2 ? 0 :  randomOutfitPalletIndex + 1;
+
+        // Go through 6 of the next set of clothing
+        let randomSetsPairTwo = [];
+
+        // choose the amount of clothing to compare with the first two sets
+        let selectionCountThree = 6;
+        for (let j = 0; j < selectionCountThree; j++) {
+            let randomIndexThird = Math.floor(Math.random() * PalletSizeTwo);
+            // ensure that the random index is unique
+            while (randomSetsPairTwo.includes(randomIndexThird)) {
+                randomIndexThird = Math.floor(Math.random() * PalletSizeTwo);
+            }
+            // add the random index to the array
+            const randomThird = outfitPallets[randomOutfitPalletIndex][randomIndexThird];
+            randomSetsPairTwo.push(randomIndexThird);
+            }
+        
+
+
+        // create the permutation of the three sets of clothing aquired [1 x 2 x 6]
+     
+
+        // Calculate the score for each item
+        let scoredItems = bestMatches.map(item => {
+            let score = Math.min(...randomSetsPairTwo.map(baseItem => score(baseItem, item)));
+            return {item, score};
+        });
+
+        // Sort the items by score
+        scoredItems.sort((a, b) => b.score - a.score);
+
+        // The best matches are now at the start of the array
+        let bestMatches = scoredItems.slice(0, n);
+
+
+        
+        
+
+
+
+    
         //   for (let k = 0; k < 6; k++) {
         //     randomIndexShoes = Math.floor(Math.random() * palletSize);
         //     const randomShoes = shoesCopy[randomIndexShoes];

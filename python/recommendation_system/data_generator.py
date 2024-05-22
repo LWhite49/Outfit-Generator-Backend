@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Button, Slider
 import pandas as pd
 import numpy as np
-from color_assignment.grouping.conversions import hex_to_rgb
+from color_assignment.conversions import hex_to_rgb
 from color_calculator import outfit_comparison
 
 def on_stop_click(event):
@@ -43,7 +43,6 @@ client = MongoClient(connectionString)
 db = client['test']
 collections = ['topmens', 'topwomens', 'bottommens', 'bottomwomens', 'shoemens', 'shoewomens']
 
-# used to control the loop
 
 def random_item():
     '''Returns the color array of a random item selected from the database.'''
@@ -60,13 +59,16 @@ def random_item():
         print('No items available with color array.')
         return None
         
+
 if __name__ == "__main__":
 
     # create an empty dataframe that will hold data results
-    # each row will have the four labels and the percentage of the image they take up for the two images compared, as well as the score given by the user
-    training_data = pd.DataFrame(columns=['Img1_Label1', 'Img1_Area%1', 'Img1_Label2', 'Img1_Area%2', 'Img1_Label3', 'Img1_Area%3', 'Img1_Label4', 'Img1_Area%4', \
-                                        'Img2_Label1', 'Img2_Area%1', 'Img2_Label2', 'Img2_Area%2', 'Img2_Label3', 'Img2_Area%3', 'Img2_Label4', 'Img2_Area%4', \
-                                        'Img1_Neutrality','Img2_Neutrality','Similarity','Complementariness','User_Score'])
+    # each row will have the four rgb values and the percentage of the image they take up for the two images compared, as well as the score given by the user
+    training_data = pd.DataFrame(columns=['Img1_R1','Img1_G1','Img1_B1','Img1_%1','Img1_R2','Img1_G2','Img1_B2','Img1_%2',\
+                                          'Img1_R3','Img1_G3','Img1_B3','Img1_%3','Img1_R4','Img1_G4','Img1_B4','Img1_%4',\
+                                          'Img2_R1','Img2_G1','Img2_B1','Img2_%1','Img2_R2','Img2_G2','Img2_B2','Img2_%2',\
+                                          'Img2_R3','Img2_G3','Img2_B3','Img2_%3','Img2_R4','Img2_G4','Img2_B4','Img2_%4',\
+                                          'Img1_Neutrality','Img2_Neutrality','Similarity','Complementariness','User_Score'])
     stop_flag = False
     while not stop_flag and random_item():
         # get random colors
@@ -84,9 +86,10 @@ if __name__ == "__main__":
         df_row = []
         user_score = None
         for i in range(len(colors1)):
-            row += [hex_to_rgb(colors1[i][2])] * round(1000 * colors1[i][1])
-            # add color label and percentage to dataframe row
-            df_row.append(colors1[i][0])
+            rgb = hex_to_rgb(colors1[i][0])
+            row += [rgb] * round(1000 * colors1[i][1])
+            # add color values and percentage to dataframe row
+            df_row.extend(rgb)
             df_row.append(colors1[i][1])
 
         img1 = [row] * 1000
@@ -94,9 +97,10 @@ if __name__ == "__main__":
         # repeat for second set of colors
         row = []
         for i in range(len(colors2)):
-            row += [hex_to_rgb(colors2[i][2])] * round(1000 * colors2[i][1])
-            df_row.append(colors1[i][0])
-            df_row.append(colors1[i][1])
+            rgb = hex_to_rgb(colors2[i][0])
+            row += [rgb] * round(1000 * colors2[i][1])
+            df_row.extend(rgb)
+            df_row.append(colors2[i][1])
 
         img2 = [row] * 1000
 
@@ -139,6 +143,7 @@ if __name__ == "__main__":
         
         # add outfit comparison details to the dataframe
         df_row.extend([neutrality1, neutrality2, similarity, complementariness, user_score])
+        print(df_row)
         training_data = pd.concat([pd.DataFrame([df_row], columns=training_data.columns), training_data], ignore_index=1)
     
     # add new training data to the csv
