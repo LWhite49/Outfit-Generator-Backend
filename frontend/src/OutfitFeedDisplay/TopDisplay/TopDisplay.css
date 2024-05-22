@@ -11,6 +11,7 @@
     border-radius: 10px;
     max-height: var(--componentHeight);
 }
+
 .Color-Pallet{
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -73,4 +74,25 @@
     color: white;
     font-weight: bold;
     font-size: 14pt;
+}
+.TopDisplayInvis{
+    display: none;
+}
+
+@media (max-width: 1800px){
+    .TopDisplay{
+        --componentHeight: 200px;
+    }
+    .Top-Display-Size-Container{
+        top: calc((var(--componentHeight) / 18));
+        left: calc(var(--componentHeight) / 7);
+        width: calc( var(--componentHeight) / 6);
+        max-width: calc( var(--componentHeight) / 6);
+        height: calc(var(--componentHeight) / 9);
+        max-height: calc(var(--componentHeight / 9));   
+    }
+    .Top-Display-Size-Text{
+        font-size: 10pt;
+    }
+
 }

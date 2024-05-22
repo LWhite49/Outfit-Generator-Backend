@@ -3,9 +3,10 @@ import './BottomDisplay.css';
 export const BottomDisplay = (props) => {
     // Source the top item to display
     const bottomItem = props.item;
+    const invis = props.invis || false;
 
     return (
-        <div className="BottomDisplay">
+        <div className={ invis ? "BottomDisplayInvis" : "BottomDisplay"}>
             <div className="Color-Pallet">
                 <div className="Color-Display-First" style={{backgroundColor: (bottomItem.productColors.length > 0 ? `#${bottomItem.productColors[0][0]}` : "red") }}></div>
                 <div className="Color-Display" style={{backgroundColor: (bottomItem.productColors.length > 1 ? `#${bottomItem.productColors[1][0]}` : "orange") }}></div>

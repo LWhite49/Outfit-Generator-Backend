@@ -3,9 +3,10 @@ import './TopDisplay.css';
 export const TopDisplay = (props) => {
     // Source the top item to display
     const topItem = props.item;
+    const invis = props.invis || false;
 
     return (
-        <div className="TopDisplay">
+        <div className={ invis ? "TopDisplayInvis" : "TopDisplay"}>
             <div className="Color-Pallet">
                 <div className="Color-Display-First" style={{backgroundColor: (topItem.productColors.length > 0 ? `#${topItem.productColors[0][0]}` : "red") }}></div>
                 <div className="Color-Display" style={{backgroundColor: (topItem.productColors.length > 1 ? `#${topItem.productColors[1][0]}` : "orange") }}></div>

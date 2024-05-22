@@ -23,15 +23,24 @@
   justify-content: center;
   align-items: center;
   z-index: 5;
+  border-bottom: 1px dashed #ffffff;
   background-color: #5D0B98;
   height: min(10vh, 180px);
   color: white;
 }
 .NavbarElem{
-  margin: 0 20px;
+  margin: 0 30px;
   color: white;
+  font-weight: 400;
   font-size: 16pt;
   text-decoration: none;
+}
+.NavbarElemSelected{
+  margin: 0 40px;
+  color: #F6ECFE;
+  font-weight: 600;
+  font-size: 18pt;
+  text-decoration: solid;
 }
 .NavbarLogo{
   position: relative;
