@@ -54,14 +54,9 @@ export const OutfitFeedDisplay = (props) => {
                 <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].bottom} />
                 <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].shoes} />
             </div>
-            <button className="Outfit-Feed-Button" onClick={incrementFeed}>
+            <button className="Outfit-Feed-Button-EndDiv" onClick={incrementFeed}>
                 <img className="Outfit-Feed-Button-Right" src={(feedStatus.currIndex + displayCount > feedStatus.feedLength - 1) ? feedButtonMax : feedButton} alt={"+"}/>
-                <p>{feedStatus.currIndex} + {feedStatus.feedLength}</p>
             </button>
-            
-            
-
-
         </div>
     )
 
