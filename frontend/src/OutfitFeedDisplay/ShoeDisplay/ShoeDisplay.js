@@ -3,9 +3,10 @@ import './ShoeDisplay.css';
 export const ShoeDisplay = (props) => {
     // Source the top item to display
     const shoeItem = props.item;
+    const invis = props.invis || false;
 
     return (
-        <div className="ShoeDisplay">
+        <div className={ invis ? "ShoeDisplayInvis" : "ShoeDisplay"}>
             <div className="Color-Pallet">
                 <div className="Color-Display-First" style={{backgroundColor: (shoeItem.productColors.length > 0 ? `#${shoeItem.productColors[0][0]}` : "red") }}></div>
                 <div className="Color-Display" style={{backgroundColor: (shoeItem.productColors.length > 1 ? `#${shoeItem.productColors[1][0]}` : "orange") }}></div>

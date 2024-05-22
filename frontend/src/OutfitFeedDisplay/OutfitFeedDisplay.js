@@ -50,9 +50,9 @@ export const OutfitFeedDisplay = (props) => {
             </div>))
             }
             <div className="Outfit-Feed-Item-Buffer">
-                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].top} />
-                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].bottom} />
-                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].shoes} />
+                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].top} invis={true} />
+                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].bottom} invis={true} />
+                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].shoes} invis={true} />
             </div>
             <button className="Outfit-Feed-Button-EndDiv" onClick={incrementFeed}>
                 <img className="Outfit-Feed-Button-Right" src={(feedStatus.currIndex + displayCount > feedStatus.feedLength - 1) ? feedButtonMax : feedButton} alt={"+"}/>
