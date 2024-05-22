@@ -92,9 +92,9 @@ function App() {
           <div className="App">
             <div className="Navbar-Container">
               <div className="Navbar">
-                <Link to="/" className="NavbarElem" style={{color: (subPage === "/home") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/home")}}> Home </Link>
-                <Link to="/generator" className="NavbarElem" style={{color: (subPage === "/generator") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/generator")}}> Generator </Link>
-                <Link to="/about" className="NavbarElem" style={{color: (subPage ==="/about") ? "#F5E7FF" : "white"}} onClick={() => {setSubPage("/about")}}> About </Link>
+                <Link to="/" className={ subPage === "/home" ? "NavbarElemSelected" : "NavbarElem"} onClick={() => {setSubPage("/home")}}> Home </Link>
+                <Link to="/generator" className={subPage === "/generator" ? "NavbarElemSelected" : "NavbarElem"} onClick={() => {setSubPage("/generator")}}> Generator </Link>
+                <Link to="/about" className={subPage === "/about" ? "NavbarElemSelected" : "NavbarElem"} onClick={() => {setSubPage("/about")}}> About </Link>
               </div>
               <img className="NavbarLogo" src={logo} alt="Logo"></img>
             </div>
