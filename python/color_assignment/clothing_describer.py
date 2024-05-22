@@ -1,6 +1,10 @@
 
 # given a link to an image, spits out an array of color label, percentage of pixels, hexadecimal value
 
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.neighbors import KNeighborsClassifier
+
 import cv2 as cv
 import numpy as np
 import urllib.request
@@ -54,6 +58,19 @@ class ClothingDescriber():
         if img.size < pre_img_size * 0.25:
             return -1
 
+        img_df = pd.DataFrame(columns=['Red', 'Green', 'Blue'])
+
+        for px in img:
+            img_df.loc[len(img_df.index)] = px
+        
+        km = KMeans(n_clusters=4, random_state=255, n_init='auto', tol=1e-6)
+
+        img_df['Label'] = km.fit_predict(img_df[['Red', 'Green', 'Blue']])
+
+        centers = km.cluster_centers_
+
+        print(centers)
+
         # get color groups from image
         labels = self.predictor.predict(img)
 
@@ -87,6 +104,8 @@ class ClothingDescriber():
         
         for c in compressed:
             c[1] /= total_px
+            # some incorrect colors appear frequently in relatively low percentages
+
 
         # return just groups
         return compressed
@@ -96,5 +115,6 @@ if __name__ == '__main__':
     # print(cd.get_colors('https://media-photos.depop.com/b1/34570605/1777087976_f762224765eb4cbcb728b9f58ba11978/P0.jpg'))
     # print(cd.get_colors('https://media-photos.depop.com/b1/29235888/1777365855_70ea0ea843e24453abbc993578db119c/P0.jpg'))
     # print(cd.get_colors('https://media-photos.depop.com/b1/44686826/1775473394_0a2ebcb4c0cd413eb05559f51cddbc4e/P0.jpg'))
-    print(cd.get_colors('https://media-photos.depop.com/b1/16866238/1829720127_9092a94406c348889b28b0279471dc82/P0.jpg'))
+    # print(cd.get_colors('https://media-photos.depop.com/b1/16866238/1829720127_9092a94406c348889b28b0279471dc82/P0.jpg'))
+    # print(cd.get_colors('https://media-photos.depop.com/b1/31681508/1870822571_7ccd6d642ea44174ae33b204a83d0292/P8.jpg'))
     

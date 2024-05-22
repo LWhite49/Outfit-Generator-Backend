@@ -129,20 +129,32 @@ const generateOutfitFeed = async (req, res) => {
     // store index values of the items in the pallet
     const tempIndexObj = {top: 0, bottom: 0, shoes: 0};
 
+    let outfitPallets = {
+        0: {top: topsCopy, bottom: bottomCopy, shoes: shoesCopy},
+        1: {top: topsCopy, bottom: bottomCopy, shoes: shoesCopy},
+        2: {top: topsCopy, bottom: bottomCopy, shoes: shoesCopy}
+      };
+      
 
     while (returnOutfits.outfitIndices.length < outfitCount) {
 
       for (let i = 0; i < outfit_maker_count; i++) { 
-        //
-        randomIndexTop = Math.floor(Math.random() * palletSize);
+        // grab a random outfit pallet to select from 
+        randomOutfitPalletOne = Math.floor(Math.random() * 3);
+
+        // grab a random index from the first set of clothing
+        randomIndexFirst = Math.floor(Math.random() * palletSize);
+
         // Get the top at the random index
-        const randomTop = topsCopy[randomIndexTop];
+        const randomFirst = outfitPallets[randomOutfitPallet].top[randomIndexFirst];
+
         // Remove the selected top from the array
-        topsCopy = topsCopy.filter((item, index) => index !== randomIndexTop);
-        // Go through 6 bottoms
+        outfitPallets[randomOutfitPalletOne].top = outfitPallets[randomOutfitPalletOne].top.filter((item, index) => index !== randomIndexFirst);
+        // Go through 6 of the next set of clothing
         for (let j = 0; j < 6; j++) {
-          randomIndexBottom = Math.floor(Math.random() * palletSize);
-          const randomBottom = bottomCopy[randomIndexBottom];
+          randomIndexSecond = Math.floor(Math.random() * palletSize);
+          // grabs the index for the next set
+          randomOutfitPalletTwo = randomOutfitPalletOne === 2 ? 0 : randomOutfitPalletOne + 1;
           
           for (let k = 0; k < 6; k++) {
             randomIndexShoes = Math.floor(Math.random() * palletSize);
@@ -154,7 +166,7 @@ const generateOutfitFeed = async (req, res) => {
             }
           }
         }
-
+    
 
 
 
