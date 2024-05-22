@@ -129,32 +129,60 @@ const generateOutfitFeed = async (req, res) => {
     // store index values of the items in the pallet
     const tempIndexObj = {top: 0, bottom: 0, shoes: 0};
 
+    let outfitPallets = {
+        0: topsCopy,
+        1: bottomCopy,
+        2: shoesCopy
+      };
+      
 
     while (returnOutfits.outfitIndices.length < outfitCount) {
-
+      tempPalletSize = outfitPallets[1].length;
       for (let i = 0; i < outfit_maker_count; i++) { 
-        //
-        randomIndexTop = Math.floor(Math.random() * palletSize);
-        // Get the top at the random index
-        const randomTop = topsCopy[randomIndexTop];
-        // Remove the selected top from the array
-        topsCopy = topsCopy.filter((item, index) => index !== randomIndexTop);
-        // Go through 6 bottoms
-        for (let j = 0; j < 6; j++) {
-          randomIndexBottom = Math.floor(Math.random() * palletSize);
-          const randomBottom = bottomCopy[randomIndexBottom];
-          
-          for (let k = 0; k < 6; k++) {
-            randomIndexShoes = Math.floor(Math.random() * palletSize);
-            const randomShoes = shoesCopy[randomIndexShoes];
-            shoesCopy = shoesCopy.filter((item, index) => index !== randomIndexShoes);
-            const colorScore = colorMatch(randomTop.productColor, randomBottom.productColor, randomShoes.productColor);
-            if (colorScore > 0.5) {
-              returnOutfits.outfitIndices.push({top: randomIndexTop, bottom: randomIndexBottom, shoes: randomIndexShoes});
-            }
-          }
-        }
+        // grab a random outfit pallet to select from 
+        randomOutfitPalletIndex = Math.floor(Math.random() * 3);
 
+        // grab a random index from the first set of clothing
+        randomIndexFirst = Math.floor(Math.random() * palletSize);
+
+        // Get the top at the random index
+        const randomFirst = outfitPallets[randomOutfitPallet][randomIndexFirst];
+
+        // Remove the selected top from the array
+        outfitPallets[randomOutfitPalletOne] = outfitPallets[randomOutfitPalletOne].filter((item, index) => index !== randomIndexFirst);
+        // Go through 6 of the next set of clothing
+        let randomSetsPair = [];
+        // grab 6 random indices from the second set of clothing
+        for (let j = 0; j < 6; j++) {
+        let randomIndex = Math.floor(Math.random() * tempPalletSize);
+        // ensure that the random index is unique
+        while (randomSetsPair.includes(randomIndex)) {
+            randomIndex = Math.floor(Math.random() * tempPalletSize);
+        }
+        // add the random index to the array
+        randomSetsPair.push(randomIndex);
+        }
+        /* add compare function that will return two matches of the best second set of clothing
+        to the first clothing */
+        // i.e.  let bestMatches = compare(randomFirst, randomSetsPair)
+
+          // grab a random index from the second set of clothing
+          randomIndexSecond = Math.floor(Math.random() * tempPalletSize);
+
+          // grabs the index for the next set
+          randomOutfitPalletIndex =  randomOutfitPalletIndex === 2 ? 0 :  randomOutfitPalletIndex + 1;
+          
+        //   for (let k = 0; k < 6; k++) {
+        //     randomIndexShoes = Math.floor(Math.random() * palletSize);
+        //     const randomShoes = shoesCopy[randomIndexShoes];
+        //     shoesCopy = shoesCopy.filter((item, index) => index !== randomIndexShoes);
+        //     const colorScore = colorMatch(randomTop.productColor, randomBottom.productColor, randomShoes.productColor);
+        //     if (colorScore > 0.5) {
+        //       returnOutfits.outfitIndices.push({top: randomIndexTop, bottom: randomIndexBottom, shoes: randomIndexShoes});
+        //     }
+        //   }
+        // }
+    
 
 
 
