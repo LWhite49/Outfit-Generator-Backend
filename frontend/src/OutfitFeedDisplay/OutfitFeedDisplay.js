@@ -33,33 +33,27 @@ export const OutfitFeedDisplay = (props) => {
         setFeedStatus({feedLength: feedStatus.feedLength, currIndex: feedStatus.currIndex - 1});
      }
 
+     // Create an array to iterate over when generating the feed
+     const feedArray = [];
+    for (let i = 0; i < displayCount; i++) { feedArray.push(i);}
+
     return (
         <div className="Outfit-Feed-Display">
             <button className="Outfit-Feed-Button" onClick={decrementFeed}>
                 <img className="Outfit-Feed-Button-Left" src={(feedStatus.currIndex === 0) ? feedButtonMax : feedButton} alt={"-"}/>
             </button>
-            <div className="Outfit-Feed-Item">
-                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex].top} />
-                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex].bottom} />
-                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex].shoes} />
+            {feedArray.map((i, index) => (
+            <div className="Outfit-Feed-Item" key={index}>
+                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + i].top} />
+                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + i].bottom} />
+                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + i].shoes} />
+            </div>))
+            }
+            <div className="Outfit-Feed-Item-Buffer">
+                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].top} />
+                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].bottom} />
+                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + feedArray.length].shoes} />
             </div>
-            <div className="Outfit-Feed-Item">
-                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + 1].top} />
-                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + 1].bottom} />
-                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + 1].shoes} />
-            </div>
-            {(displayCount < 3) ? null : 
-            <div className="Outfit-Feed-Item">
-                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + 2].top} />
-                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + 2].bottom} />
-                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + 2].shoes} />
-            </div>}
-            {(displayCount < 4) ? null : 
-            <div className="Outfit-Feed-Item">
-                <TopDisplay item={outfitFeed.pallet[feedStatus.currIndex + 3].top} />
-                <BottomDisplay item={outfitFeed.pallet[feedStatus.currIndex + 3].bottom} />
-                <ShoeDisplay item={outfitFeed.pallet[feedStatus.currIndex + 3].shoes} />
-            </div>}
             <button className="Outfit-Feed-Button" onClick={incrementFeed}>
                 <img className="Outfit-Feed-Button-Right" src={(feedStatus.currIndex + displayCount > feedStatus.feedLength - 1) ? feedButtonMax : feedButton} alt={"+"}/>
                 <p>{feedStatus.currIndex} + {feedStatus.feedLength}</p>

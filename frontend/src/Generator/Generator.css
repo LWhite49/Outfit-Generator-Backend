@@ -59,7 +59,7 @@
   margin-bottom: 4px;
   color: black;
   font-weight: bold;
-  font-size: 14pt
+  font-size: 14pt;
 }
 .Top-Gender-Slider, .Bottom-Gender-Slider, .Shoe-Gender-Slider{
   position: relative;
@@ -90,13 +90,17 @@
 
 }
 
-.Size-Label, .Waist-Size-Label, .Shoe-Size-Label{
+.Size-Label, .Waist-Size-Label, .Shoe-Size-Label, .Bottom-Size-Label{
   display: inline-block;
   margin: 10px 20px 10px 10px;
-  width: min(60px, 10vw);
+  width: 60px;
   color: black;
   font-weight: bold;
   font-size: 14pt;
+}
+.Bottom-Size-Label{
+  margin-right: 14px;
+  margin-left: 4px;
 }
 .Waist-Size-Label{
   margin-right: 6px;

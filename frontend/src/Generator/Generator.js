@@ -11,7 +11,7 @@ import { OutfitFeedDisplay } from '../OutfitFeedDisplay/OutfitFeedDisplay.js';
 
 export const Generator = () => {
     // Source elements from provider
-    const { setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size } = useContext(FeedContext);
+    const { setSize, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, size, windowWidth } = useContext(FeedContext);
     
     // Define checked states for each slider
     const [topChecked, setTopChecked] = useState(false);
@@ -251,7 +251,7 @@ export const Generator = () => {
                         <button className={topSizeButtonState["XXL"] === true ? "Size-Button-Small-Selected" : "Size-Button-Small"} onClick={() => {toggleTopSizeButton("XXL")}}>XXL</button>
                     </div>
                     <div className="Size-Input-Container">
-                        <p className="Size-Label">Bottom Sizes:</p>
+                        <p className="Bottom-Size-Label">Bottom Sizes:</p>
                         <button className={bottomSizeButtonState["all"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("all")}}>All</button>
                         <button className={bottomSizeButtonState["XS"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("XS")}}>XS</button>
                         <button className={bottomSizeButtonState["S"] === true ? "Size-Button-Selected" : "Size-Button"} onClick={() => {toggleBottomSizeButton("S")}}>S</button>
@@ -284,7 +284,7 @@ export const Generator = () => {
                     <Keywords/>
                 </div>
             </div>
-            <OutfitFeedDisplay displayCount={4}/>
+            <OutfitFeedDisplay displayCount={Math.floor(windowWidth / 500)}/>
         </div>
     )
     }

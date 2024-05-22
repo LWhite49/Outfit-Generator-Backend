@@ -15,6 +15,12 @@
     background-color: #f6ecfe;
     padding: 10px 20px 10px 20px;
 }
+.Outfit-Feed-Item-Buffer{
+    opacity: 0%;
+    width: 0px;
+    height: 0px;
+    
+}
 
 .Outfit-Feed-Button{
     transition: background-color 0.3s, border 0.3s, box-shadow 0.3s;

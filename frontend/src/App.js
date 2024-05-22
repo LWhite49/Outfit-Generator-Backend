@@ -37,6 +37,20 @@ function App() {
   // Create a state for current subpage used for conditional rendering of navbar
   const [subPage, setSubPage] = useState("/home");
 
+  // Create a state for the current width of the window
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Create a listener for window width changes
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
   // Create a useEffect that mounts the outfitFeed array from the server, and updates it when settings are changed
   useEffect(() => {
     // Define async funciton, since useaEffect cannot be async
@@ -74,7 +88,7 @@ function App() {
   return (outfitFeed.length !== 0) ? (
     <QueryClientProvider client={client}>
       <Router>
-        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, expandFeed, feedStatus, setFeedStatus, images, setSubPage, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, brand, size}}>
+        <FeedContext.Provider value={{outfitFeed, setOutfitFeed, expandFeed, feedStatus, setFeedStatus, images, setSubPage, setSize, setBrand, setTopGender, setBottomGender, setShoeGender, topGender, bottomGender, shoeGender, brand, size, windowWidth}}>
           <div className="App">
             <div className="Navbar-Container">
               <div className="Navbar">
