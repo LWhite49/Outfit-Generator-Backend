@@ -75,6 +75,8 @@ def outfit_comparison(palette1: list[list[str, float], list[str, float], list[st
             # Calulate the similarity in the same way
             similarity_prob = ratio * area2 * similarity(hex1, hex2)
 
+            print(similarity(hex1, hex2))
+
             # add these scores to the running score
             complementary_score += complementary_prob
             similarity_score += similarity_prob
@@ -89,7 +91,7 @@ def outfit_comparison(palette1: list[list[str, float], list[str, float], list[st
     return complementary_score, similarity_score, neutrality_score1, neutrality_score2
 
 if __name__ == "__main__":
-    # print(similarity('#287280', '#286e80'))
-    print(similarity('#ff0000', '#00ff00'))
+    print(similarity('#287280', '#286e80'))
+    # print(similarity('#ff0000', '#00ff00'))
     # print(similarity('#aaaaaa', '#ffffff'))
     # print(complementariness('#9740bf', '#bf4240'))
