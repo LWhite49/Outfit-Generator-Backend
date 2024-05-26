@@ -1,15 +1,16 @@
 .App {
   box-sizing: border-box;
   margin: 0px;
-  background-color: #F6ECFE;
+  background-color: #f6ecfe;
   background-color: #f6ecfe;
   padding: 0px;
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
   text-align: center;
 }
-.Navbar-Container{
+.Navbar-Container {
   display: relative;
   position: fixed;
   top: 0;
@@ -23,26 +24,28 @@
   justify-content: center;
   align-items: center;
   z-index: 5;
+  margin: 0px;
   border-bottom: 1px dashed #ffffff;
-  background-color: #5D0B98;
+  background-color: #5d0b98;
+  max-width: 100vw;
   height: min(10vh, 180px);
   color: white;
 }
-.NavbarElem{
+.NavbarElem {
   margin: 0 30px;
   color: white;
   font-weight: 400;
   font-size: 16pt;
   text-decoration: none;
 }
-.NavbarElemSelected{
+.NavbarElemSelected {
   margin: 0 40px;
-  color: #F6ECFE;
+  color: #f6ecfe;
   font-weight: 600;
   font-size: 18pt;
   text-decoration: solid;
 }
-.NavbarLogo{
+.NavbarLogo {
   position: relative;
   top: -8vh;
   left: -44vw;
@@ -51,6 +54,3 @@
   height: 6vh;
   pointer-events: none;
 }
-
-
-
