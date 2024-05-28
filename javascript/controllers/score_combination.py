@@ -17,7 +17,7 @@ try:
         colors1 = ast.literal_eval(sys.argv[1])
         colors2 = ast.literal_eval(sys.argv[2])
 
-        print(json.dumps(str(score(colors1, colors2))))
+        print(json.dumps(str(round(score(colors1, colors2), 3))))
 
     elif len(sys.argv) == 4: 
         colors1 = ast.literal_eval(sys.argv[1])
@@ -28,7 +28,7 @@ try:
         score2 = score(colors1, colors3)
         score3 = score(colors2, colors3)
 
-        print(json.dumps(str((score1 + score2 + score3) / 3)))
+        print(json.dumps(str(round((score1 + score2 + score3) / 3, 3))))
 
 except:
     print(json.dumps('-0.5'))
