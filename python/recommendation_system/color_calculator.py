@@ -46,7 +46,6 @@ def similarity(color1: str, color2: str)->float:
     dist = delta_e_cie2000(lab1, lab2)
 
     return 1 - (dist / 100)
-    # https://stackoverflow.com/questions/35113979/calculate-distance-between-colors-in-hsv-space
 
 def neutrality(color: str)->float:
     '''Returns the inverse of saturation, indicating how neutral a color is.'''
