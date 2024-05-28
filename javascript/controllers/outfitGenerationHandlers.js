@@ -32,7 +32,7 @@ const scoreColorsViaPy = async (p1, p2, p3 = "N/A") => {
 
 		// Parse good output
 		pyProcess.stdout.on("data", (data) => {
-			resolve(parseFloat(data));
+			resolve(JSON.parse(data));
 		});
 
 		// Parse error output
