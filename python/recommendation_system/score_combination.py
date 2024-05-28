@@ -27,3 +27,6 @@ try:
 
 except:
     print(json.dumps('-0.5'))
+
+finally:
+    sys.stdout.flush()
