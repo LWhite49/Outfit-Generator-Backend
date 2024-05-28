@@ -1,129 +1,218 @@
 // This file contains all the callback functions pertaining to the generation of outfits from the database
 
 // Import the DB collections
-const TopMen = require('../mongo-config/Top-Men.js');
-const BottomMen = require('../mongo-config/Bottom-Men.js');
-const ShoeMen = require('../mongo-config/Shoe-Men.js');
-const TopWomen = require('../mongo-config/Top-Women.js');
-const BottomWomen = require('../mongo-config/Bottom-Women.js');
-const ShoeWomen = require('../mongo-config/Shoe-Women.js');
+const TopMen = require("../mongo-config/Top-Men.js");
+const BottomMen = require("../mongo-config/Bottom-Men.js");
+const ShoeMen = require("../mongo-config/Shoe-Men.js");
+const TopWomen = require("../mongo-config/Top-Women.js");
+const BottomWomen = require("../mongo-config/Bottom-Women.js");
+const ShoeWomen = require("../mongo-config/Shoe-Women.js");
+
+// Import the child process so we can run py scripts
+const { spawner } = require("child_process").spawn;
+
+// Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
+const scoreColorsViaPy = async (p1, p2, p3 = "N/A") => {
+	return new Promise((resolve, reject) => {
+		let pyProcess;
+		if (p3 === "N/A") {
+			pyProcess = spawner("python", [
+				"../../python/recommendation_system/score_combination.py",
+				JSON.stringify(p1),
+				JSON.stringify(p2),
+			]);
+		} else {
+			pyProcess = spawner("python", [
+				"../../python/recommendation_system/score_combination.py",
+				JSON.stringify(p1),
+				JSON.stringify(p2),
+				JSON.stringify(p3),
+			]);
+		}
+
+		// Parse good output
+		pyProcess.stdout.on("data", (data) => {
+			resolve(parseFloat(data));
+		});
+
+		// Parse error output
+		pyProcess.stderr.on("data", (data) => {
+			reject(data);
+		});
+	});
+};
 
 // This function accepts a variety of query information and returns a feed of outfits informed by color processing algorithm
 const generateOutfitFeed = async (req, res) => {
+	// Source gender from request body
+	const topGender = req.query.topGender;
+	const bottomGender = req.query.bottomGender;
+	const shoeGender = req.query.shoeGender;
+	const sizeData = JSON.parse(req.query.size);
+	const brandData = JSON.parse(req.query.brand);
 
-    // Source gender from request body
-    const topGender = req.query.topGender;
-    const bottomGender = req.query.bottomGender;
-    const shoeGender = req.query.shoeGender;
-    const sizeData = JSON.parse(req.query.size);
-    const brandData = JSON.parse(req.query.brand);
+	// Specify length of pallets and number of outfits
+	const palletSize = 20;
+	const outfitCount = 20;
 
-    // Specify length of pallets and number of outfits
-    const palletSize = 20;
-    const outfitCount = 20;
+	// Parse gender queries to determine which collections to use
+	let collections = [];
+	collections.push(topGender == "female" ? TopWomen : TopMen);
+	collections.push(bottomGender == "female" ? BottomWomen : BottomMen);
+	collections.push(shoeGender == "female" ? ShoeWomen : ShoeMen);
 
-    // Parse gender queries to determine which collections to use
-    let collections = [];
-    collections.push((topGender == "female") ? TopWomen : TopMen);
-    collections.push((bottomGender == "female") ? BottomWomen : BottomMen);
-    collections.push((shoeGender == "female") ? ShoeWomen : ShoeMen);
+	// We will use these items to form the outfits, so call these "pallet" items
+	let palletTops = [];
+	let palletBottoms = [];
+	let palletShoes = [];
 
-    // We will use these items to form the outfits, so call these "pallet" items
-    let palletTops = [];
-    let palletBottoms = [];
-    let palletShoes = [];
+	// Define options object for each collection, which will be informed by the queries
+	let topOptions = [{ $sample: { size: palletSize } }];
+	let bottomOptions = [{ $sample: { size: palletSize } }];
+	let shoeOptions = [{ $sample: { size: palletSize } }];
 
-    // Define options object for each collection, which will be informed by the queries
-    let topOptions = [ {$sample: {size: palletSize}} ];
-    let bottomOptions = [ {$sample: {size: palletSize}} ];
-    let shoeOptions = [ {$sample: {size: palletSize}} ];
+	// Conditionally apply match specifications to each collection
+	if (true) {
+		let match = { $expr: { $gt: [{ $size: "$productColors" }, 0] } };
+		if (sizeData.topSizes.length > 0) {
+			match.productSize = { $in: sizeData.topSizes };
+		}
+		if (brandData.length > 0) {
+			match.productBrand = { $in: brandData };
+		}
+		topOptions.unshift({ $match: match });
+	}
 
-    // Conditionally apply match specifications to each collection
-    if (true) {
-        let match = {$expr: {$gt: [{$size: "$productColors"}, 0]}};
-        if (sizeData.topSizes.length > 0) { match.productSize = { $in: sizeData.topSizes }; }
-        if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
-        topOptions.unshift({$match: match});
-    }
+	if (true) {
+		let match = { $expr: { $gt: [{ $size: "$productColors" }, 0] } };
+		if (sizeData.bottomSizes.length > 0) {
+			match.productSize = { $in: sizeData.bottomSizes };
+		}
+		if (brandData.length > 0) {
+			match.productBrand = { $in: brandData };
+		}
+		bottomOptions.unshift({ $match: match });
+	}
 
-    if (true) {
-        let match = {$expr: {$gt: [{$size: "$productColors"}, 0]}};
-        if (sizeData.bottomSizes.length > 0) { match.productSize = { $in: sizeData.bottomSizes }; }
-        if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
-        bottomOptions.unshift({$match: match});
-    }
+	if (true) {
+		let match = { $expr: { $gt: [{ $size: "$productColors" }, 0] } };
+		if (sizeData.shoeSizes.length > 0) {
+			match.productSize = { $in: sizeData.shoeSizes };
+		}
+		if (brandData.length > 0) {
+			match.productBrand = { $in: brandData };
+		}
+		shoeOptions.unshift({ $match: match });
+	}
 
-    if (true) {
-        let match = {$expr: {$gt: [{$size: "$productColors"}, 0]}};
-        if (sizeData.shoeSizes.length > 0) { match.productSize = { $in: sizeData.shoeSizes }; }
-        if (brandData.length > 0) { match.productBrand = { $in: brandData }; }
-        shoeOptions.unshift({$match: match});
-    }
+	// Source the pallet items using rendered options
+	try {
+		// Aggregate Pallets from each collection in collections
+		palletTops = await collections[0].aggregate(topOptions);
+		palletBottoms = await collections[1].aggregate(bottomOptions);
+		palletShoes = await collections[2].aggregate(shoeOptions);
+	} catch (err) {
+		console.log(err, `Error in generating pallets from initial query`);
+		res.status(401).json({ err: `${err}` });
+	}
 
-    // Source the pallet items using rendered options
-    try {
-        // Aggregate Pallets from each collection in collections
-        palletTops = await collections[0].aggregate(topOptions);
-        palletBottoms = await collections[1].aggregate(bottomOptions);
-        palletShoes = await collections[2].aggregate(shoeOptions);
-    } catch (err) {
-        console.log(err, `Error in generating pallets from initial query`);
-        res.status(401).json({err: `${err}`});
-    }
+	// Define returnOutfits object to be populated with the pallet, the wasRandom flag, and the outfitIndices
+	let returnOutfits = {
+		pallet: [],
+		outfits: [],
+	};
 
-    
-    // Define returnOutfits object to be populated with the pallet, the wasRandom flag, and the outfitIndices
-    let returnOutfits = {
-        pallet: [],
-        outfitIndices: []
-    };
+	// Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
+	try {
+		if (palletTops.length < palletSize) {
+			palletTops = palletTops.concat(
+				await collections[0].aggregate([
+					{ $sample: { size: palletSize - palletTops.length } },
+					{
+						$match: {
+							productSize: { $in: sizeData.bottomSizes },
+							$expr: { $gt: [{ $size: "$productColors" }, 0] },
+						},
+					},
+				])
+			);
+			palletTops = palletTops.concat(
+				await collections[0].aggregate([
+					{ $sample: { size: palletSize - palletTops.length } },
+				])
+			);
+		}
 
-    // Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
-    try {
-        if (palletTops.length < palletSize) {
-            palletTops = palletTops.concat(await collections[0].aggregate([
-                { $sample: {size: palletSize - palletTops.length}}, 
-                { $match: {productSize: {$in : sizeData.bottomSizes}, $expr: {$gt: [{$size: "$productColors"}, 0]}}}
-            ]));
-            palletTops = palletTops.concat(await collections[0].aggregate([{ $sample: {size: palletSize - palletTops.length} }]));
-            
-        }
+		if (palletBottoms.length < palletSize) {
+			palletBottoms = palletBottoms.concat(
+				await collections[1].aggregate([
+					{ $sample: { size: palletSize - palletBottoms.length } },
+					{
+						$match: {
+							productSize: { $in: sizeData.bottomSizes },
+							$expr: { $gt: [{ $size: "$productColors" }, 0] },
+						},
+					},
+				])
+			);
+			palletBottoms = palletBottoms.concat(
+				await collections[1].aggregate([
+					{ $sample: { size: palletSize - palletBottoms.length } },
+				])
+			);
+		}
 
-        if (palletBottoms.length < palletSize) {
-            palletBottoms = palletBottoms.concat(await collections[1].aggregate([
-                { $sample: {size: palletSize - palletBottoms.length} },
-                { $match: {productSize: {$in : sizeData.bottomSizes}, $expr: {$gt: [{$size: "$productColors"}, 0]}}}
-            ]));
-            palletBottoms = palletBottoms.concat(await collections[1].aggregate([{$sample: {size: palletSize - palletBottoms.length}}]));
-        }
+		if (palletShoes.length < palletSize) {
+			palletShoes = palletShoes.concat(
+				await collections[2].aggregate([
+					{ $sample: { size: palletSize - palletShoes.length } },
+					{
+						$match: {
+							productSize: { $in: sizeData.bottomSizes },
+							$expr: { $gt: [{ $size: "$productColors" }, 0] },
+						},
+					},
+				])
+			);
+			palletShoes = palletShoes.concat(
+				await collections[2].aggregate([
+					{ $sample: { size: palletSize - palletShoes.length } },
+				])
+			);
+		}
+	} catch (err) {
+		console.log(err, `Error in populating pallets with random items`);
+		res.status(401).json({ err: `${err}` });
+	}
 
-        if (palletShoes.length < palletSize) {
-            palletShoes = palletShoes.concat(await collections[2].aggregate([
-                { $sample: {size: palletSize - palletShoes.length} },
-                { $match: {productSize: {$in : sizeData.bottomSizes}, $expr: {$gt: [{$size: "$productColors"}, 0]}}}
-            ]));
-            palletShoes = palletShoes.concat(await collections[2].aggregate([{$sample: {size: palletSize - palletShoes.length}}]));
-        }
-    } catch (err) {
-        console.log(err, `Error in populating pallets with random items`);
-        res.status(401).json({err: `${err}`});
-    }
+	// Populate returnOutfits.pallet with the pallet items
+	for (let i = 0; i < palletSize; i++) {
+		returnOutfits.pallet.push({
+			top: palletTops[i],
+			bottom: palletBottoms[i],
+			shoes: palletShoes[i],
+		});
+	}
 
-    // Populate returnOutfits.pallet with the pallet items
-    for (let i = 0; i < palletSize; i++) {
-        returnOutfits.pallet.push({
-            top: palletTops[i],
-            bottom: palletBottoms[i],
-            shoes: palletShoes[i]
-        });
-    }
+	// Use Py to score outfits
+	for (let i = 0; i < palletSize; i++) {
+		try {
+			const score = await scoreColorsViaPy(
+				returnOutfits.pallet.top[i].productColors,
+				returnOutfits.pallet.bottom[i].productColors,
+				returnOutfits.pallet.shoes[i].productColors
+			);
+			returnOutfits.outfits.push(score);
+		} catch (err) {
+			console.log(err, `Error in scoring outfits`);
+			res.status(401).json({ err: `${err}` });
+		}
+	}
 
-    // Send returnOutfits
-    res.status(201).json(returnOutfits);
+	// Send returnOutfits
+	res.status(201).json(returnOutfits);
 
-    
-
-    /* Psuedocode for the creation of outfits
+	/* Psuedocode for the creation of outfits
         Note that this process will not create a new returnObject, only add objects of INDICES to the returnOutfits.outfitIndices array
 
     while (returnOutfits.outfitIndices.length < outfitCount) {
@@ -155,9 +244,7 @@ const generateOutfitFeed = async (req, res) => {
                     {top: topIndex, bottom: bottomIndex, shoes: shoeIndex}
     }
 */
-}
-
-
+};
 
 // Export route handlers
-module.exports = { generateOutfitFeed }
+module.exports = { generateOutfitFeed };
