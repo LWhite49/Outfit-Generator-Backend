@@ -9,20 +9,20 @@ const BottomWomen = require("../mongo-config/Bottom-Women.js");
 const ShoeWomen = require("../mongo-config/Shoe-Women.js");
 
 // Import the child process so we can run py scripts
-const { spawner } = require("child_process").spawn;
+const { spawn } = require("child_process");
 
 // Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
 const scoreColorsViaPy = async (p1, p2, p3 = "N/A") => {
 	return new Promise((resolve, reject) => {
 		let pyProcess;
 		if (p3 === "N/A") {
-			pyProcess = spawner("python", [
+			pyProcess = spawn("python", [
 				"../../python/recommendation_system/score_combination.py",
 				JSON.stringify(p1),
 				JSON.stringify(p2),
 			]);
 		} else {
-			pyProcess = spawner("python", [
+			pyProcess = spawn("python", [
 				"../../python/recommendation_system/score_combination.py",
 				JSON.stringify(p1),
 				JSON.stringify(p2),
@@ -198,9 +198,9 @@ const generateOutfitFeed = async (req, res) => {
 	for (let i = 0; i < palletSize; i++) {
 		try {
 			const score = await scoreColorsViaPy(
-				returnOutfits.pallet.top[i].productColors,
-				returnOutfits.pallet.bottom[i].productColors,
-				returnOutfits.pallet.shoes[i].productColors
+				returnOutfits.pallet[i].top.productColors,
+				returnOutfits.pallet[i].bottom.productColors,
+				returnOutfits.pallet[i].shoes.productColors
 			);
 			returnOutfits.outfits.push(score);
 		} catch (err) {
