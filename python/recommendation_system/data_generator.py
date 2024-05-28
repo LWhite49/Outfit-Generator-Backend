@@ -13,6 +13,7 @@ import pandas as pd
 import numpy as np
 from color_assignment.conversions import hex_to_rgb
 from color_calculator import outfit_comparison
+import time
 
 def on_stop_click(event):
     global stop_flag
@@ -129,7 +130,9 @@ if __name__ == "__main__":
         button_stop.on_clicked(on_stop_click)
 
         # calculate outfit comparison criteria
+        t0 = time.time()
         complementariness, similarity, neutrality1, neutrality2 = outfit_comparison(colors1, colors2)
+        print(time.time() - t0)
 
         print('Palette 1 neutrality: ', neutrality1)
         print('Palette 2 neutrality: ', neutrality2)

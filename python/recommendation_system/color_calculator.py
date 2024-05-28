@@ -73,9 +73,7 @@ def outfit_comparison(palette1: list[list[str, float], list[str, float], list[st
             complementary_prob = ratio * area2 * complementariness(hex1, hex2)
             # Calulate the similarity in the same way
             similarity_prob = ratio * area2 * similarity(hex1, hex2)
-
-            print(similarity(hex1, hex2))
-
+            
             # add these scores to the running score
             complementary_score += complementary_prob
             similarity_score += similarity_prob

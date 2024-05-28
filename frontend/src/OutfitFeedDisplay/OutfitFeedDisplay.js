@@ -85,7 +85,6 @@ export const OutfitFeedDisplay = (props) => {
 					<ShoeDisplay
 						item={outfitFeed.pallet[feedStatus.currIndex + i].shoes}
 					/>
-					<p>{outfitFeed.outfit[i]}</p>
 				</div>
 			))}
 			<div className="Outfit-Feed-Item-Buffer">

@@ -12,23 +12,15 @@ const ShoeWomen = require("../mongo-config/Shoe-Women.js");
 const { spawn } = require("child_process");
 const path = require("path");
 // Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
-const scoreColorsViaPy = async (p1, p2, p3 = "N/A") => {
+
+const scoreColorsViaPy = async (p1, p2, p3) => {
 	return new Promise((resolve, reject) => {
-		let pyProcess;
-		if (p3 === "N/A") {
-			pyProcess = spawn("python", [
-				path.join(__dirname, "score_combination.py"),
-				JSON.stringify(p1),
-				JSON.stringify(p2),
-			]);
-		} else {
-			pyProcess = spawn("python", [
-				path.join(__dirname, "score_combination.py"),
-				JSON.stringify(p1),
-				JSON.stringify(p2),
-				JSON.stringify(p3),
-			]);
-		}
+		pyProcess = spawn("python", [
+			path.join(__dirname, "score_combination.py"),
+			JSON.stringify(p1),
+			JSON.stringify(p2),
+			JSON.stringify(p3),
+		]);
 
 		// Parse good output
 		pyProcess.stdout.on("data", (data) => {
@@ -120,7 +112,6 @@ const generateOutfitFeed = async (req, res) => {
 	// Define returnOutfits object to be populated with the pallet, the wasRandom flag, and the outfitIndices
 	let returnOutfits = {
 		pallet: [],
-		outfits: [],
 	};
 
 	// Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
@@ -196,25 +187,26 @@ const generateOutfitFeed = async (req, res) => {
 		});
 	}
 
-	// Use Py to score outfits
-	for (let i = 0; i < palletSize; i++) {
-		try {
-			const score = await scoreColorsViaPy(
-				returnOutfits.pallet[i].top.productColors,
-				returnOutfits.pallet[i].bottom.productColors,
-				returnOutfits.pallet[i].shoes.productColors
-			);
-			returnOutfits.outfits.push(score);
-		} catch (err) {
-			console.log(err, `Error in scoring outfits`);
-			res.status(401).json({ err: `${err}` });
-			return;
-		}
-	}
+	// Create arrays of productColor arrays
+	let topColors = palletTops.map((item) => item.productColors);
+	let bottomColors = palletBottoms.map((item) => item.productColors);
+	let shoeColors = palletShoes.map((item) => item.productColors);
 
+	// Send the color pallets to the PyScript
+	try {
+		const outfitIndices = await scoreColorsViaPy(
+			topColors,
+			bottomColors,
+			shoeColors
+		);
+		returnOutfits.outfits = outfitIndices;
+	} catch (err) {
+		console.log(err, `Error communicating with Py color combinations`);
+	}
 	// Send returnOutfits
 	res.status(201).json(returnOutfits);
 	return;
+
 	/* Psuedocode for the creation of outfits
         Note that this process will not create a new returnObject, only add objects of INDICES to the returnOutfits.outfitIndices array
 
