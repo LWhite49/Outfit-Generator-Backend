@@ -1,6 +1,6 @@
 import sys
-from json import dumps
-from ast import literal_eval
+import json
+import ast
 from color_calculator import outfit_comparison
 
 def score(item1, item2) -> float:
@@ -8,18 +8,24 @@ def score(item1, item2) -> float:
     return similarity
 
 if len(sys.argv) == 3:
-    colors1 = literal_eval(sys.argv[1])
-    colors2 = literal_eval(sys.argv[2])
+    colors1 = ast.literal_eval(sys.argv[1])
+    colors2 = ast.literal_eval(sys.argv[2])
 
-    print(dumps(score(colors1, colors2)))
+    if (colors1 and colors2):
+        print(json.dumps(score(colors1, colors2)))
+    else:
+        print(json.dumps(-0.5))
 
-elif len(sys.argv) == 4:
-    colors1 = literal_eval(sys.argv[1])
-    colors2 = literal_eval(sys.argv[2])
-    colors3 = literal_eval(sys.argv[3])
+elif len(sys.argv) == 4: 
+    colors1 = ast.literal_eval(sys.argv[1])
+    colors2 = ast.literal_eval(sys.argv[2])
+    colors3 = ast.literal_eval(sys.argv[3])
     
     score1 = score(colors1, colors2)
     score2 = score(colors1, colors3)
     score3 = score(colors2, colors3)
 
-    print(dumps((score1 + score2 + score3) / 3))
+    if (colors1 and colors2):
+        print(json.dumps((score1 + score2 + score3) / 3))
+    else:
+        print(json.dumps(-0.5))
