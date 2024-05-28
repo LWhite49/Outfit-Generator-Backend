@@ -205,6 +205,13 @@ const generateOutfitFeed = async (req, res) => {
 
         // Calculate the score for each item
         let scoredItems = bestMatches.map(item => {
+            $.ajax({
+                type: "POST",
+                url: "../../python/recommendation_system/score_combination.py",
+                data: { param: text}
+              }).done(function( o ) {
+                 // do something
+              });
             let score = Math.min(...randomSetsPairTwo.map(baseItem => score(baseItem, item)));
             return {item, score};
         });
@@ -214,8 +221,7 @@ const generateOutfitFeed = async (req, res) => {
 
         // The best matches are now at the start of the array
         let bestMatches = scoredItems.slice(0, n);
-
-
+    }
         
         
 
@@ -271,8 +277,8 @@ const generateOutfitFeed = async (req, res) => {
                     {top: topIndex, bottom: bottomIndex, shoes: shoeIndex}
     }
 */
+    }
 }
-
 
 
 // Export route handlers
