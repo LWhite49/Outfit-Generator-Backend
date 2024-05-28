@@ -10,20 +10,20 @@ const ShoeWomen = require("../mongo-config/Shoe-Women.js");
 
 // Import the child process so we can run py scripts
 const { spawn } = require("child_process");
-
+const path = require("path");
 // Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
 const scoreColorsViaPy = async (p1, p2, p3 = "N/A") => {
 	return new Promise((resolve, reject) => {
 		let pyProcess;
 		if (p3 === "N/A") {
 			pyProcess = spawn("python", [
-				"../../python/recommendation_system/score_combination.py",
+				path.join(__dirname, "score_combination.py"),
 				JSON.stringify(p1),
 				JSON.stringify(p2),
 			]);
 		} else {
 			pyProcess = spawn("python", [
-				"../../python/recommendation_system/score_combination.py",
+				path.join(__dirname, "score_combination.py"),
 				JSON.stringify(p1),
 				JSON.stringify(p2),
 				JSON.stringify(p3),
@@ -37,7 +37,7 @@ const scoreColorsViaPy = async (p1, p2, p3 = "N/A") => {
 
 		// Parse error output
 		pyProcess.stderr.on("data", (data) => {
-			reject(data);
+			reject(data.toString());
 		});
 	});
 };
@@ -114,6 +114,7 @@ const generateOutfitFeed = async (req, res) => {
 	} catch (err) {
 		console.log(err, `Error in generating pallets from initial query`);
 		res.status(401).json({ err: `${err}` });
+		return;
 	}
 
 	// Define returnOutfits object to be populated with the pallet, the wasRandom flag, and the outfitIndices
@@ -183,6 +184,7 @@ const generateOutfitFeed = async (req, res) => {
 	} catch (err) {
 		console.log(err, `Error in populating pallets with random items`);
 		res.status(401).json({ err: `${err}` });
+		return;
 	}
 
 	// Populate returnOutfits.pallet with the pallet items
@@ -206,12 +208,13 @@ const generateOutfitFeed = async (req, res) => {
 		} catch (err) {
 			console.log(err, `Error in scoring outfits`);
 			res.status(401).json({ err: `${err}` });
+			return;
 		}
 	}
 
 	// Send returnOutfits
 	res.status(201).json(returnOutfits);
-
+	return;
 	/* Psuedocode for the creation of outfits
         Note that this process will not create a new returnObject, only add objects of INDICES to the returnOutfits.outfitIndices array
 
