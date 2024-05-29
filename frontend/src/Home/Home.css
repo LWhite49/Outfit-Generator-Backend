@@ -1,143 +1,132 @@
-.Home{
-    cursor:default;
+.Home {
+	cursor: default;
 }
-.Home-Hero{
-    display: relative;
-    padding-top: min(10vh, 180px);
+.Home-Hero {
+	display: relative;
+	padding-top: min(10vh, 180px);
 }
-.Hero-Background{
-    position: absolute;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-
+.Hero-Background {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
 }
-.Rel-Dummy{
-    display: inline-block;
-    position: absolute;
-    top: 15%;
-    left: 28%;
-    z-index: 5;
+.Rel-Dummy {
+	display: inline-block;
+	position: absolute;
+	top: 15%;
+	left: 28%;
+	z-index: 5;
 }
-.Hero-Overlay{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    opacity: 75%;
-    background-color: black;
-    padding: 2vh 1.6vw 2vh 1.6vw;
-
+.Hero-Overlay {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	opacity: 75%;
+	background-color: black;
+	padding: 2vh 1.6vw 2vh 1.6vw;
 }
-.Hero-Header{
-    display: inline-block;
-    opacity: 100%;
-    z-index: 5;
-    margin:0px;
-    margin-left: 1vw;
-    color: #F5E7FF;
-    font-weight: bold;
-    font-size: 3.2vw;
-    font-family: 'Roboto', sans-serif;
-    text-align: left;
-    text-align: center;
-    text-shadow: -2px -2px 0 #5D0B98,  
-    2px -2px 0 #5D0B98,
-   -2px  2px 0 #5D0B98,
-    2px  2px 0 #5D0B98;
+.Hero-Header {
+	display: inline-block;
+	opacity: 100%;
+	z-index: 5;
+	margin: 0px;
+	margin-left: 1vw;
+	color: #f5e7ff;
+	font-weight: bold;
+	font-size: 3.2vw;
+	font-family: "Roboto", sans-serif;
+	text-align: left;
+	text-align: center;
+	text-shadow: -2px -2px 0 #5d0b98, 2px -2px 0 #5d0b98, -2px 2px 0 #5d0b98,
+		2px 2px 0 #5d0b98;
 }
-.Hero-Subheader{
-    display: inline-block;
-    opacity: 100%;
-    opacity: 100%;
-    z-index: 5;
-    margin:0px;
-    margin-top: 1.2vh;
-    margin-right: 1vw;
-    padding: 0px;
-    padding-left: 2.4vw;
-    color: #F5E7FF;
-    font-size: 1.3vw;
-    font-family:'Courier New', Courier, monospace;
-    text-align: left;
-    text-shadow: -1px -1px 0 #5D0B98,  
-    1px -1px 0 #5D0B98,
-   -1px  1px 0 #5D0B98,
-    1px  1px 0 #5D0B98;
+.Hero-Subheader {
+	display: inline-block;
+	opacity: 100%;
+	opacity: 100%;
+	z-index: 5;
+	margin: 0px;
+	margin-top: 1.2vh;
+	margin-right: 1vw;
+	padding: 0px;
+	padding-left: 2.4vw;
+	color: #f5e7ff;
+	font-size: 1.3vw;
+	font-family: "Courier New", Courier, monospace;
+	text-align: left;
+	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
+		1px 1px 0 #5d0b98;
 }
-.Hero-Button{
-    display: inline-block;
-    opacity: 100%;
-    z-index: 5;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    margin:5.8vh 0px 4vh 1vw;
-    border: none;
-    border-radius: 5px;
-    background-color: #5D0B98;
-    padding: 1vh 1.6vw 1vh 1.6vw;
-    color: #F5E7FF;
-    font-weight: bold;
-    font-size: 1.3vw;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    text-shadow: -1px -1px 0 #5D0B98,  
-    1px -1px 0 #5D0B98,
-   -1px  1px 0 #5D0B98,
-    1px  1px 0 #5D0B98;
+.Hero-Button {
+	display: inline-block;
+	opacity: 100%;
+	z-index: 5;
+	transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+	cursor: pointer;
+	margin: 5.8vh 0px 4vh 1vw;
+	border: none;
+	border-radius: 5px;
+	background-color: #5d0b98;
+	padding: 1vh 1.6vw 1vh 1.6vw;
+	color: #f5e7ff;
+	font-weight: bold;
+	font-size: 1.3vw;
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
+		1px 1px 0 #5d0b98;
 }
-.Hero-Button:hover{
-    box-shadow: 0px 0px 10px 0px #5D0B98;
-    background-color: black;
-    color: #5D0B98;
+.Hero-Button:hover {
+	box-shadow: 0px 0px 10px 0px #5d0b98;
+	background-color: black;
+	color: #5d0b98;
 }
 
-.Project-Scale-Pannel{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #F5E7FF;
-    padding-top: 0vh;
-    padding-bottom: 1vh;
-    
+.How-It-Works-Wrap {
+	display: flex;
+	flex-direction: column;
 }
-.Home-Header-Wrap{
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
+.How-It-Works-Intro-Pannel {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 3vw;
+	background-color: #f5e7ff;
+	background-color: #f5e7ff;
+	padding-top: 4vh;
+	padding-bottom: 2vh;
 }
-.Project-Scale-Header{
-    display: inline-flex;
-    opacity: 100%;
-    margin: 0px 0px 1.8vh 0px;
-    border-bottom: 2px ridge #5D0B98;
-    padding: 0px 0px 4px 0px;
-    color: black;
-    font-weight: bold;
-    font-size: max(1.8vw, 34pt);
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    text-align: center;
-    text-shadow: -2px -2px 0 hsl(275, 100%, 95%),  
-    2px -2px 0 #F5E7FF,
-   -2px  2px 0 #F5E7FF,
-    4px  4px 0 #F5E7FF;
+.How-It-Works-Header {
+	display: inline-block;
+	padding: 0px 0px 20px 0px;
+	color: #f5e7ff;
+	font-weight: bold;
+	font-size: max(2.2vw, 34pt);
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	letter-spacing: 2px;
+	text-align: center;
+	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+		2px 2px 0 black;
 }
-
-.Project-Scale-Text{
-    margin:0px;
-    margin-top: 2vh;
-    margin-left: 26vw;
-    padding: 0px;
-    color: black;
-    font-size: max(.8vw, 14pt);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; ;
-    text-align: left;
-    text-shadow: -1px -1px 0 #F5E7FF,  
-    1px -1px 0 #F5E7FF,
-   -1px  1px 0 #F5E7FF,
-    1px  1px 0 #F5E7FF;
+.Down-Arrow-Home {
+	width: 80px;
+	height: 80px;
+}
+.Project-Scale-Text {
+	margin: 0px;
+	margin-top: 2vh;
+	margin-left: 26vw;
+	padding: 0px;
+	color: black;
+	font-size: max(0.8vw, 14pt);
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	text-align: left;
+	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0 #f5e7ff, -1px 1px 0 #f5e7ff,
+		1px 1px 0 #f5e7ff;
 }
 
-.Project-Scale-Text-Emph{
-    font-weight: bold;
+.Project-Scale-Text-Emph {
+	font-weight: bold;
 }
