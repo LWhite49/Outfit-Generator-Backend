@@ -93,13 +93,16 @@
 	justify-content: center;
 	align-items: center;
 	gap: 3vw;
+	border-bottom: 2px solid rgb(0, 0, 0, 0.1);
 	background-color: #f5e7ff;
 	background-color: #f5e7ff;
 	padding-top: 4vh;
-	padding-bottom: 2vh;
+	padding-bottom: 10vh;
 }
 .How-It-Works-Header {
 	display: inline-block;
+	transition: color 0.3s;
+	cursor: pointer;
 	padding: 0px 0px 20px 0px;
 	color: #f5e7ff;
 	font-weight: bold;
@@ -110,23 +113,80 @@
 	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
 		2px 2px 0 black;
 }
+.How-It-Works-Header:hover {
+	color: #c9ace1;
+}
 .Down-Arrow-Home {
 	width: 80px;
 	height: 80px;
 }
-.Project-Scale-Text {
+.Step-One-Aggregation-Pannel {
+	position: relative;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 3vw;
+	background-color: #f6ecfe;
+	padding-top: 14vh;
+	padding-bottom: max(30vh, 200px);
+}
+.Step-One-Header {
+	display: inline-block;
+	position: relative;
+	left: -4vw;
 	margin: 0px;
-	margin-top: 2vh;
-	margin-left: 26vw;
-	padding: 0px;
+	padding-top: 2vh;
+	padding-bottom: 3vh;
+	color: #c9ace1;
+	font-weight: bold;
+	font-size: max(1.8vw, 30pt);
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	letter-spacing: 2px;
+	text-align: start;
+	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+		2px 2px 0 black;
+}
+.Step-Span {
+	margin-right: min(2vw, 30px);
 	color: black;
-	font-size: max(0.8vw, 14pt);
+	text-shadow: -1px -1px 0 #c9ace1, 1px -1px 0 #c9ace1, -1px 1px 0 #c9ace1,
+		2px 2px 0 #c9ace1;
+}
+.Bullet-Span {
+	margin-right: 1vw;
+	color: #5d0b98;
+}
+.Bullet-Text-Emph {
+	color: #5d0b98;
+}
+.Hanger-Image {
+	position: relative;
+	top: 16px;
+	right: 30px;
+	width: 80px;
+	height: 80px;
+}
+.Step-One-Image {
+	display: inline;
+	position: absolute;
+	top: 16vh;
+	left: 4vw;
+	border: 4px double #c9ace1;
+	border-radius: 80px;
+	background-color: #f5e7ff;
+	padding: 2vw;
+	width: 14vw;
+	height: 14vw;
+}
+.Step-One-Text {
+	margin: 0px;
+	margin-top: 3vh;
+	margin-left: 30vw;
+	color: black;
+	font-weight: 600;
+	font-size: max(1vw, 18pt);
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 	text-align: left;
 	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0 #f5e7ff, -1px 1px 0 #f5e7ff,
 		1px 1px 0 #f5e7ff;
-}
-
-.Project-Scale-Text-Emph {
-	font-weight: bold;
 }
