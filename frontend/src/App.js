@@ -6,7 +6,7 @@ import { useState, createContext, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import axios from "axios";
-import logo from "./images/TempLogo.png";
+import logo from "./images/OGLogo.png";
 
 //Import Images using require.context
 const imageContext = require.context(
@@ -141,7 +141,7 @@ function App() {
 									to="/"
 									className={
 										subPage === "/home"
-											? "NavbarElemSelected"
+											? "NavbarElem Selected"
 											: "NavbarElem"
 									}
 									onClick={() => {
@@ -154,7 +154,7 @@ function App() {
 									to="/generator"
 									className={
 										subPage === "/generator"
-											? "NavbarElemSelected"
+											? "NavbarElem Selected"
 											: "NavbarElem"
 									}
 									onClick={() => {
@@ -167,7 +167,7 @@ function App() {
 									to="/about"
 									className={
 										subPage === "/about"
-											? "NavbarElemSelected"
+											? "NavbarElem Selected"
 											: "NavbarElem"
 									}
 									onClick={() => {
