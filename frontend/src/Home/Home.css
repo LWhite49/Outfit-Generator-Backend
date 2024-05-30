@@ -87,16 +87,14 @@
 	display: flex;
 	flex-direction: column;
 }
-.How-It-Works-Intro-Pannel {
+.How-It-Works-Intro-Panel {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	gap: 3vw;
-	border-bottom: 2px solid rgb(0, 0, 0, 0.1);
 	background-color: #f5e7ff;
-	background-color: #f5e7ff;
-	padding-top: 4vh;
+	padding-top: 2vh;
 	padding-bottom: 10vh;
 }
 .How-It-Works-Header {
@@ -120,24 +118,33 @@
 	width: 80px;
 	height: 80px;
 }
-.Step-One-Aggregation-Pannel {
+.Wave-Container {
+	margin: 0px;
+	padding: 0px;
+}
+.Wave-Panel-Interface {
+	background-color: #f5e7ff;
+}
+.Step-One-Aggregation-Panel,
+.Step-Two-Coloring-Panel {
 	position: relative;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 3vw;
-	background-color: #f6ecfe;
-	padding-top: 14vh;
-	padding-bottom: max(30vh, 200px);
+	background-color: #c9ace1;
+	padding-top: 12vh;
+	padding-bottom: max(20vh, 200px);
 }
-.Step-One-Header {
+.Step-One-Header,
+.Step-Two-Header {
 	display: inline-block;
 	position: relative;
 	left: -4vw;
 	margin: 0px;
 	padding-top: 2vh;
-	padding-bottom: 3vh;
-	color: #c9ace1;
+	padding-bottom: 6vh;
+	color: #f6ecfe;
 	font-weight: bold;
 	font-size: max(1.8vw, 30pt);
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -147,10 +154,10 @@
 		2px 2px 0 black;
 }
 .Step-Span {
-	margin-right: min(2vw, 30px);
+	margin-right: 12px;
 	color: black;
-	text-shadow: -1px -1px 0 #c9ace1, 1px -1px 0 #c9ace1, -1px 1px 0 #c9ace1,
-		2px 2px 0 #c9ace1;
+	text-shadow: -1px -1px 0 #f6ecfe, 1px -1px 0 #f6ecfe, -1px 1px 0 #f6ecfe,
+		2px 2px 0 #f6ecfe;
 }
 .Bullet-Span {
 	margin-right: 1vw;
@@ -166,19 +173,21 @@
 	width: 80px;
 	height: 80px;
 }
-.Step-One-Image {
+.Step-One-Image,
+.Step-Two-Image {
 	display: inline;
 	position: absolute;
 	top: 16vh;
 	left: 4vw;
-	border: 4px double #c9ace1;
+	border: 4px double black;
 	border-radius: 80px;
 	background-color: #f5e7ff;
 	padding: 2vw;
-	width: 14vw;
-	height: 14vw;
+	width: 360px;
+	height: 360px;
 }
-.Step-One-Text {
+.Step-One-Text,
+.Step-Two-Text {
 	margin: 0px;
 	margin-top: 3vh;
 	margin-left: 30vw;
@@ -189,4 +198,33 @@
 	text-align: left;
 	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0 #f5e7ff, -1px 1px 0 #f5e7ff,
 		1px 1px 0 #f5e7ff;
+}
+
+.Step-Two-Coloring-Panel {
+	background-color: #5d0b98;
+}
+.Wave-Panel-Interface-Two {
+	background-color: #c9ace1;
+}
+.Spectrum-Bar {
+	display: inline;
+	position: relative;
+	top: -7vh;
+	left: 36vw;
+	rotate: 90deg;
+	border: 4px double black;
+	width: 400px;
+	height: 60px;
+}
+.Bullet-Span-Two {
+	margin-right: 1vw;
+	color: #c9ace1;
+}
+.Bullet-Text-Emph-Two {
+	color: #ffff99;
+}
+.Step-Two-Text {
+	color: #f6ecfe;
+	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+		1px 1px 0 black;
 }

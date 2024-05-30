@@ -3,9 +3,11 @@ import { useContext, useRef } from "react";
 import { FeedContext } from "../App";
 import { Link } from "react-router-dom";
 import { Carousel } from "../Carousel/Carousel.js";
+import Wavify from "react-wavify";
 import downArrowHome from "../images/downArrowHome.svg";
 import wardrobeSvg from "../images/cabinetSvg.svg";
-import hangerSvg from "../images/hangerSvg.svg";
+import paintPalletSvg from "../images/paintPalletSvg.svg";
+import palletBar from "../images/spectrumBar.png";
 
 export const Home = () => {
 	// Extract images from feed context
@@ -48,7 +50,8 @@ export const Home = () => {
 				<Carousel className="Hero-Background" images={images} />
 			</div>
 			<div className="How-It-Works-Wrap">
-				<div className="How-It-Works-Intro-Pannel">
+				<div className="How-It-Works-Intro-Panel">
+					{" "}
 					<img
 						className="Down-Arrow-Home"
 						src={downArrowHome}
@@ -65,15 +68,17 @@ export const Home = () => {
 						src={downArrowHome}
 						alt="Down Arrow"></img>
 				</div>
-				<div className="Step-One-Aggregation-Pannel" ref={targetRef}>
+				<Wavify
+					className="Wave-Panel-Interface"
+					strokeWidth="0"
+					fill="#c9ace1"
+					options={{ height: 20, amplitude: 35, speed: 0.25 }}
+				/>
+				<div className="Step-One-Aggregation-Panel" ref={targetRef}>
 					<p className="Step-One-Header">
-						<span className="Step-Span">Step #1: </span>Building a
+						<span className="Step-Span">Step #1: </span>Building our
 						Wardrobe
 					</p>
-					<img
-						className="Hanger-Image"
-						src={hangerSvg}
-						alt="Hangar"></img>
 					<img
 						className="Step-One-Image"
 						src={wardrobeSvg}
@@ -106,6 +111,62 @@ export const Home = () => {
 						<span className="Bullet-Text-Emph">millions</span> of
 						new combinations each day!
 					</p>
+				</div>
+				<Wavify
+					className="Wave-Panel-Interface-Two"
+					strokeWidth="0"
+					fill="#5d0b98"
+					options={{ height: 20, amplitude: 35, speed: 0.25 }}
+				/>
+				<div className="Step-Two-Coloring-Panel">
+					<p className="Step-Two-Header">
+						{" "}
+						<span className="Step-Span">Step #2: </span>Analyze our
+						Clothes
+					</p>
+					<img
+						className="Step-Two-Image"
+						src={paintPalletSvg}
+						alt="Step Two"></img>
+					<p
+						className="Step-Two-Text"
+						style={{ letterSpacing: ".4px" }}>
+						{" "}
+						<span className="Bullet-Span-Two">&bull; </span>Before
+						putting together any{" "}
+						<span className="Bullet-Text-Emph-Two">outfits</span>,
+						you have to understand the clothes you own{" "}
+					</p>
+					<p
+						className="Step-Two-Text"
+						style={{ letterSpacing: ".4px" }}>
+						{" "}
+						<span className="Bullet-Span-Two">&bull; </span>Our{" "}
+						<span className="Bullet-Text-Emph-Two">
+							image processing algorithm
+						</span>{" "}
+						finds and stores the most{" "}
+						<span className="Bullet-Text-Emph-Two">
+							prominent colors
+						</span>{" "}
+						from each item{" "}
+					</p>
+					<p
+						className="Step-Two-Text"
+						style={{ letterSpacing: ".4px" }}>
+						{" "}
+						<span className="Bullet-Span-Two">&bull; </span>Those
+						colors allow our{" "}
+						<span className="Bullet-Text-Emph-Two">algorithm</span>{" "}
+						to make choices about which{" "}
+						<span className="Bullet-Text-Emph-Two">
+							clothes match eachother
+						</span>
+					</p>
+					<img
+						className="Spectrum-Bar"
+						src={palletBar}
+						alt="Bar"></img>
 				</div>
 			</div>
 		</div>
