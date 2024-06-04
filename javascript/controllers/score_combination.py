@@ -42,28 +42,28 @@ def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]]
         rand_indices = randint(0, len(seed_array), size=6)
         # compare all these indices to the seed, selecting the best one
         best_idx = rand_indices[0]
-        best_score = score(seed_colors, item_roto[roto_idx + 1][0])
+        best_score = score(seed_colors, item_roto[(roto_idx + 1) % 2][0])
         for i in rand_indices[1:]:
-            comparison = score(seed_colors, item_roto[roto_idx + 1][i])
+            comparison = score(seed_colors, item_roto[(roto_idx + 1) % 2][i])
             if comparison > best_score:
                 best_score = comparison
                 best_idx = i
         
-        outfit_dict[list(outfit_dict.keys())[roto_idx + 1]] = best_idx
+        outfit_dict[list(outfit_dict.keys())[(roto_idx + 1) % 2]] = best_idx
         
         # repeat this process for the final set
         rand_indices = randint(0, len(seed_array), size=10)
         best_idx = rand_indices[0]
-        best_score = score(seed_colors, item_roto[roto_idx + 2][0])
+        best_score = score(seed_colors, item_roto[(roto_idx + 2) % 2][0])
         for i in rand_indices[1:]:
-            comparison = score(seed_colors, item_roto[roto_idx + 2][i])
+            comparison = score(seed_colors, item_roto[(roto_idx + 2) % 2][i])
             if comparison > best_score:
                 best_score = comparison
                 best_idx = i
         
-        outfit_dict[list(outfit_dict.keys())[roto_idx + 2]] = best_idx
+        outfit_dict[list(outfit_dict.keys())[(roto_idx + 2) % 2]] = best_idx
 
-        indexed_fits.append(outfit_array)
+        indexed_fits.append(outfit_dict)
         roto_idx = (roto_idx + 1) % 2 # increment rotation index
     
     return indexed_fits
@@ -76,5 +76,3 @@ outfits = index_palettes(tops, bottoms, shoes)
 
 print(json.dumps(outfits))
 sys.stdout.flush()
-
-if __name_
