@@ -19,7 +19,7 @@ class ClothingDescriber():
     def __init__(self):
         self.km = KMeans(n_clusters=n_groups(), random_state=255, n_init='auto', tol=1e-6)
         self.sess = rembg.new_session('u2netp')
-    def get_colors(self, url: str) -> list[list[int, float, str]]:
+    def get_colors(self, url: str) -> list[list[str, float]]:
         '''Takes in an image url and returns its predominant color groups in order. Color grouping info has the hex value and percentage, in that order. Failures will return -1.'''
         # get the image data from the url
         response = urllib.request.urlopen(url)

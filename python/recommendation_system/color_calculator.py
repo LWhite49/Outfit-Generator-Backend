@@ -51,7 +51,7 @@ def neutrality(color: str)->float:
     '''Returns the inverse of saturation, indicating how neutral a color is.'''
     return 1 - (saturation(color) / 100)
 
-def outfit_comparison(palette1: list[list[str, float], list[str, float], list[str, float], list[str, float]], palette2: list[list[str, float], list[str, float], list[str, float], list[str, float]])->list[float, float, float, float]:
+def outfit_comparison(palette1: list[list[str, float]], palette2: list[list[str, float]])->list[float, float, float, float]:
     '''Takes in the color arrays from two database items (which are formatted as [color label, pixel percentage, hex value]) and produce scores for their relative complementariness, similarity, and neutrality, in that order.'''
     complementary_score = 0
     similarity_score = 0

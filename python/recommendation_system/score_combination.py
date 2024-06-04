@@ -1,32 +1,72 @@
 import sys
 import json
 import ast
+from numpy.random import randint
 from color_calculator import outfit_comparison
 
-def score(item1, item2) -> float:
+def score(item1, item2, item3 = None) -> float:
     _, similarity, _, _ = outfit_comparison(item1, item2)
-    return similarity
+    if not item3:
+        return similarity
+    else:
+        _, similarity2, _, _ = outfit_comparison(item1, item3)
+        _, similarity3, _, _ = outfit_comparison(item2, item3)
+        return (similarity + similarity2 + similarity3) / 3
 
-try:
-    if len(sys.argv) == 3:
-        colors1 = ast.literal_eval(sys.argv[1])
-        colors2 = ast.literal_eval(sys.argv[2])
+def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]], shoes: list[list[str, float]]) -> list[dict[str: int]]:
+    # will rotate through the arrays for seed item collection
+    item_roto = [tops, bottoms, shoes]
+    roto_idx = 0
 
-        print(json.dumps(str(round(score(colors1, colors2), 3))))
-
-    elif len(sys.argv) == 4: 
-        colors1 = ast.literal_eval(sys.argv[1])
-        colors2 = ast.literal_eval(sys.argv[2])
-        colors3 = ast.literal_eval(sys.argv[3])
+    indexed_fits = [] # final array to be returned
+    selected_items = [[-1][-1][-1]] # keeps track of indices selected for seeding so that the same seed isn't picked twice
+    while len(indexed_fits) <= 20:
+        outfit_dict = {'top': -1, 'bottom': -1, 'shoe': -1}
         
-        score1 = score(colors1, colors2)
-        score2 = score(colors1, colors3)
-        score3 = score(colors2, colors3)
+        seed_array = item_roto[roto_idx]
+        
+        seed_idx = randint(0, len(seed_array)) # get a random item to seed the selection process
+        while seed_idx in selected_items[roto_idx]:
+            seed_idx = randint(0, len(seed_array))
+        seed_colors = seed_array[seed_idx]
 
-        print(json.dumps(str(round((score1 + score2 + score3) / 3, 3))))
+        outfit_dict[outfit_dict.keys[roto_idx]] = seed_idx
+        
+        # get a certain number of items from the next set for comparison
+        rand_indices = randint(0, len(seed_array), size=6)
+        # compare all these indices to the seed, selecting the best one
+        best_idx = rand_indices[0]
+        best_score = score(seed_colors, item_roto[roto_idx + 1][0])
+        for i in rand_indices[1:]:
+            comparison = score(seed_colors, item_roto[roto_idx + 1][i])
+            if comparison > best_score:
+                best_score = comparison
+                best_idx = i
+        
+        outfit_dict[outfit_dict.keys[roto_idx + 1]] = best_idx
+        
+        # repeat this process for the final set
+        rand_indices = randint(0, len(seed_array), size=10)
+        best_idx = rand_indices[0]
+        best_score = score(seed_colors, item_roto[roto_idx + 2][0])
+        for i in rand_indices[1:]:
+            comparison = score(seed_colors, item_roto[roto_idx + 2][i])
+            if comparison > best_score:
+                best_score = comparison
+                best_idx = i
+        
+        outfit_dict[outfit_dict.keys[roto_idx + 2]] = best_idx
 
-except:
-    print(json.dumps('-0.5'))
+        indexed_fits.append(outfit_array)
+        roto_idx = (roto_idx + 1) % 2 # increment rotation index
+    
+    return indexed_fits
 
-finally:
-    sys.stdout.flush()
+tops = ast.literal_eval(sys.argv[1])
+bottoms = ast.literal_eval(sys.argv[2])
+shoes = ast.literal_eval(sys.argv[3])
+
+outfits = index_palettes(tops, bottoms, shoes)
+
+print(json.dumps(outfits))
+sys.stdout.flush()
