@@ -75,15 +75,18 @@ export const OutfitFeedDisplay = (props) => {
 			{feedArray.map((i, index) => (
 				<div className="Outfit-Feed-Item" key={index}>
 					<TopDisplay
-						item={outfitFeed.pallet[feedStatus.currIndex + i].top}
+						item={outfitFeed.pallet[outfitFeed.outfits[i].top].top}
 					/>
 					<BottomDisplay
 						item={
-							outfitFeed.pallet[feedStatus.currIndex + i].bottom
+							outfitFeed.pallet[outfitFeed.outfits[i].bottom]
+								.bottom
 						}
 					/>
 					<ShoeDisplay
-						item={outfitFeed.pallet[feedStatus.currIndex + i].shoes}
+						item={
+							outfitFeed.pallet[outfitFeed.outfits[i].shoe].shoes
+						}
 					/>
 				</div>
 			))}
