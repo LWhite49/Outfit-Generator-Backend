@@ -136,18 +136,15 @@
 	align-items: center;
 	gap: 3vw;
 	background-color: #c9ace1;
-	padding-top: 12vh;
-	padding-bottom: max(20vh, 200px);
-}
-.Step-One-Aggregation-Panel {
-	padding-bottom: 0px;
+	padding-top: 70px;
+	padding-bottom: 200px;
 }
 .Step-One-Header,
 .Step-Two-Header,
 .Step-Three-Header {
 	display: inline-block;
 	position: relative;
-	left: -4vw;
+	left: -120px;
 	margin: 0px;
 	padding-top: 2vh;
 	padding-bottom: 6vh;
@@ -173,19 +170,12 @@
 .Bullet-Text-Emph {
 	color: #5d0b98;
 }
-.Hanger-Image {
-	position: relative;
-	top: 16px;
-	right: 30px;
-	width: 80px;
-	height: 80px;
-}
 .Step-One-Image,
 .Step-Two-Image,
 .Step-Three-Image {
 	display: inline;
 	position: absolute;
-	top: 16vh;
+	top: 10vh;
 	left: 4vw;
 	border: 4px double black;
 	border-radius: 80px;
@@ -246,9 +236,9 @@
 }
 .Spectrum-Bar {
 	display: inline;
-	position: relative;
-	top: -8vh;
-	left: 36vw;
+	position: absolute;
+	top: 26vh;
+	right: -3vw;
 	rotate: 90deg;
 	border: 4px double black;
 	width: 400px;
@@ -273,6 +263,10 @@
 	background-color: #000000;
 }
 .Step-Three-Header {
+	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
+		2px 2px 0 #5d0b98;
+}
+.Bullet-Text-Emph-Three {
 	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
 		2px 2px 0 #5d0b98;
 }
