@@ -101,9 +101,16 @@ function App() {
 				brand
 			)}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
 			let res = await axios.get(url);
+			const diff = outfitFeed.pallet.length;
+			const adjustedOutfits = res.data.outfits.map((outfit) => {
+				outfit.top += diff;
+				outfit.bottom += diff;
+				outfit.shoe += diff;
+				return outfit;
+			});
 			setOutfitFeed((prev) => ({
-				...prev,
 				pallet: prev.pallet.concat(res.data.pallet),
+				outfits: prev.outfits.concat(adjustedOutfits),
 			}));
 		} catch (err) {
 			console.log(err, "Error expanding feed");

@@ -34,13 +34,13 @@ export const OutfitFeedDisplay = (props) => {
 			feedLength: feedStatus.feedLength,
 			currIndex: feedStatus.currIndex + 1,
 		});
-		if (feedStatus.currIndex + displayCount + 5 >= feedStatus.feedLength) {
+		if (feedStatus.currIndex + displayCount + 7 >= feedStatus.feedLength) {
+			expandFeed();
 			setFeedStatus({
 				feedLength: feedStatus.feedLength + 20,
 				currIndex: feedStatus.currIndex + 1,
 				expanded: true,
 			});
-			expandFeed();
 		}
 	};
 
@@ -75,15 +75,27 @@ export const OutfitFeedDisplay = (props) => {
 			{feedArray.map((i, index) => (
 				<div className="Outfit-Feed-Item" key={index}>
 					<TopDisplay
-						item={outfitFeed.pallet[feedStatus.currIndex + i].top}
+						item={
+							outfitFeed.pallet[
+								outfitFeed.outfits[feedStatus.currIndex + i].top
+							].top
+						}
 					/>
 					<BottomDisplay
 						item={
-							outfitFeed.pallet[feedStatus.currIndex + i].bottom
+							outfitFeed.pallet[
+								outfitFeed.outfits[feedStatus.currIndex + i]
+									.bottom
+							].bottom
 						}
 					/>
 					<ShoeDisplay
-						item={outfitFeed.pallet[feedStatus.currIndex + i].shoes}
+						item={
+							outfitFeed.pallet[
+								outfitFeed.outfits[feedStatus.currIndex + i]
+									.shoe
+							].shoes
+						}
 					/>
 				</div>
 			))}
@@ -91,7 +103,9 @@ export const OutfitFeedDisplay = (props) => {
 				<TopDisplay
 					item={
 						outfitFeed.pallet[
-							feedStatus.currIndex + feedArray.length
+							outfitFeed.outfits[
+								feedStatus.currIndex + feedArray.length
+							].top
 						].top
 					}
 					invis={true}
@@ -99,7 +113,9 @@ export const OutfitFeedDisplay = (props) => {
 				<BottomDisplay
 					item={
 						outfitFeed.pallet[
-							feedStatus.currIndex + feedArray.length
+							outfitFeed.outfits[
+								feedStatus.currIndex + feedArray.length
+							].bottom
 						].bottom
 					}
 					invis={true}
@@ -107,7 +123,9 @@ export const OutfitFeedDisplay = (props) => {
 				<ShoeDisplay
 					item={
 						outfitFeed.pallet[
-							feedStatus.currIndex + feedArray.length
+							outfitFeed.outfits[
+								feedStatus.currIndex + feedArray.length
+							].shoe
 						].shoes
 					}
 					invis={true}
