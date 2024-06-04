@@ -36,7 +36,7 @@ def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]]
             seed_idx = randint(0, len(seed_array))
         seed_colors = seed_array[seed_idx]
 
-        outfit_dict[list(outfit_dict.keys())[roto_idx]] = seed_idx
+        outfit_dict[list(outfit_dict.keys())[roto_idx]] = int(seed_idx)
         
         # get a certain number of items from the next set for comparison
         rand_indices = randint(0, len(seed_array), size=6)
@@ -49,7 +49,7 @@ def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]]
                 best_score = comparison
                 best_idx = i
         
-        outfit_dict[list(outfit_dict.keys())[(roto_idx + 1) % 2]] = best_idx
+        outfit_dict[list(outfit_dict.keys())[(roto_idx + 1) % 2]] = int(best_idx)
         
         # repeat this process for the final set
         rand_indices = randint(0, len(seed_array), size=10)
@@ -61,7 +61,7 @@ def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]]
                 best_score = comparison
                 best_idx = i
         
-        outfit_dict[list(outfit_dict.keys())[(roto_idx + 2) % 2]] = best_idx
+        outfit_dict[list(outfit_dict.keys())[(roto_idx + 2) % 2]] = int(best_idx)
 
         indexed_fits.append(outfit_dict)
         roto_idx = (roto_idx + 1) % 2 # increment rotation index
