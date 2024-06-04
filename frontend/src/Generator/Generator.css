@@ -1,244 +1,248 @@
 .Generator {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%23e3c5fc' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
-  background-color: #21033a;
-  padding-top: 10vh;
-  overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%23e3c5fc' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+	background-color: #21033a;
+	padding-top: 10vh;
+	overflow: hidden;
 }
 .Generator-Settings {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 6vh;
-  border: 4px ridge #5d0b98;
-  border-radius: 30px;
-  background-color: #f6ecfe;
-  padding-top: max(1vh, 20px);
-  width: 80%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 6vh;
+	border: 4px ridge #5d0b98;
+	border-radius: 30px;
+	background-color: #f6ecfe;
+	padding-top: max(1vh, 20px);
+	width: 80%;
 }
 .Generator-Settings-Header {
-  display: inline-flex;
-  opacity: 100%;
-  margin: 0px 0vw 1.8vh 0vw;
-  border-bottom: 2px ridge #5d0b98;
-  padding: 1vh 1vw 4px 1vw;
-  color: black;
-  font-weight: bold;
-  font-size: max(1.8vw, 34pt);
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-  text-align: center;
-  text-shadow: -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff,
-    4px 4px 0 #ffffff;
+	display: inline-flex;
+	opacity: 100%;
+	margin: 0px 0vw 1.8vh 0vw;
+	border-bottom: 2px ridge #5d0b98;
+	padding: 1vh 1vw 4px 1vw;
+	color: black;
+	font-weight: bold;
+	font-size: max(1.8vw, 34pt);
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	text-align: center;
+	text-shadow: -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff,
+		4px 4px 0 #ffffff;
 }
 .Gender-Container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: max(30px, 2vw);
-  margin-top: 6px;
-  margin-bottom: 16px;
-  border: 2px ridge #5d0b98;
-  border-radius: 10px;
-  background-color: #f5e7ff;
-  padding: 10px 24px 14px 24px;
-  width: max(24vw, 400px);
-  max-width: max(24vw, 400px);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: max(30px, 2vw);
+	margin-top: 6px;
+	margin-bottom: 16px;
+	border: 2px ridge #5d0b98;
+	border-radius: 10px;
+	background-color: #f5e7ff;
+	padding: 10px 24px 14px 24px;
+	width: max(24vw, 400px);
+	max-width: max(24vw, 400px);
 }
 .Gender-Slider-Container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 .Slider-Label {
-  display: inline-block;
-  margin-bottom: 4px;
-  color: black;
-  font-weight: bold;
-  font-size: 14pt;
+	display: inline-block;
+	margin-bottom: 4px;
+	color: black;
+	font-weight: bold;
+	font-size: 14pt;
 }
 .Top-Gender-Slider,
 .Bottom-Gender-Slider,
 .Shoe-Gender-Slider {
-  position: relative;
-  margin-top: 4px;
+	position: relative;
+	margin-top: 4px;
 }
 .Size-Container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: max(24vw, 400px);
-  max-width: max(24vw, 400px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: max(24vw, 400px);
+	max-width: max(24vw, 400px);
 }
 .Size-Input-Container,
 .Brand-Container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: max(1vw, 10px);
-  margin-top: max(1.2vh, 10px);
-  margin-bottom: max(1.2vh, 10px);
-  border-bottom: 2px ridge #5d0b98;
-  padding: 0px 4vw 0px 4vw;
-  width: max(24vw, 400px);
-  max-width: max(24vw, 400px);
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: max(1vw, 10px);
+	margin-top: max(1.2vh, 10px);
+	margin-bottom: max(1.2vh, 10px);
+	border-bottom: 2px ridge #5d0b98;
+	padding: 0px 4vw 0px 4vw;
+	width: max(24vw, 400px);
+	max-width: max(24vw, 400px);
 }
 .Brand-Container {
-  margin-bottom: max(2vh, 60px);
-  border-bottom: none;
+	margin-bottom: max(2vh, 60px);
+	border-bottom: none;
 }
 
 .Size-Label,
 .Waist-Size-Label,
 .Shoe-Size-Label,
 .Bottom-Size-Label {
-  display: inline-block;
-  margin: 10px 20px 10px 10px;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
-  color: black;
-  font-weight: bold;
-  font-size: 14pt;
-  text-align: center;
+	display: inline-block;
+	margin: 10px 20px 10px 10px;
+	width: 60px;
+	min-width: 60px;
+	max-width: 60px;
+	color: black;
+	font-weight: bold;
+	font-size: 14pt;
+	text-align: center;
 }
 .Waist-Size-Label {
-  margin-right: 6px;
-  font-size: 12pt;
+	margin-right: 6px;
+	font-size: 12pt;
 }
 .Shoe-Size-Label {
-  font-size: 22pt;
-  text-shadow: #f5e7ff 2px 2px 1px;
+	font-size: 22pt;
+	text-shadow: #f5e7ff 2px 2px 1px;
 }
 .Shoe-Size-Range-Emph {
-  color: #5d0b98;
+	color: #5d0b98;
 }
 .Size-Button,
 .Size-Button-Small {
-  display: inline-block;
-  transition: background-color 0.3s, color 0.3s, border-radius, text-shadow 0.3s,
-    border-width 0.3s;
-  cursor: pointer;
-  margin: 10px 0 10px 0;
-  border: 1px ridge #5d0b98;
-  border-radius: 5px;
-  background-color: #f5e7ff;
-  padding: 6px 10px 6px 10px;
-  color: #f5e7ff;
-  font-weight: bold;
-  font-size: 11pt;
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
-    1px 1px 0 black;
+	display: inline-block;
+	transition: background-color 0.3s, color 0.3s, border-radius,
+		text-shadow 0.3s, border-width 0.3s;
+	cursor: pointer;
+	margin: 10px 0 10px 0;
+	border: 1px ridge #5d0b98;
+	border-radius: 5px;
+	background-color: #f5e7ff;
+	padding: 6px 10px 6px 10px;
+	color: #f5e7ff;
+	font-weight: bold;
+	font-size: 11pt;
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+		1px 1px 0 black;
 }
 .Size-Button-Small {
-  padding: 6px 6px 6px 6px;
+	padding: 6px 6px 6px 6px;
 }
 .Size-Button:hover,
 .Size-Button-Small:hover {
-  border-color: #f5e7ff;
-  background-color: black;
-  color: #5d0b98;
-  text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0px #f5e7ff, -1px 1px 0 #f5e7ff,
-    1px 1px 0 #f5e7ff;
+	border-color: #f5e7ff;
+	background-color: black;
+	color: #5d0b98;
+	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0px #f5e7ff, -1px 1px 0 #f5e7ff,
+		1px 1px 0 #f5e7ff;
 }
 .Size-Button-Selected,
 .Size-Button-Small-Selected {
-  display: inline-block;
-  transition: background-color 0.3s, color 0.3s, border-radius, text-shadow 0.3s,
-    border-width 0.3s;
-  cursor: pointer;
-  margin: 18px 0 18px 0;
-  border: 1px ridge #5d0b98;
-  border-radius: 5px;
-  background-color: black;
-  padding: 6px 10px 6px 10px;
-  color: #5d0b98;
-  font-weight: bold;
-  font-size: 11pt;
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-  text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0px #f5e7ff, -1px 1px 0 #f5e7ff,
-    1px 1px 0 #f5e7ff;
+	display: inline-block;
+	transition: background-color 0.3s, color 0.3s, border-radius,
+		text-shadow 0.3s, border-width 0.3s;
+	cursor: pointer;
+	margin: 18px 0 18px 0;
+	border: 1px ridge #5d0b98;
+	border-radius: 5px;
+	background-color: black;
+	padding: 6px 10px 6px 10px;
+	color: #5d0b98;
+	font-weight: bold;
+	font-size: 11pt;
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0px #f5e7ff, -1px 1px 0 #f5e7ff,
+		1px 1px 0 #f5e7ff;
 }
 .Waist-Container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 12px;
-  border: 1px ridge #5d0b98;
-  border-radius: 10px;
-  background-color: #f5e7ff;
-  padding: 0px 10px 0px 0px;
-  width: max(24vw, 400px);
-  max-width: max(24vw, 400px);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 12px;
+	border: 1px ridge #5d0b98;
+	border-radius: 10px;
+	background-color: #f5e7ff;
+	padding: 0px 10px 0px 0px;
+	width: max(24vw, 400px);
+	max-width: max(24vw, 400px);
 }
 .Size-Button-Small-Selected {
-  padding: 6px 6px 6px 6px;
+	padding: 6px 6px 6px 6px;
 }
 
 .Waist-Size-Up,
 .Waist-Size-Down {
-  border: none;
-  background-color: #f5e7ff;
-  padding: 0px;
+	border: none;
+	background-color: #f5e7ff;
+	padding: 0px;
 }
 
 .Waist-Size-Up-Icon,
 .Waist-Size-Down-Icon {
-  cursor: pointer;
-  margin: 0px;
-  width: max(1vw, 20px);
+	cursor: pointer;
+	margin: 0px;
+	width: max(1vw, 20px);
 }
 
 .Waist-Size-Up-Icon {
-  rotate: 180deg;
+	rotate: 180deg;
 }
 .Waist-Size-Display {
-  display: inline-block;
-  margin: 0px 10px 0px 10px;
-  color: black;
-  font-weight: bold;
-  font-size: 16pt;
-  text-shadow: #e3c5fc 2px 2px 0px;
+	display: inline-block;
+	margin: 0px 10px 0px 10px;
+	color: black;
+	font-weight: bold;
+	font-size: 16pt;
+	text-shadow: #e3c5fc 2px 2px 0px;
 }
 
 .Shoe-Size-Input {
-  box-shadow: #5d0b98 1px 1px 2px;
-  background-color: #f6ecfe;
-  padding: 2px 4px 2px 2px;
-  width: max(3vw, 50px);
+	box-shadow: #5d0b98 1px 1px 2px;
+	background-color: #f6ecfe;
+	padding: 2px 4px 2px 2px;
+	width: max(3vw, 50px);
 }
 .Shoe-Size-Input:focus {
-  outline: none;
-  box-shadow: 1px 1px 1px 2px #5d0b98;
+	outline: none;
+	box-shadow: 1px 1px 1px 2px #5d0b98;
 }
 
 .Outfit-Display {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0px;
 }
 .Outfit-Feed-Display {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 100px;
-  margin-top: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 100px;
+	margin-top: 10px;
+}
+.Index-Display {
+	color: white;
+	font-size: 18pt;
 }
