@@ -25,7 +25,7 @@ def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]]
     roto_idx = 0
 
     indexed_fits = [] # final array to be returned
-    selected_items = [[-1][-1][-1]] # keeps track of indices selected for seeding so that the same seed isn't picked twice
+    selected_items = [[-1],[-1],[-1]] # keeps track of indices selected for seeding so that the same seed isn't picked twice
     while len(indexed_fits) <= 20:
         outfit_dict = {'top': -1, 'bottom': -1, 'shoe': -1}
         
