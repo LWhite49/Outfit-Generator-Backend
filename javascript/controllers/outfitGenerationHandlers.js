@@ -29,6 +29,7 @@ const scoreColorsViaPy = async (p1, p2, p3) => {
 
 		// Parse error output
 		pyProcess.stderr.on("data", (data) => {
+			console.log(data.toString());
 			reject(data.toString());
 		});
 	});

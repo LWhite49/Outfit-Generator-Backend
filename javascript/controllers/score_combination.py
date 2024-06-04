@@ -76,3 +76,5 @@ outfits = index_palettes(tops, bottoms, shoes)
 
 print(json.dumps(outfits))
 sys.stdout.flush()
+
+if __name_
