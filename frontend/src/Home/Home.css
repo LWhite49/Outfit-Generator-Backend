@@ -12,29 +12,32 @@
 	height: 100%;
 }
 .Rel-Dummy {
-	display: inline-block;
-	position: absolute;
-	top: 15%;
-	left: 28%;
+	display: flex;
+	position: relative;
+	top: 22vh;
+	justify-content: center;
+	align-items: center;
 	z-index: 5;
 }
 .Hero-Overlay {
 	display: flex;
+	position: absolute;
 	flex-direction: column;
 	align-items: start;
-	opacity: 75%;
+	opacity: 80%;
 	background-color: black;
-	padding: 2vh 1.6vw 2vh 1.6vw;
+	padding: 30px 50px;
+	width: 1000px;
 }
 .Hero-Header {
 	display: inline-block;
 	opacity: 100%;
 	z-index: 5;
 	margin: 0px;
-	margin-left: 1vw;
+	margin-left: 20px;
 	color: #f5e7ff;
 	font-weight: bold;
-	font-size: 3.2vw;
+	font-size: 62pt;
 	font-family: "Roboto", sans-serif;
 	text-align: left;
 	text-align: center;
@@ -47,12 +50,11 @@
 	opacity: 100%;
 	z-index: 5;
 	margin: 0px;
-	margin-top: 1.2vh;
-	margin-right: 1vw;
+	margin-top: 30px;
+	margin-left: 58px;
 	padding: 0px;
-	padding-left: 2.4vw;
 	color: #f5e7ff;
-	font-size: 1.3vw;
+	font-size: 22pt;
 	font-family: "Courier New", Courier, monospace;
 	text-align: left;
 	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
@@ -65,14 +67,14 @@
 	z-index: 5;
 	transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 	cursor: pointer;
-	margin: 5.8vh 0px 4vh 1vw;
+	margin: max(4vh, 70px) 0px max(4vh, 70px) 30px;
 	border: none;
 	border-radius: 5px;
 	background-color: #5d0b98;
-	padding: 1vh 1.6vw 1vh 1.6vw;
+	padding: 15px 20px;
 	color: #f5e7ff;
 	font-weight: bold;
-	font-size: 1.3vw;
+	font-size: 24pt;
 	font-family: "Roboto", sans-serif;
 	text-align: center;
 	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
@@ -176,7 +178,7 @@
 	display: inline;
 	position: absolute;
 	top: 10vh;
-	left: 4vw;
+	left: 30px;
 	border: 4px double black;
 	border-radius: 80px;
 	background-color: #f5e7ff;
@@ -238,7 +240,7 @@
 	display: inline;
 	position: absolute;
 	top: 26vh;
-	right: -3vw;
+	right: -60px;
 	rotate: 90deg;
 	border: 4px double black;
 	width: 400px;
@@ -275,4 +277,95 @@
 }
 .Bottom-Call-To-Action {
 	margin-top: 6vh;
+}
+
+/* responsive width */
+
+@media (max-width: 2160px) {
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		width: 300px;
+		height: 300px;
+	}
+
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		left: -60px;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 32vw;
+	}
+}
+
+@media (max-width: 1900px) {
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		left: 0px;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 32vw;
+	}
+	.Spectrum-Bar {
+		display: none;
+	}
+}
+
+@media (max-width: 1700px) {
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		top: 14vh;
+		width: 200px;
+		height: 200px;
+	}
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		left: 0px;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 28vw;
+		font-size: 16pt;
+	}
+	.Spectrum-Bar {
+		display: none;
+	}
+}
+
+@media (max-width: 1350px) {
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		top: 18vh;
+		width: 160px;
+		height: 160px;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 26vw;
+		font-size: 15pt;
+	}
+}
+
+@media (max-width: 1220px) {
+}
+
+/* responsive height */
+@media (max-height: 1240px) {
+	.Rel-Dummy {
+		top: 24vh;
+	}
+}
+@media (max-height: 1140px) {
+	.Rel-Dummy {
+		top: 26vh;
+	}
+}
+@media (max-height: 1020px) {
 }

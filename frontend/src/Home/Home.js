@@ -19,7 +19,7 @@ export const Home = () => {
 		window.scrollTo({
 			top:
 				window.innerHeight * 0.2 +
-				Math.max(window.innerHeight * 0.6, 500),
+				Math.max(window.innerHeight * 0.6, 560),
 			behavior: "smooth",
 		});
 	};
@@ -81,9 +81,7 @@ export const Home = () => {
 						className="Step-One-Image"
 						src={wardrobeSvg}
 						alt="Step One"></img>
-					<p
-						className="Step-One-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-One-Text">
 						{" "}
 						<span className="Bullet-Span">&bull; </span>A diverse
 						and well-rounded wardrobe is the foundation for all{" "}
@@ -91,18 +89,14 @@ export const Home = () => {
 							stylish outfits
 						</span>
 					</p>
-					<p
-						className="Step-One-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-One-Text">
 						{" "}
 						<span className="Bullet-Span">&bull; </span>Our program
 						scours the internet for{" "}
 						<span className="Bullet-Text-Emph">thousands</span> of
 						tops, bottoms, and shoes daily
 					</p>
-					<p
-						className="Step-One-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-One-Text">
 						{" "}
 						<span className="Bullet-Span">&bull; </span>Those
 						clothes build a dynamic wardrobe, with{" "}
@@ -126,18 +120,14 @@ export const Home = () => {
 						className="Step-Two-Image"
 						src={paintPalletSvg}
 						alt="Step Two"></img>
-					<p
-						className="Step-Two-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-Two-Text">
 						{" "}
 						<span className="Bullet-Span-Two">&bull; </span>Before
 						putting together any{" "}
 						<span className="Bullet-Text-Emph-Two">outfits</span>,
 						you have to understand the clothes you own{" "}
 					</p>
-					<p
-						className="Step-Two-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-Two-Text">
 						{" "}
 						<span className="Bullet-Span-Two">&bull; </span>Our{" "}
 						<span className="Bullet-Text-Emph-Two">
@@ -149,9 +139,7 @@ export const Home = () => {
 						</span>{" "}
 						from each item{" "}
 					</p>
-					<p
-						className="Step-Two-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-Two-Text">
 						{" "}
 						<span className="Bullet-Span-Two">&bull; </span>Those
 						colors allow our{" "}
@@ -182,9 +170,7 @@ export const Home = () => {
 						className="Step-Three-Image"
 						src={outfitSvg}
 						alt="Step Two"></img>
-					<p
-						className="Step-Two-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-Two-Text">
 						{" "}
 						<span className="Bullet-Span-Two">&bull; </span>For now,
 						each outfit is a{" "}
@@ -197,9 +183,7 @@ export const Home = () => {
 						</span>{" "}
 						to ensure style{" "}
 					</p>
-					<p
-						className="Step-Two-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-Two-Text">
 						{" "}
 						<span className="Bullet-Span-Two">&bull; </span>You can
 						search for any{" "}
@@ -212,9 +196,7 @@ export const Home = () => {
 						</span>{" "}
 						for your body{" "}
 					</p>
-					<p
-						className="Step-Two-Text"
-						style={{ letterSpacing: ".4px" }}>
+					<p className="Step-Two-Text">
 						{" "}
 						<span className="Bullet-Span-Two">&bull; </span>All of
 						this is{" "}
