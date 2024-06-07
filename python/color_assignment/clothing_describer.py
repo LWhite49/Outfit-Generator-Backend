@@ -82,6 +82,7 @@ if __name__ == '__main__':
     # print(cd.get_colors('https://media-photos.depop.com/b1/34570605/1777087976_f762224765eb4cbcb728b9f58ba11978/P0.jpg'))
     # print(cd.get_colors('https://media-photos.depop.com/b1/29235888/1777365855_70ea0ea843e24453abbc993578db119c/P0.jpg'))
     # print(cd.get_colors('https://media-photos.depop.com/b1/44686826/1775473394_0a2ebcb4c0cd413eb05559f51cddbc4e/P0.jpg'))
-    print(cd.get_colors('https://media-photos.depop.com/b1/16866238/1829720127_9092a94406c348889b28b0279471dc82/P0.jpg'))
-    print(cd.get_colors('https://media-photos.depop.com/b1/31681508/1870822571_7ccd6d642ea44174ae33b204a83d0292/P8.jpg'))
+    # print(cd.get_colors('https://media-photos.depop.com/b1/16866238/1829720127_9092a94406c348889b28b0279471dc82/P0.jpg'))
+    # print(cd.get_colors('https://media-photos.depop.com/b1/31681508/1870822571_7ccd6d642ea44174ae33b204a83d0292/P8.jpg'))
+    print(cd.get_colors('http://img2.polyvoreimg.com/cgi/img-thing?.out=jpg&size=m&tid=194508109'))
     

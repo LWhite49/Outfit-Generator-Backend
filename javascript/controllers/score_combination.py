@@ -11,12 +11,19 @@ from numpy.random import randint
 from color_calculator import outfit_comparison
 
 def score(item1, item2, item3 = None) -> float:
-    _, similarity, _, _ = outfit_comparison(item1, item2)
+    _, similarity, n1, n2 = outfit_comparison(item1, item2)
     if not item3:
-        return similarity
+        rel_neutrality = n1 + n2 - (0.2 * n1 * n2)
+
+        return (0.7 * similarity) + (0.3 * rel_neutrality)
     else:
-        _, similarity2, _, _ = outfit_comparison(item1, item3)
-        _, similarity3, _, _ = outfit_comparison(item2, item3)
+        _, similarity2, n1_2, n2_2 = outfit_comparison(item1, item3)
+        _, similarity3, n1_3, n2_3 = outfit_comparison(item2, item3)
+
+        score1 = (0.7 * similarity) + (0.3 * (n1 + n2 - (0.2 * n1 * n2)))
+        score2 = (0.7 * similarity2) + (0.3 * (n1_2 + n2_2 - (0.2 * n1_2 * n2_2)))
+        score3 = (0.7 * similarity3) + (0.3 * (n1_3 + n2_3 - (0.2 * n1_3 * n2_3)))
+
         return (similarity + similarity2 + similarity3) / 3
 
 def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]], shoes: list[list[str, float]]) -> list[dict[str: int]]:
