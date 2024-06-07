@@ -21,6 +21,7 @@
 }
 .Navbar {
 	display: flex;
+	left: 30px;
 	justify-content: center;
 	align-items: center;
 	z-index: 5;
@@ -40,7 +41,7 @@
 	text-decoration: none;
 }
 .NavbarElem.Selected {
-	margin: 0 36px;
+	margin: 0 26px;
 	border-bottom: 2px dashed #f6ecfe;
 	color: #f6ecfe;
 	font-weight: 600;
@@ -49,7 +50,7 @@
 }
 .NavbarLogo {
 	position: relative;
-	top: calc(-1 * max(8vh, 90px) - 14px);
+	top: calc(-1 * max(8vh, 90px) - 12px);
 	left: -44vw;
 	z-index: 101;
 	border: 2px double black;
@@ -59,14 +60,15 @@
 	pointer-events: none;
 }
 
+/* Width Scaling */
 @media (max-width: 800px) {
 	.NavbarElem {
-		margin: 0 12px;
-		font-size: 13pt;
+		margin: 0 10px;
+		font-size: 14pt;
 	}
 	.NavbarElem.Selected {
-		margin: 0 16px;
-		font-size: 16pt;
+		margin: 0 10px;
+		font-size: 17pt;
 	}
 	.NavbarLogo {
 		display: none;

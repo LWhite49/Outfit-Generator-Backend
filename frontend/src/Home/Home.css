@@ -39,6 +39,7 @@
 	font-weight: bold;
 	font-size: 62pt;
 	font-family: "Roboto", sans-serif;
+	letter-spacing: 2px;
 	text-align: left;
 	text-align: center;
 	text-shadow: -2px -2px 0 #5d0b98, 2px -2px 0 #5d0b98, -2px 2px 0 #5d0b98,
@@ -47,7 +48,6 @@
 .Hero-Subheader {
 	display: inline-block;
 	opacity: 100%;
-	opacity: 100%;
 	z-index: 5;
 	margin: 0px;
 	margin-top: 30px;
@@ -55,6 +55,7 @@
 	padding: 0px;
 	color: #f5e7ff;
 	font-size: 22pt;
+	line-height: 34px;
 	font-family: "Courier New", Courier, monospace;
 	text-align: left;
 	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
@@ -180,9 +181,9 @@
 	top: 10vh;
 	left: 30px;
 	border: 4px double black;
-	border-radius: 80px;
+	border-radius: 40px;
 	background-color: #f5e7ff;
-	padding: 2vw;
+	padding: 40px;
 	width: 360px;
 	height: 360px;
 }
@@ -276,7 +277,7 @@
 	border: 4px double #5d0b98;
 }
 .Bottom-Call-To-Action {
-	margin-top: 6vh;
+	margin-top: max(6vh, 100px);
 }
 
 /* responsive width */
@@ -285,6 +286,7 @@
 	.Step-One-Image,
 	.Step-Two-Image,
 	.Step-Three-Image {
+		padding: 30px;
 		width: 300px;
 		height: 300px;
 	}
@@ -320,6 +322,7 @@
 	.Step-Two-Image,
 	.Step-Three-Image {
 		top: 14vh;
+		padding: 25px;
 		width: 200px;
 		height: 200px;
 	}
@@ -338,7 +341,7 @@
 	}
 }
 
-@media (max-width: 1350px) {
+@media (max-width: 1370px) {
 	.Step-One-Image,
 	.Step-Two-Image,
 	.Step-Three-Image {
@@ -354,8 +357,221 @@
 }
 
 @media (max-width: 1220px) {
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 38vw;
+		max-width: 500px;
+		line-height: 34px;
+		text-indent: -56px;
+	}
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		top: 27vh;
+	}
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		left: -20px;
+	}
+	.Hero-Overlay {
+		margin-bottom: 20px;
+		width: 800px;
+	}
+	.Hero-Header {
+		font-size: 50pt;
+	}
+	.Hero-Subheader {
+		font-size: 18pt;
+	}
+}
+@media (max-width: 1000px) {
+	.Hero-Overlay {
+		width: 630px;
+	}
+	.Hero-Header {
+		font-size: 40pt;
+	}
+	.Hero-Subheader {
+		font-size: 14pt;
+	}
+	.Hero-Button {
+		margin-top: 40px;
+		margin-bottom: 20px;
+		font-size: 20pt;
+	}
 }
 
+@media (max-width: 880px) {
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 36vw;
+		max-width: 410px;
+		line-height: 34px;
+		text-indent: -56px;
+	}
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		top: 30vh;
+		width: 120px;
+		height: 120px;
+	}
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		margin-bottom: 16px;
+		font-size: 24pt;
+	}
+	.Bottom-Call-To-Action {
+		font-size: 18pt;
+	}
+}
+
+@media (max-width: 790px) {
+	.Hero-Overlay {
+		width: 500px;
+	}
+	.Hero-Header {
+		font-size: 36pt;
+		letter-spacing: 1px;
+	}
+	.Hero-Subheader {
+		margin-top: 16px;
+		font-size: 13pt;
+		line-height: 26px;
+	}
+	.Hero-Button {
+		margin-top: 40px;
+		margin-bottom: 20px;
+		font-size: 18pt;
+	}
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		left: 0px;
+		margin-bottom: 0px;
+		font-size: 22pt;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 38vw;
+		max-width: 300px;
+		line-height: 34px;
+		text-indent: -56px;
+	}
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		top: 36vh;
+		width: 90px;
+		height: 90px;
+	}
+}
+@media (max-width: 650px) {
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		left: 0px;
+		margin-bottom: 0px;
+		font-size: 20pt;
+	}
+	.How-It-Works-Header {
+		font-size: 28pt;
+	}
+	.Hero-Overlay {
+		width: 400px;
+	}
+	.Hero-Header {
+		margin-left: 0px;
+		font-size: 28pt;
+	}
+	.Hero-Subheader {
+		font-size: 12pt;
+		line-height: 24px;
+	}
+	.Hero-Button {
+		margin-top: 30px;
+		font-size: 16pt;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 44vw;
+	}
+}
+@media (max-width: 580px) {
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		font-size: 17pt;
+	}
+	.How-It-Works-Header {
+		font-size: 24pt;
+	}
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		top: 40vh;
+		width: 60px;
+		height: 60px;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 44vw;
+		max-width: 270px;
+	}
+}
+@media (max-width: 500px) {
+	.Step-One-Header,
+	.Step-Two-Header,
+	.Step-Three-Header {
+		font-size: 14pt;
+		line-break: none;
+	}
+	.How-It-Works-Header {
+		font-size: 16pt;
+	}
+	.Down-Arrow-Home {
+		width: 60px;
+		height: 60px;
+	}
+	.Hero-Overlay {
+		width: 200px;
+	}
+	.Hero-Header {
+		font-size: 18pt;
+	}
+	.Hero-Subheader {
+		left: 0px;
+		margin-left: 10px;
+		font-size: 10pt;
+	}
+	.Hero-Button {
+		margin-top: 20px;
+		margin-left: 0px;
+		font-size: 14pt;
+	}
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 30vw;
+	}
+	.Step-One-Image,
+	.Step-Two-Image,
+	.Step-Three-Image {
+		display: none;
+	}
+	.Step-Span {
+		display: none;
+	}
+}
+@media (max-width: 370px) {
+	.Step-One-Text,
+	.Step-Two-Text {
+		margin-left: 30vw;
+		max-width: 200px;
+		text-indent: -40px;
+	}
+}
 /* responsive height */
 @media (max-height: 1240px) {
 	.Rel-Dummy {
@@ -368,4 +584,51 @@
 	}
 }
 @media (max-height: 1050px) {
+	.Hero-Overlay {
+		padding: 30px 40px;
+	}
+	.Hero-Button {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+}
+@media (max-height: 900px) {
+	.Rel-Dummy {
+		top: 26vh;
+	}
+}
+@media (max-height: 840px) {
+	.Rel-Dummy {
+		top: 28vh;
+	}
+}
+@media (max-height: 790px) {
+	.Rel-Dummy {
+		top: 30vh;
+	}
+}
+@media (max-height: 720px) {
+	.Rel-Dummy {
+		top: 32vh;
+	}
+}
+@media (max-height: 680px) {
+	.Rel-Dummy {
+		top: 34vh;
+	}
+}
+@media (max-height: 640px) {
+	.Rel-Dummy {
+		top: 36vh;
+	}
+}
+@media (max-height: 610px) {
+	.Rel-Dummy {
+		top: 40vh;
+	}
+}
+@media (max-height: 560px) {
+	.Rel-Dummy {
+		top: 43vh;
+	}
 }
