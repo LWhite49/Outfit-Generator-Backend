@@ -226,7 +226,13 @@
 	outline: none;
 	box-shadow: 1px 1px 1px 2px #5d0b98;
 }
-
+.wasRandom-Warning-Text {
+	color: red;
+	font-size: 14pt;
+}
+.wasRandom-Invis {
+	display: none;
+}
 .Outfit-Display {
 	display: flex;
 	flex-direction: column;

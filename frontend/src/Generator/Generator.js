@@ -20,6 +20,7 @@ export const Generator = () => {
 		bottomGender,
 		shoeGender,
 		size,
+		brand,
 		windowWidth,
 		outfitFeed,
 	} = useContext(FeedContext);
@@ -91,6 +92,15 @@ export const Generator = () => {
 			if (waistSize === "---") {
 				setWaistSize(32);
 				setSize({ ...size, bottomSizes: [String(32)] });
+				setBottomSizeButtonState({
+					all: false,
+					XS: false,
+					S: false,
+					M: false,
+					L: false,
+					XL: false,
+					XXL: false,
+				});
 			} else {
 				setWaistSize(Math.min(waistSize + 2, 44));
 				setSize({
@@ -102,6 +112,15 @@ export const Generator = () => {
 			if (waistSize === "---") {
 				setWaistSize(32);
 				setSize({ ...size, bottomSizes: [String(32)] });
+				setBottomSizeButtonState({
+					all: false,
+					XS: false,
+					S: false,
+					M: false,
+					L: false,
+					XL: false,
+					XXL: false,
+				});
 			} else {
 				setWaistSize(Math.max(waistSize - 2, 28));
 				setSize({
@@ -109,18 +128,6 @@ export const Generator = () => {
 					bottomSizes: [String(Math.max(waistSize - 2, 28))],
 				});
 			}
-		}
-
-		if (!isNaN(waistSize)) {
-			setBottomSizeButtonState({
-				all: false,
-				XS: false,
-				S: false,
-				M: false,
-				L: false,
-				XL: false,
-				XXL: false,
-			});
 		}
 	};
 	// Define a function that toggles the top size button state
@@ -177,6 +184,7 @@ export const Generator = () => {
 			}
 		}
 	};
+
 	// Define a function that toggles the bottom size button state
 	const toggleBottomSizeButton = (sizeStr) => {
 		// Branch for if All button is picked
@@ -192,9 +200,9 @@ export const Generator = () => {
 					XXL: false,
 				});
 				setSize({ ...size, bottomSizes: [] });
-				setWaistSize("---");
 			}
 		}
+
 		// Branch for if any other button is picked
 		else {
 			if (bottomSizeButtonState[sizeStr] === false) {
@@ -234,7 +242,11 @@ export const Generator = () => {
 				}
 			}
 		}
+
+		// Set waist size to ---
+		setWaistSize("---");
 	};
+
 	// Define state for the shoe size, which stores an interval of sizes
 	const [shoeSizeRange, setShoeSizeRange] = useState([6, 15]);
 
@@ -260,8 +272,6 @@ export const Generator = () => {
 		}
 		setSize({ ...size, shoeSizes: shoeSizeArr });
 	};
-
-	// Define a state for the feed context which will be referenced by the feed components
 
 	return (
 		<div className="Generator">
@@ -592,17 +602,23 @@ export const Generator = () => {
 					<p className="Size-Label">Brand:</p>
 					<Keywords />
 				</div>
+				<p
+					className={
+						outfitFeed.wasRandom === true
+							? "wasRandom-Warning-Text"
+							: "wasRandom-Invis"
+					}>
+					Our wardrobe doesn't have enough clothes
+				</p>
+				<p>{outfitFeed.wasRandom}</p>
+				<p>
+					{size.topSizes}
+					{size.bottomSizes}
+					{size.shoeSizes}
+				</p>
+				<p>{brand}</p>
 			</div>
 			<OutfitFeedDisplay displayCount={Math.floor(windowWidth / 500)} />
-			<div>
-				{outfitFeed.outfits?.map((i) => {
-					return (
-						<p className="Index-Display">
-							{i.top} + {i.bottom} + {i.shoe}
-						</p>
-					);
-				})}
-			</div>
 		</div>
 	);
 };

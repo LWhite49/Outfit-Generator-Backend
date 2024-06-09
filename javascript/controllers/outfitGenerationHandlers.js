@@ -115,6 +115,18 @@ const generateOutfitFeed = async (req, res) => {
 		pallet: [],
 	};
 
+	// Define a bool that will be used to determine if the pallets were populated with random items
+	let wasRandom = false;
+	if (
+		palletTops.length < palletSize - 9 ||
+		palletBottoms.length < palletSize - 9 ||
+		palletShoes.length < palletSize - 9
+	) {
+		wasRandom = true;
+	}
+
+	returnOutfits.wasRandom = wasRandom;
+
 	// Populate any pallets with less than palletSize items with random items from the collection, trying sizes and then completely random
 	try {
 		if (palletTops.length < palletSize) {
