@@ -243,8 +243,16 @@ export const Generator = () => {
 			}
 		}
 
-		// Set waist size to ---
-		setWaistSize("---");
+		// If waist size is not ---, remove first item from bottomSizes, and set waist size to ---
+		if (waistSize !== "---") {
+			if (sizeStr !== "all") {
+				setSize({
+					...size,
+					bottomSizes: [sizeStr],
+				});
+			}
+			setWaistSize("---");
+		}
 	};
 
 	// Define state for the shoe size, which stores an interval of sizes

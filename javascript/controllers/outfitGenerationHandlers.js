@@ -45,7 +45,7 @@ const generateOutfitFeed = async (req, res) => {
 	const brandData = JSON.parse(req.query.brand);
 
 	// Specify length of pallets and number of outfits
-	const palletSize = 30;
+	const palletSize = 50;
 	const outfitCount = 20;
 
 	// Parse gender queries to determine which collections to use
@@ -118,9 +118,9 @@ const generateOutfitFeed = async (req, res) => {
 	// Define a bool that will be used to determine if the pallets were populated with random items
 	let wasRandom = false;
 	if (
-		palletTops.length < palletSize - 9 ||
-		palletBottoms.length < palletSize - 9 ||
-		palletShoes.length < palletSize - 9
+		palletTops.length < palletSize - 15 ||
+		palletBottoms.length < palletSize - 15 ||
+		palletShoes.length < palletSize - 15
 	) {
 		wasRandom = true;
 	}
