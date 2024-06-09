@@ -45,7 +45,7 @@ const generateOutfitFeed = async (req, res) => {
 	const brandData = JSON.parse(req.query.brand);
 
 	// Specify length of pallets and number of outfits
-	const palletSize = 50;
+	const palletSize = 30;
 	const outfitCount = 20;
 
 	// Parse gender queries to determine which collections to use
@@ -113,6 +113,8 @@ const generateOutfitFeed = async (req, res) => {
 	// Define returnOutfits object to be populated with the pallet, the wasRandom flag, and the outfitIndices
 	let returnOutfits = {
 		pallet: [],
+		outfits: [],
+		wasRandom: false,
 	};
 
 	// Define a bool that will be used to determine if the pallets were populated with random items
@@ -204,7 +206,7 @@ const generateOutfitFeed = async (req, res) => {
 	let topColors = palletTops.map((item) => item.productColors);
 	let bottomColors = palletBottoms.map((item) => item.productColors);
 	let shoeColors = palletShoes.map((item) => item.productColors);
-
+	console.log("Sending colors to PyScript");
 	// Send the color pallets to the PyScript
 	try {
 		const outfitIndices = await scoreColorsViaPy(
@@ -212,6 +214,7 @@ const generateOutfitFeed = async (req, res) => {
 			bottomColors,
 			shoeColors
 		);
+		console.log("Received outfitIndices from PyScript:", outfitIndices);
 		returnOutfits.outfits = outfitIndices;
 	} catch (err) {
 		console.log(err, `Error communicating with Py color combinations`);

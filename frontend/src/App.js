@@ -7,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import axios from "axios";
 import logo from "./images/OGLogo.png";
+import circle from "./images/circle.svg";
+import loadingBuddy from "./images/LoadingBuddy.png";
 
 //Import Images using require.context
 const imageContext = require.context(
@@ -79,10 +81,10 @@ function App() {
 				)}&brand=${JSON.stringify(
 					brand
 				)}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
-
 				// Get the outfitFeed from the server
+				console.log("Fetching Feed");
 				let res = await axios.get(url);
-
+				console.log("Feed Fetched");
 				// Set the outfitFeed state
 				setOutfitFeed(res.data);
 			} catch (err) {
@@ -112,12 +114,13 @@ function App() {
 				pallet: prev.pallet.concat(res.data.pallet),
 				outfits: prev.outfits.concat(adjustedOutfits),
 			}));
+			// console.log("Feed expanded");
 		} catch (err) {
 			console.log(err, "Error expanding feed");
 		}
 	};
-
-	return outfitFeed.length !== 0 ? (
+	// Object.keys(outfitFeed).length > 0
+	return Object.keys(outfitFeed).length > 0 ? (
 		<QueryClientProvider client={client}>
 			<Router>
 				<FeedContext.Provider
@@ -201,7 +204,37 @@ function App() {
 			</Router>
 		</QueryClientProvider>
 	) : (
-		<p> Loading </p>
+		<div className="App">
+			<div className="Navbar-Container">
+				<div className="Navbar">
+					<img
+						className="NavbarLogo-Loading"
+						src={logo}
+						alt="Logo"></img>
+					<img
+						className="Loading-Navbar-Circle"
+						src={circle}
+						style={{ animationDelay: "0.5s" }}
+						alt=""></img>
+					<img
+						className="Loading-Navbar-Circle"
+						src={circle}
+						style={{ animationDelay: "0.25s" }}
+						alt=""></img>
+					<img
+						className="Loading-Navbar-Circle"
+						src={circle}
+						alt=""></img>
+				</div>
+				<p className="Loading-Header">
+					Our Fashionable Gnomes are building the website...
+				</p>
+				<img
+					className="Loading-Spinner"
+					src={loadingBuddy}
+					alt="Loading Buddy"></img>
+			</div>
+		</div>
 	);
 }
 
