@@ -63,36 +63,6 @@ export const AppMain = () => {
 		};
 	}, []);
 
-	// // Create a useEffect that mounts the outfitFeed array from the server, and updates it when settings are changed
-	// useEffect(() => {
-	// 	// Define async funciton, since useaEffect cannot be async
-	// 	const updateFeed = async (
-	// 		size,
-	// 		brand,
-	// 		topGender,
-	// 		bottomGender,
-	// 		shoeGender
-	// 	) => {
-	// 		try {
-	// 			// Define target URL
-	// 			let url = `http://localhost:3500/generateOutfitFeed?size=${JSON.stringify(
-	// 				size
-	// 			)}&brand=${JSON.stringify(
-	// 				brand
-	// 			)}&topGender=${topGender}&bottomGender=${bottomGender}&shoeGender=${shoeGender}`;
-	// 			// Get the outfitFeed from the server
-	// 			console.log("Fetching Feed");
-	// 			let res = await axios.get(url);
-	// 			console.log("Feed Fetched");
-	// 			// Set the outfitFeed state
-	// 			setOutfitFeed(res.data);
-	// 		} catch (err) {
-	// 			console.log(err);
-	// 		}
-	// 	};
-	// 	updateFeed(size, brand, topGender, bottomGender, shoeGender);
-	// }, [size, brand, topGender, bottomGender, shoeGender]);
-
 	// Create a queryFn that fetches the outfitFeed from the server
 	const fetchOutfitFeed = async () => {
 		try {
@@ -126,6 +96,7 @@ export const AppMain = () => {
 		retry: 3,
 		refetchOnWindowFocus: false,
 	});
+
 	// Define function that extends the feed by 20 outfits
 	const expandFeed = async () => {
 		try {
@@ -151,6 +122,19 @@ export const AppMain = () => {
 			console.log(err, "Error expanding feed");
 		}
 	};
+
+	// useQuery to expand the feed
+	const {
+		isLoading: isLoadingExpand,
+		isError: isErrorExpand,
+		refetch: refetchExpandFeed,
+	} = useQuery({
+		queryKey: ["outfitFeedExpand"],
+		queryFn: expandFeed,
+		retry: 3,
+		refetchOnWindowFocus: false,
+		enabled: false,
+	});
 	// Object.keys(outfitFeed).length > 0
 	return Object.keys(outfitFeed).length > 0 ? (
 		<Router>
@@ -158,11 +142,13 @@ export const AppMain = () => {
 				value={{
 					outfitFeed,
 					setOutfitFeed,
-					expandFeed,
 					feedStatus,
 					setFeedStatus,
 					isLoading,
 					isError,
+					isLoadingExpand,
+					isErrorExpand,
+					refetchExpandFeed,
 					images,
 					setSubPage,
 					setSize,

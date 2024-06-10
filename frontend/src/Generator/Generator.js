@@ -25,7 +25,7 @@ export const Generator = () => {
 		outfitFeed,
 		feedStatus,
 		isLoading,
-		isError,
+		isLoadingExpand,
 	} = useContext(FeedContext);
 
 	// Define checked states for each slider
@@ -626,7 +626,10 @@ export const Generator = () => {
 					right now. Items may not match your preferences.
 				</p>
 			</div>
-			{isLoading ? (
+			{isLoading ||
+			(isLoadingExpand &&
+				feedStatus.currIndex + Math.floor(windowWidth / 500) ===
+					outfitFeed.outfits.length) ? (
 				<img
 					src={loadingBuddy}
 					alt={"Loading..."}

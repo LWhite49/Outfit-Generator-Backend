@@ -10,7 +10,7 @@ export const OutfitFeedDisplay = (props) => {
 	// Source feed from provider
 	const {
 		outfitFeed,
-		expandFeed,
+		refetchExpandFeed,
 		feedStatus,
 		setFeedStatus,
 		size,
@@ -35,7 +35,7 @@ export const OutfitFeedDisplay = (props) => {
 			currIndex: feedStatus.currIndex + 1,
 		});
 		if (feedStatus.currIndex + displayCount + 7 >= feedStatus.feedLength) {
-			expandFeed();
+			refetchExpandFeed();
 			setFeedStatus({
 				feedLength: feedStatus.feedLength + 20,
 				currIndex: feedStatus.currIndex + 1,
