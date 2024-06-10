@@ -1,6 +1,6 @@
 import "./Generator.css";
 import { useContext, useState } from "react";
-import { FeedContext } from "../App";
+import { FeedContext } from "../AppMain.js";
 import Switch from "react-switch";
 import { Keywords } from "../Keywords/Keywords.js";
 import maleIcon from "../images/maleIcon.svg";
@@ -20,9 +20,10 @@ export const Generator = () => {
 		bottomGender,
 		shoeGender,
 		size,
-		brand,
 		windowWidth,
 		outfitFeed,
+		isLoading,
+		isError,
 	} = useContext(FeedContext);
 
 	// Define checked states for each slider
@@ -620,7 +621,7 @@ export const Generator = () => {
 							: "wasRandom-Invis"
 					}>
 					Our wardrobe can't fully accomodate your search settings
-					right now. Some items may not match your preferences.
+					right now. Items may not match your preferences.
 				</p>
 			</div>
 			<OutfitFeedDisplay displayCount={Math.floor(windowWidth / 500)} />

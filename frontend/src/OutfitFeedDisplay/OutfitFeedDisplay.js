@@ -1,6 +1,6 @@
 import "./OutfitFeedDisplay.css";
 import { useContext, useEffect } from "react";
-import { FeedContext } from "../App";
+import { FeedContext } from "../AppMain";
 import { TopDisplay } from "./TopDisplay/TopDisplay";
 import { BottomDisplay } from "./BottomDisplay/BottomDisplay";
 import { ShoeDisplay } from "./ShoeDisplay/ShoeDisplay";

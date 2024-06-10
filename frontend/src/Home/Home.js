@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useContext } from "react";
-import { FeedContext } from "../App";
+import { FeedContext } from "../AppMain.js";
 import { Link } from "react-router-dom";
 import { Carousel } from "../Carousel/Carousel.js";
 import Wavify from "react-wavify";

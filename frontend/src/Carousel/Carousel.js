@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import { useContext } from "react";
-import { FeedContext } from "../App.js";
+import { FeedContext } from "../AppMain.js";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Carousel.css";
