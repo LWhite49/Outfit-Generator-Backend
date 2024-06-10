@@ -123,6 +123,8 @@ export const AppMain = () => {
 			shoeGender,
 		],
 		queryFn: fetchOutfitFeed,
+		retry: 3,
+		refetchOnWindowFocus: false,
 	});
 	// Define function that extends the feed by 20 outfits
 	const expandFeed = async () => {

@@ -8,6 +8,7 @@ import femaleIcon from "../images/femaleIcon.svg";
 import waistSizeIncrementIcon from "../images/waistIncrementIcon.svg";
 import waistSizeMax from "../images/waistMaxIcon.svg";
 import { OutfitFeedDisplay } from "../OutfitFeedDisplay/OutfitFeedDisplay.js";
+import loadingBuddy from "../images/starSpinner.svg";
 
 export const Generator = () => {
 	// Source elements from provider
@@ -22,6 +23,7 @@ export const Generator = () => {
 		size,
 		windowWidth,
 		outfitFeed,
+		feedStatus,
 		isLoading,
 		isError,
 	} = useContext(FeedContext);
@@ -624,7 +626,17 @@ export const Generator = () => {
 					right now. Items may not match your preferences.
 				</p>
 			</div>
-			<OutfitFeedDisplay displayCount={Math.floor(windowWidth / 500)} />
+			{isLoading ? (
+				<img
+					src={loadingBuddy}
+					alt={"Loading..."}
+					className="Loading-Spinner-Gen"
+				/>
+			) : (
+				<OutfitFeedDisplay
+					displayCount={Math.floor(windowWidth / 500)}
+				/>
+			)}
 		</div>
 	);
 };
