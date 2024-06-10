@@ -262,6 +262,7 @@
 	left: calc(50% - 150px);
 	animation: linear 2.8s infinite;
 	animation-name: loadingSpin;
+	margin-bottom: 60vh;
 	border-radius: 50%;
 	width: 300px;
 	height: 300px;

@@ -78,6 +78,12 @@ export const AppMain = () => {
 			console.log("Feed Fetched");
 			// Set the outfitFeed state
 			setOutfitFeed(res.data);
+			// Reinitialize the feedStatus state
+			setFeedStatus({
+				feedLength: 20,
+				currIndex: 0,
+				expanded: false,
+			});
 		} catch (err) {
 			console.log("Trouble Fetching outfitFeed:", err);
 		}
