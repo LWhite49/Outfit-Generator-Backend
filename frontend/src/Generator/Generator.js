@@ -261,6 +261,7 @@ export const Generator = () => {
 	// Define a function that updates the shoe size range, where a passed 0 means the min size is updated and 1 means the max size is updated
 	const updateShoeSizeRange = (event, bool) => {
 		const input = Number(event.target.value);
+		const shoeSizeArr = [];
 		if (isNaN(input)) {
 			return;
 		}
@@ -268,16 +269,18 @@ export const Generator = () => {
 			let calcMin = Math.max(6, input);
 			calcMin = Math.min(calcMin, shoeSizeRange[1] - 0.5);
 			setShoeSizeRange([calcMin, shoeSizeRange[1]]);
+			for (let i = shoeSizeRange[1]; i >= calcMin; i -= 0.5) {
+				shoeSizeArr.push(String(i));
+			}
 		} else {
 			let calcMax = Math.min(15, input);
 			calcMax = Math.max(calcMax, shoeSizeRange[0] + 0.5);
 			setShoeSizeRange([shoeSizeRange[0], calcMax]);
+			for (let i = calcMax; i >= shoeSizeRange[0]; i -= 0.5) {
+				shoeSizeArr.push(String(i));
+			}
 		}
 		// Update the size state
-		const shoeSizeArr = [];
-		for (let i = shoeSizeRange[1]; i >= shoeSizeRange[0]; i -= 0.5) {
-			shoeSizeArr.push(String(i));
-		}
 		setSize({ ...size, shoeSizes: shoeSizeArr });
 	};
 
@@ -616,15 +619,9 @@ export const Generator = () => {
 							? "wasRandom-Warning-Text"
 							: "wasRandom-Invis"
 					}>
-					Our wardrobe doesn't have enough clothes
+					Our wardrobe can't fully accomodate your search settings
+					right now. Some items may not match your preferences.
 				</p>
-				<p>{outfitFeed.wasRandom}</p>
-				<p>
-					{size.topSizes}
-					{size.bottomSizes}
-					{size.shoeSizes}
-				</p>
-				<p>{brand}</p>
 			</div>
 			<OutfitFeedDisplay displayCount={Math.floor(windowWidth / 500)} />
 		</div>
