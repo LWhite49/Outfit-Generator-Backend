@@ -619,16 +619,16 @@
 }
 @media (max-height: 640px) {
 	.Rel-Dummy {
-		top: 36vh;
+		top: 42vh;
 	}
 }
 @media (max-height: 610px) {
 	.Rel-Dummy {
-		top: 44vh;
+		top: 46vh;
 	}
 }
 @media (max-height: 560px) {
 	.Rel-Dummy {
-		top: 46vh;
+		top: 52vh;
 	}
 }
