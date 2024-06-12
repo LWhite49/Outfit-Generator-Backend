@@ -145,3 +145,8 @@
 		display: none;
 	}
 }
+@media (max-height: 1040px) {
+	.NavbarLogo {
+		top: 4px;
+	}
+}

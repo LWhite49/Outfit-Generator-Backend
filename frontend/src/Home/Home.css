@@ -315,6 +315,16 @@
 	.Spectrum-Bar {
 		display: none;
 	}
+	.Hero-Overlay {
+		margin-bottom: 20px;
+		width: 800px;
+	}
+	.Hero-Header {
+		font-size: 50pt;
+	}
+	.Hero-Subheader {
+		font-size: 18pt;
+	}
 }
 
 @media (max-width: 1700px) {
@@ -373,16 +383,6 @@
 	.Step-Two-Header,
 	.Step-Three-Header {
 		left: -20px;
-	}
-	.Hero-Overlay {
-		margin-bottom: 20px;
-		width: 800px;
-	}
-	.Hero-Header {
-		font-size: 50pt;
-	}
-	.Hero-Subheader {
-		font-size: 18pt;
 	}
 }
 @media (max-width: 1000px) {
@@ -594,27 +594,27 @@
 }
 @media (max-height: 900px) {
 	.Rel-Dummy {
-		top: 26vh;
+		top: 28vh;
 	}
 }
 @media (max-height: 840px) {
 	.Rel-Dummy {
-		top: 28vh;
+		top: 32vh;
 	}
 }
 @media (max-height: 790px) {
 	.Rel-Dummy {
-		top: 30vh;
+		top: 36vh;
 	}
 }
 @media (max-height: 720px) {
 	.Rel-Dummy {
-		top: 32vh;
+		top: 37vh;
 	}
 }
 @media (max-height: 680px) {
 	.Rel-Dummy {
-		top: 34vh;
+		top: 38vh;
 	}
 }
 @media (max-height: 640px) {
@@ -624,11 +624,11 @@
 }
 @media (max-height: 610px) {
 	.Rel-Dummy {
-		top: 40vh;
+		top: 44vh;
 	}
 }
 @media (max-height: 560px) {
 	.Rel-Dummy {
-		top: 43vh;
+		top: 46vh;
 	}
 }
