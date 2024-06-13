@@ -11,6 +11,7 @@ const ShoeWomen = require("../mongo-config/Shoe-Women.js");
 // Import the child process so we can run py scripts
 const { spawn } = require("child_process");
 const path = require("path");
+
 // Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
 
 const scoreColorsViaPy = async (p1, p2, p3) => {
@@ -25,6 +26,31 @@ const scoreColorsViaPy = async (p1, p2, p3) => {
 		// Parse good output
 		pyProcess.stdout.on("data", (data) => {
 			resolve(JSON.parse(data));
+		});
+
+		// Parse error output
+		pyProcess.stderr.on("data", (data) => {
+			console.log(data.toString());
+			reject(data.toString());
+		});
+	});
+};
+
+// Define function that accepts three color pallet arrays and a bool score, updating the ML model with Python
+
+const updateModelViaPy = async (p1, p2, p3, score) => {
+	return new Promise((resolve, reject) => {
+		pyProcess = spawn("python", [
+			path.join(__dirname, "update_model.py"),
+			JSON.stringify(p1),
+			JSON.stringify(p2),
+			JSON.stringify(p3),
+			JSON.stringify(score),
+		]);
+
+		// Parse good output
+		pyProcess.stdout.on("data", (data) => {
+			resolve(data.toString());
 		});
 
 		// Parse error output
@@ -222,40 +248,28 @@ const generateOutfitFeed = async (req, res) => {
 	// Send returnOutfits
 	res.status(201).json(returnOutfits);
 	return;
-
-	/* Psuedocode for the creation of outfits
-        Note that this process will not create a new returnObject, only add objects of INDICES to the returnOutfits.outfitIndices array
-
-    while (returnOutfits.outfitIndices.length < outfitCount) {
-
-        1. Define an object that will be filled with the indices of the items in the pallets:
-            const tempIndexObj = {top: 0, bottom: 0, shoes: 0};
-
-        2. Use the loop iterator % 2 to determine the order of which pallets to pick from:
-            follow the cycle top -> bottom -> shoes --> top...
-
-        3.For the first collection, generate a random index between 0 and palletSize - 1 and assign it to the corresponding key in tempIndexObj
-            maybe consider a way of ensuring that the same item cannot be selected first more than once to ensure unique pairings?
-
-        4. For the second collection, generate six random indices between 0 and palletSize - 1
-            we can play with the number chosen to generate here mostly based on runtime
-
-        5. Compare the colors of the first selected item with each of the six items in the second collection
-            keep the two indices that have the best combinaiton with the first selected item
-
-        6. For the third collection, generate six random indices between 0 and palletSize - 1
-            we can play with the number chosen to generate here mostly based on runtime
-
-        7. Now working with three way combinations, compare all permutations of [1 x 2 x 6] to find the best combination of colors
-           to derive two possible outfits:
-                - random item from first collection + first best match from seocnd collection + best three way match from third collection
-                - random item from first collection + second best match from second collection + best three way match from third collection
-                Assess each of these outfits seprately and if they pass a certain quality threshold, add them to the returnOutfits.outfitIndices array
-                as an object in the form:
-                    {top: topIndex, bottom: bottomIndex, shoes: shoeIndex}
-    }
-*/
 };
 
+// This function handles a post request to rate an outfit, updating the ML Model
+const rateOutfit = async (req, res) => {
+	// Parse the request body
+	const p1 = req.body.p1;
+	const p2 = req.body.p2;
+	const p3 = req.body.p3;
+	const rating = req.body.rating;
+
+	// Send the colors to the PyScript
+	try {
+		console.log("Sending Rating to PyScript...");
+		const response = await updateModelViaPy(p1, p2, p3, rating);
+		console.log("Updated ML Model Successfully:", response);
+	} catch (err) {
+		console.log(err, `Error communicating with Py to update ML Model`);
+	}
+
+	// Send response
+	res.status(201).json({ message: "Outfit rated" });
+	return;
+};
 // Export route handlers
-module.exports = { generateOutfitFeed };
+module.exports = { generateOutfitFeed, rateOutfit };

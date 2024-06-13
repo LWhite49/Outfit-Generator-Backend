@@ -148,16 +148,6 @@ export const AppMain = () => {
 		try {
 			console.log("Rating Outfit...");
 			let url = `http://localhost:3500/rateOutfit`;
-			console.log(
-				"Color 1: ",
-				p1,
-				"Color 2: ",
-				p2,
-				"Color 3: ",
-				p3,
-				"Rating: ",
-				rating
-			);
 			let res = await axios.post(url, {
 				body: {
 					p1: p1,
