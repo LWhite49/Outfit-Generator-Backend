@@ -1,52 +1,121 @@
-.Outfit-Feed-Display{
-    display: flex;
-    flex-direction: row;
-    gap: 36px;
-    margin-top: max(5vh, 60px);
-    margin-bottom: max(20vh, 250px);
+.Outfit-Feed-Display {
+	display: flex;
+	flex-direction: row;
+	gap: 36px;
+	margin-top: max(5vh, 60px);
+	margin-bottom: max(20vh, 250px);
 }
-.Outfit-Feed-Item{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    border: black double 4px;
-    border-radius: 10px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");
-    background-color: #f6ecfe;
-    padding: 10px 20px 10px 20px;
+.Outfit-Feed-Item {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	border: black double 4px;
+	border-radius: 10px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");
+	background-color: #f6ecfe;
+	padding: 10px 20px 10px 20px;
 }
-.Outfit-Feed-Item-Buffer{
-    opacity: 0%;
-    width: 0px;
-    height: 0px;
+.Outfit-Feed-Item-Buffer {
+	opacity: 0%;
+	width: 0px;
+	height: 0px;
+}
+.Outfit-Rating-Button-Container {
+	display: flex;
+	justify-content: center;
+	gap: 40px;
+	margin-top: 10px;
+}
+.Outfit-Rating-Button {
+	transition: background-color 0.2s border 0.2s;
+	cursor: pointer;
+	border: #c9ace1 solid 2px;
+	background-color: #f6ecfe;
+}
+.Outfit-Rating-Button:hover {
+	border: black solid 2px;
+	background-color: #e4d6ed;
+}
+.Outfit-Rating-Img-Pos,
+.Outfit-Rating-Img-Neg {
+	width: 70px;
+	pointer-events: none;
+}
+.Outfit-Rating-Img-Neg {
+	transform: translateY(6px);
+}
+.Outfit-Rating-Img-Pos-Clicked {
+	animation: pulsePos 0.5s infinite;
+}
+.Outfit-Rating-Img-Neg-Clicked {
+	transform: translateY(6px);
+	animation: pulseNeg 0.5s infinite;
+}
 
+@keyframes pulsePos {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.25);
+		background-image: radial-gradient(
+			circle,
+			#f6ecfe 0%,
+			rgb(133, 208, 133) 70%,
+			rgb(101, 237, 101) 100%
+		);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 
-.Outfit-Feed-Button, .Outfit-Feed-Button-EndDiv{
-    transition: background-color 0.3s, border 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    box-shadow: 0px 0px 4px 0px #5D0B98;
-    border: black solid 2px;
-    border-radius: 10px;
-    background-color: #F6ECFE;
-    height: 400px;
-}
-.Outfit-Feed-Button:hover, .Outfit-Feed-Button-EndDiv:hover{
-    box-shadow: 0px 0px 8px 0px #5D0B98;
-    background-color: #c9ace1;
-}
-.Outfit-Feed-Button-EndDiv{
-    margin-left: -40px;
-}
-.Outfit-Feed-Button-Left, .Outfit-Feed-Button-Right{
-    cursor: pointer;
-    margin: 4px;
-    padding: 6px 8px 6px 8px;
-    width: 40px;
-    height: 80px;
+@keyframes pulseNeg {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.25);
+		background-image: radial-gradient(
+			circle,
+			#f6ecfe 0%,
+			rgb(237, 106, 106) 70%,
+			rgb(255, 0, 0) 100%
+		);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 
-.Outfit-Feed-Button-Right{
-    transform: rotate(180deg);
+.Outfit-Feed-Button,
+.Outfit-Feed-Button-EndDiv {
+	transition: background-color 0.3s, border 0.3s, box-shadow 0.3s;
+	cursor: pointer;
+	box-shadow: 0px 0px 4px 0px #5d0b98;
+	border: black solid 2px;
+	border-radius: 10px;
+	background-color: #f6ecfe;
+	height: 400px;
+}
+.Outfit-Feed-Button:hover,
+.Outfit-Feed-Button-EndDiv:hover {
+	box-shadow: 0px 0px 8px 0px #5d0b98;
+	background-color: #c9ace1;
+}
+.Outfit-Feed-Button-EndDiv {
+	margin-left: -40px;
+}
+.Outfit-Feed-Button-Left,
+.Outfit-Feed-Button-Right {
+	cursor: pointer;
+	margin: 4px;
+	padding: 6px 8px 6px 8px;
+	width: 40px;
+	height: 80px;
+}
+
+.Outfit-Feed-Button-Right {
+	transform: rotate(180deg);
 }

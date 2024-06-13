@@ -39,6 +39,7 @@ export const Home = () => {
 						<Link
 							to="/generator"
 							onClick={() => {
+								window.scrollTo(0, 0);
 								setSubPage("/generator");
 							}}>
 							<button className="Hero-Button">Jump In</button>

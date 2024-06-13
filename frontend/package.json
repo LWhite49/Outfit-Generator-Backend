@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.0.0",
+    "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
     "lowdash": "^1.2.0",
     "qs": "^6.12.0",

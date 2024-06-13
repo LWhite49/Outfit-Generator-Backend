@@ -3,7 +3,7 @@ import { Home } from "./Home/Home";
 import { Generator } from "./Generator/Generator";
 import { About } from "./About/About";
 import { useState, createContext, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import axios from "axios";
 import logo from "./images/OGLogo.png";
@@ -88,6 +88,7 @@ export const AppMain = () => {
 			console.log("Trouble Fetching outfitFeed:", err);
 		}
 	};
+
 	// useQuery to fetch the outfitFeed from the server
 	const { isLoading, isError } = useQuery({
 		queryKey: [
@@ -141,7 +142,45 @@ export const AppMain = () => {
 		refetchOnWindowFocus: false,
 		enabled: false,
 	});
-	// Object.keys(outfitFeed).length > 0
+
+	// Crete a mutationFn that makes a post request to the server to rate an outfit
+	const rateOutfit = async (p1, p2, p3, rating) => {
+		try {
+			console.log("Rating Outfit...");
+			let url = `http://localhost:3500/rateOutfit`;
+			console.log(
+				"Color 1: ",
+				p1,
+				"Color 2: ",
+				p2,
+				"Color 3: ",
+				p3,
+				"Rating: ",
+				rating
+			);
+			let res = await axios.post(url, {
+				body: {
+					p1: p1,
+					p2: p2,
+					p3: p3,
+					rating: rating,
+				},
+			});
+			console.log("Outfit Rated");
+			return res.data;
+		} catch (err) {
+			console.log("Trouble Rating outfit:", err);
+			return err;
+		}
+	};
+
+	// useMutation to rate an outfit
+	const rateOutfitMutation = useMutation({
+		mutationKey: "RateOutfit",
+		mutationFn: rateOutfit,
+	});
+
+	// Return loading screen when outfitFeed is empty
 	return Object.keys(outfitFeed).length > 0 ? (
 		<Router>
 			<FeedContext.Provider
@@ -155,7 +194,9 @@ export const AppMain = () => {
 					isLoadingExpand,
 					isErrorExpand,
 					refetchExpandFeed,
+					rateOutfitMutation,
 					images,
+					subPage,
 					setSubPage,
 					setSize,
 					setBrand,
@@ -180,6 +221,7 @@ export const AppMain = () => {
 										: "NavbarElem"
 								}
 								onClick={() => {
+									window.scrollTo(0, 0);
 									setSubPage("/home");
 								}}>
 								{" "}
@@ -193,6 +235,7 @@ export const AppMain = () => {
 										: "NavbarElem"
 								}
 								onClick={() => {
+									window.scrollTo(0, 0);
 									setSubPage("/generator");
 								}}>
 								{" "}
@@ -206,6 +249,7 @@ export const AppMain = () => {
 										: "NavbarElem"
 								}
 								onClick={() => {
+									window.scrollTo(0, 0);
 									setSubPage("/about");
 								}}>
 								{" "}
