@@ -23,43 +23,48 @@ export const About = () => {
 				<img className="About-Image" src={aboutUs} alt="About Us" />
 				<p className="About-Header">About Us</p>
 			</div>
-			<div className="About-Memo-Panel">
-				<p className="About-Memo">
-					&bull; Outfit Generator was created by a team of{" "}
-					<span className="About-Memo-Highlight">
-						three undergraduate students
-					</span>{" "}
-					located in{" "}
-					<span className="About-Memo-Highlight">Tampa, Florida</span>{" "}
-					that got together to build a large-scale project to showcase
-					our technical skills in{" "}
-					<span className="About-Memo-Highlight">
-						web development, database management, information
-						science, and machine learning
-					</span>
-				</p>
-				<p className="About-Memo">
-					&bull; Our vision for Outfit Generator is a way of{" "}
-					<span className="About-Memo-Highlight">
-						making fashion accessible
-					</span>{" "}
-					for everyone, while{" "}
-					<span className="About-Memo-Highlight">
-						promoting shopping secondhand
-					</span>{" "}
-					to combat the dangerous and wasteful trends of fast fashion
-					flooding retail stores today{" "}
-				</p>
-				<p className="About-Memo">
-					&bull; Thank you so much for using our website! If you're
-					interested in how everything works on a technical level,
-					please check out our comprehensive video documentation:{" "}
-					<span
-						className="Video-Documentation-Link"
-						onClick={openVideoDocumentation}>
-						Here
-					</span>
-				</p>
+			<div className="About-Memo-Wrap">
+				<div className="About-Memo-Panel">
+					<p className="About-Memo">
+						&bull; Outfit Generator was created by a team of{" "}
+						<span className="About-Memo-Highlight">
+							three undergraduate students
+						</span>{" "}
+						located in{" "}
+						<span className="About-Memo-Highlight">
+							Tampa, Florida
+						</span>{" "}
+						that got together and built a large-scale project to
+						showcase our technical skills in{" "}
+						<span className="About-Memo-Highlight">
+							web development, database management, and data
+							science
+						</span>
+					</p>
+					<p className="About-Memo">
+						&bull; Our vision for Outfit Generator is a way of{" "}
+						<span className="About-Memo-Highlight">
+							making fashion accessible
+						</span>{" "}
+						for everyone, while{" "}
+						<span className="About-Memo-Highlight">
+							promoting shopping secondhand
+						</span>{" "}
+						to combat the dangerous and wasteful trends of fast
+						fashion flooding retail stores today{" "}
+					</p>
+					<p className="About-Memo">
+						&bull; Thank you so much for using our website! If
+						you're interested in how everything works on a technical
+						level, please check out our comprehensive video
+						documentation:{" "}
+						<span
+							className="Video-Documentation-Link"
+							onClick={openVideoDocumentation}>
+							Here
+						</span>
+					</p>
+				</div>
 			</div>
 			<div className="Meet-The-Team-Panel">
 				<p className="About-Header-Devs">Our Developers</p>
@@ -173,11 +178,11 @@ export const About = () => {
 							src={JLImg}
 							alt="Developer"
 						/>
-						<p className="Dev-Display-Name-Long">Josh Lacsamana</p>
+						<p className="Dev-Display-Name-Long">Luke Lacsamana</p>
+						<p className="Dev-Display-Role">Image Processing</p>
 						<p className="Dev-Display-Role">
 							Project Documentation
 						</p>
-						<p className="Dev-Display-Role">Image Processing</p>
 						<div className="Dev-Display-Links">
 							<img
 								onClick={() => {

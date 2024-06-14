@@ -144,7 +144,7 @@ export const AppMain = () => {
 	});
 
 	// Crete a mutationFn that makes a post request to the server to rate an outfit
-	const rateOutfit = async (p1, p2, p3, rating) => {
+	const rateOutfit = async (p1, p2, p3, id1, id2, id3, rating) => {
 		try {
 			console.log("Rating Outfit...");
 			let url = `http://localhost:3500/rateOutfit`;
@@ -153,6 +153,9 @@ export const AppMain = () => {
 					p1: p1,
 					p2: p2,
 					p3: p3,
+					id1: id1,
+					id2: id2,
+					id3: id3,
 					rating: rating,
 				},
 			});

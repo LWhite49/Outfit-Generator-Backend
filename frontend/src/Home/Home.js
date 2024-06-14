@@ -9,6 +9,7 @@ import wardrobeSvg from "../images/clothesRack.svg";
 import paintPalletSvg from "../images/paintPalletSvg.svg";
 import palletBar from "../images/spectrumBar.png";
 import outfitSvg from "../images/outfitSvg.svg";
+import feedbackSvg from "../images/feedbackSvg.svg";
 
 export const Home = () => {
 	// Extract images from feed context
@@ -199,12 +200,69 @@ export const Home = () => {
 					</p>
 					<p className="Step-Two-Text">
 						{" "}
-						<span className="Bullet-Span-Two">&bull; </span>All of
-						this is{" "}
+						<span className="Bullet-Span-Two">&bull; </span>
+						Seemlessly explore{" "}
+						<span className="Bullet-Text-Emph-Three">
+							millions of unique outfits
+						</span>{" "}
+						presented in a{" "}
+						<span className="Bullet-Text-Emph-Three">
+							user-friendly
+						</span>{" "}
+						content feed{" "}
+					</p>
+				</div>
+				<Wavify
+					className="Wave-Panel-Interface-Four"
+					fill="#F5928E"
+					options={{ height: 20, amplitude: 35, speed: 0.25 }}
+				/>
+				<div
+					className="Step-Three-Generation-Panel"
+					style={{ backgroundColor: "#F5928E" }}>
+					<p
+						className="Step-Three-Header"
+						style={{
+							textShadow:
+								"-1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98, 2px 2px 0 #5d0b98",
+						}}>
+						{" "}
+						<span className="Step-Span">Step #4: </span>
+						Incorporate Feedback
+					</p>
+					<img
+						className="Step-Three-Image"
+						src={feedbackSvg}
+						alt="Step Two"></img>
+					<p className="Step-Two-Text">
+						{" "}
+						<span className="Bullet-Span-Two">&bull; </span>Each
+						outfit is presented with{" "}
+						<span className="Bullet-Text-Emph-Three">
+							a like and dislike button
+						</span>{" "}
+						to provide feedback{" "}
+					</p>
+					<p className="Step-Two-Text">
+						{" "}
+						<span className="Bullet-Span-Two">&bull; </span>With
+						each rating, the{" "}
+						<span className="Bullet-Text-Emph-Three">
+							outfit reccomendation algorithm
+						</span>{" "}
+						is updated{" "}
+						<span className="Bullet-Text-Emph-Three">
+							in real time
+						</span>{" "}
+					</p>
+					<p className="Step-Two-Text">
+						{" "}
+						<span className="Bullet-Span-Two">&bull; </span>
+						All of this is{" "}
 						<span className="Bullet-Text-Emph-Three">
 							just a click away
-						</span>
-						...{" "}
+						</span>{" "}
+						so...
 					</p>
 					<Link
 						to="/generator"
@@ -213,7 +271,7 @@ export const Home = () => {
 							setSubPage("/generator");
 						}}>
 						<button className="Bottom-Call-To-Action">
-							Try it Out!
+							Try it Now!
 						</button>
 					</Link>
 				</div>

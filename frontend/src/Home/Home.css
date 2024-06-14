@@ -66,7 +66,8 @@
 	display: inline-block;
 	opacity: 100%;
 	z-index: 5;
-	transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+	transition: background-color 0.3s, color 0.3s, box-shadow 0.3s,
+		transform 0.3s;
 	cursor: pointer;
 	margin: max(4vh, 70px) 0px max(4vh, 70px) 30px;
 	border: none;
@@ -81,8 +82,8 @@
 	text-shadow: -1px -1px 0 #5d0b98, 1px -1px 0 #5d0b98, -1px 1px 0 #5d0b98,
 		1px 1px 0 #5d0b98;
 }
-.Hero-Button:hover,
-.Bottom-Call-To-Action:hover {
+.Hero-Button:hover {
+	transform: scale(1.1);
 	box-shadow: 0px 0px 10px 0px #5d0b98;
 	background-color: black;
 	color: #5d0b98;
@@ -277,7 +278,18 @@
 	border: 4px double #5d0b98;
 }
 .Bottom-Call-To-Action {
+	transition: transform 0.2s, box-shadow 0.2s;
 	margin-top: max(6vh, 100px);
+	background-color: #f5e7ff;
+	color: black;
+	text-shadow: red 1px 1px 0px;
+}
+.Bottom-Call-To-Action:hover {
+	transform: scale(1.1);
+	box-shadow: 0px 0px 10px 0px #5d0b98;
+}
+.Wave-Panel-Interface-Four {
+	background-color: #000000;
 }
 
 /* responsive width */

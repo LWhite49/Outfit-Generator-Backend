@@ -98,6 +98,21 @@ export const OutfitFeedDisplay = (props) => {
 											feedStatus.currIndex + i
 										].shoe
 									].shoes.productColors,
+									outfitFeed.pallet[
+										outfitFeed.outfits[
+											feedStatus.currIndex + i
+										].top
+									].top._id,
+									outfitFeed.pallet[
+										outfitFeed.outfits[
+											feedStatus.currIndex + i
+										].bottom
+									].bottom._id,
+									outfitFeed.pallet[
+										outfitFeed.outfits[
+											feedStatus.currIndex + i
+										].shoe
+									].shoes._id,
 									1
 								);
 								// Add class to img to signal rating
@@ -152,6 +167,21 @@ export const OutfitFeedDisplay = (props) => {
 											feedStatus.currIndex + i
 										].shoe
 									].shoes.productColors,
+									outfitFeed.pallet[
+										outfitFeed.outfits[
+											feedStatus.currIndex + i
+										].top
+									].top._id,
+									outfitFeed.pallet[
+										outfitFeed.outfits[
+											feedStatus.currIndex + i
+										].bottom
+									].bottom._id,
+									outfitFeed.pallet[
+										outfitFeed.outfits[
+											feedStatus.currIndex + i
+										].shoe
+									].shoes._id,
 									0
 								);
 								// Add class to img to signal rating
