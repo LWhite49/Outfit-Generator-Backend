@@ -47,13 +47,20 @@ export const AppMain = () => {
 	const [shoeGender, setShoeGender] = useState("male");
 
 	// Create a state for current subpage used for conditional rendering of navbar
-	const [subPage, setSubPage] = useState(
-		localStorage.getItem("subPage") || "/home"
-	);
+	const [subPage, setSubPage] = useState(() => {
+		if (
+			localStorage.getItem("subPage") &&
+			Date.now() - localStorage.getItem("lastLoad") < 5000
+		) {
+			return localStorage.getItem("subPage");
+		}
+		return "/home";
+	});
 
 	// Create a useEffect that stores the subpage in local storage when it changes
 	useEffect(() => {
 		localStorage.setItem("subPage", subPage);
+		localStorage.setItem("lastLoad", Date.now());
 	}, [subPage]);
 
 	// Create a state for the current width of the window
