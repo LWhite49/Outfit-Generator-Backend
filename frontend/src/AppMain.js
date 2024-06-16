@@ -57,7 +57,7 @@ export const AppMain = () => {
 		return "/home";
 	});
 
-	// Create a useEffect that stores the subpage in local storage when it changes
+	// Create a useEffect that stores the subpage in local storage when it changes, and updates lastLoad on page closing
 	useEffect(() => {
 		localStorage.setItem("subPage", subPage);
 		localStorage.setItem("lastLoad", Date.now());
@@ -66,12 +66,17 @@ export const AppMain = () => {
 	// Create a state for the current width of the window
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-	// Create a listener for window width changes
+	// Create a listener for window width changes, and add an unload event listener to update lastLoad
 	useEffect(() => {
 		const handleResize = () => {
 			setWindowWidth(window.innerWidth);
 		};
+
+		const handleUnload = () => {
+			localStorage.setItem("lastLoad", Date.now());
+		};
 		window.addEventListener("resize", handleResize);
+		window.addEventListener("beforeunload", handleUnload);
 		return () => {
 			window.removeEventListener("resize", handleResize);
 		};
