@@ -384,7 +384,7 @@
 		margin-left: 38vw;
 		max-width: 500px;
 		line-height: 34px;
-		text-indent: -56px;
+		text-indent: -23px;
 	}
 	.Step-One-Image,
 	.Step-Two-Image,
@@ -420,7 +420,6 @@
 		margin-left: 36vw;
 		max-width: 410px;
 		line-height: 34px;
-		text-indent: -56px;
 	}
 	.Step-One-Image,
 	.Step-Two-Image,
@@ -470,7 +469,6 @@
 		margin-left: 38vw;
 		max-width: 300px;
 		line-height: 34px;
-		text-indent: -56px;
 	}
 	.Step-One-Image,
 	.Step-Two-Image,
@@ -537,15 +535,14 @@
 	.Step-One-Header,
 	.Step-Two-Header,
 	.Step-Three-Header {
-		font-size: 14pt;
+		font-size: 16pt;
 		line-break: none;
 	}
 	.How-It-Works-Header {
-		font-size: 16pt;
+		font-size: 18pt;
 	}
 	.Down-Arrow-Home {
-		width: 60px;
-		height: 60px;
+		display: none;
 	}
 	.Hero-Overlay {
 		width: 200px;

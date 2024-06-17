@@ -215,6 +215,211 @@
 }
 .Bottom-Call-To-Action {
 	position: absolute;
-	bottom: -10px;
+	bottom: -18px;
 	left: calc(50% - 150px);
+}
+
+/* Responsive Widths */
+
+@media (max-width: 1880px) {
+	.About-Memo {
+		font-size: 16pt;
+	}
+	.Tech-Stack-Node-Text {
+		max-width: 1000px;
+	}
+	.Tech-Stack-Node-Image {
+		width: 200px;
+		height: 200px;
+	}
+}
+
+@media (max-width: 1630px) {
+	.Tech-Stack-Node-Text {
+		max-width: 800px;
+	}
+}
+
+@media (max-width: 1410px) {
+	.About-Memo {
+		font-size: 14pt;
+		letter-spacing: 1px;
+		text-indent: -22px;
+	}
+	.Tech-Stack-Node-Text {
+		max-width: 700px;
+	}
+	.Tech-Stack-Node-Image {
+		width: 180px;
+		height: 180px;
+	}
+	.Dev-Display-Card {
+		padding: 30px 40px 20px 40px;
+	}
+	.Dev-Display-Name {
+		padding: 0px 0px 10px 0px;
+		font-size: 20pt;
+	}
+	.Dev-Display-Role {
+		font-size: 14pt;
+	}
+	.Dev-Display-Name-Long {
+		font-size: 20pt;
+	}
+	.Dev-Display-Image {
+		width: 220px;
+		height: 220px;
+	}
+	.Dev-Display-Link {
+		width: 30px;
+		height: 30px;
+	}
+}
+
+@media (max-width: 1300px) {
+	.Dev-Display-Div {
+		gap: 30px;
+	}
+	.Tech-Stack-Node-Text {
+		margin-left: 80px;
+		max-width: 600px;
+		font-size: 18pt;
+	}
+}
+
+@media (max-width: 1100px) {
+	.About-Memo {
+		font-size: 13pt;
+		line-height: 32px;
+		letter-spacing: 0.5px;
+		text-indent: -20px;
+	}
+	.Tech-Stack-Node-Image {
+		right: 40px;
+		width: 150px;
+		height: 150px;
+	}
+	.Tech-Stack-Node-Text {
+		margin-left: 60px;
+		font-size: 17pt;
+	}
+	.Dev-Display-Image {
+		width: 180px;
+		height: 180px;
+	}
+	.Dev-Display-Name,
+	.Dev-Display-Name-Long {
+		font-size: 18pt;
+	}
+
+	.Dev-Display-Role {
+		font-size: 12pt;
+	}
+}
+
+@media (max-width: 1000px) {
+	.Tech-Stack-Node-Text {
+		margin-left: 40px;
+		max-width: 500px;
+		font-size: 16pt;
+	}
+}
+
+@media (max-width: 910px) {
+	.Dev-Display-Div {
+		gap: 16px;
+	}
+	.Dev-Display-Card {
+		padding: 20px 30px 20px 30px;
+	}
+}
+
+@media (max-width: 850px) {
+	.About-Memo {
+		font-size: 11pt;
+		line-height: 28px;
+		text-indent: -17px;
+	}
+	.Dev-Display-Div {
+		flex-direction: column;
+		gap: 20px;
+	}
+	.Dev-Display-Card {
+		gap: 0px;
+	}
+	.Tech-Stack-Node-Text {
+		margin-left: 20px;
+		max-width: 400px;
+		font-size: 14pt;
+		text-indent: -19px;
+	}
+	.Tech-Stack-Node-Image {
+		right: 24px;
+		width: 120px;
+		height: 120px;
+	}
+}
+
+@media (max-width: 710px) {
+	.Tech-Stack-Node-Text {
+		margin-left: 20px;
+		max-width: 300px;
+		font-size: 12pt;
+		text-indent: -18px;
+	}
+	.About-Header-Devs {
+		left: -10px;
+		font-size: 20pt;
+	}
+	.About-Image-HTML {
+		top: -100px;
+		left: 170px;
+	}
+	.About-Header {
+		font-size: 24pt;
+	}
+	.About-Image {
+		top: 29px;
+		left: 220px;
+		width: 60px;
+	}
+}
+
+@media (max-width: 610px) {
+	.Tech-Stack-Node-Image {
+		display: none;
+	}
+	.Tech-Stack-Node-Text {
+		max-width: 340px;
+	}
+}
+
+@media (max-width: 480px) {
+	.About-Header {
+		left: -40px;
+		font-size: 18pt;
+	}
+	.About-Image {
+		top: 16px;
+		left: 160px;
+		width: 50px;
+	}
+	.About-Memo {
+		font-size: 10pt;
+		line-height: 20px;
+		text-indent: -15px;
+	}
+	.About-Image-HTML {
+		display: none;
+	}
+	.About-Header-Devs {
+		left: 0px;
+		font-size: 18pt;
+	}
+	.Tech-Stack-Node-Text {
+		margin-left: 0px;
+		max-width: 150px;
+		font-size: 11pt;
+		line-height: 18px;
+	}
 }

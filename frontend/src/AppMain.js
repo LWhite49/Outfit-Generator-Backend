@@ -47,24 +47,36 @@ export const AppMain = () => {
 	const [shoeGender, setShoeGender] = useState("male");
 
 	// Create a state for current subpage used for conditional rendering of navbar
-	const [subPage, setSubPage] = useState(
-		localStorage.getItem("subPage") || "/home"
-	);
+	const [subPage, setSubPage] = useState(() => {
+		if (
+			localStorage.getItem("subPage") &&
+			Date.now() - localStorage.getItem("lastLoad") < 5000
+		) {
+			return localStorage.getItem("subPage");
+		}
+		return "/home";
+	});
 
-	// Create a useEffect that stores the subpage in local storage when it changes
+	// Create a useEffect that stores the subpage in local storage when it changes, and updates lastLoad on page closing
 	useEffect(() => {
 		localStorage.setItem("subPage", subPage);
+		localStorage.setItem("lastLoad", Date.now());
 	}, [subPage]);
 
 	// Create a state for the current width of the window
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-	// Create a listener for window width changes
+	// Create a listener for window width changes, and add an unload event listener to update lastLoad
 	useEffect(() => {
 		const handleResize = () => {
 			setWindowWidth(window.innerWidth);
 		};
+
+		const handleUnload = () => {
+			localStorage.setItem("lastLoad", Date.now());
+		};
 		window.addEventListener("resize", handleResize);
+		window.addEventListener("beforeunload", handleUnload);
 		return () => {
 			window.removeEventListener("resize", handleResize);
 		};
