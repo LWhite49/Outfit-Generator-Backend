@@ -259,12 +259,23 @@ const rateOutfit = async (req, res) => {
 	const p1 = req.body.p1;
 	const p2 = req.body.p2;
 	const p3 = req.body.p3;
+	const id1 = req.body.id1;
+	const id2 = req.body.id2;
+	const id3 = req.body.id3;
 	const rating = req.body.rating;
 
 	// Send the colors to the PyScript
 	try {
 		console.log("Sending Rating to PyScript...");
-		const response = await updateModelViaPy(p1, p2, p3, rating);
+		const response = await updateModelViaPy(
+			p1,
+			p2,
+			p3,
+			id1,
+			id2,
+			id3,
+			rating
+		);
 		console.log("Updated ML Model Successfully:", response);
 	} catch (err) {
 		console.log(err, `Error communicating with Py to update ML Model`);

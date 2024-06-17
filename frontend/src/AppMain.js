@@ -163,19 +163,28 @@ export const AppMain = () => {
 	});
 
 	// Crete a mutationFn that makes a post request to the server to rate an outfit
-	const rateOutfit = async (p1, p2, p3, id1, id2, id3, rating) => {
+	const rateOutfit = async (args) => {
 		try {
 			console.log("Rating Outfit...");
+			console.log(
+				args[0],
+				args[1],
+				args[2],
+				args[3],
+				args[4],
+				args[5],
+				args[6]
+			);
 			let url = `http://localhost:3500/rateOutfit`;
 			let res = await axios.post(url, {
 				body: {
-					p1: p1,
-					p2: p2,
-					p3: p3,
-					id1: id1,
-					id2: id2,
-					id3: id3,
-					rating: rating,
+					p1: args[0],
+					p2: args[1],
+					p3: args[2],
+					id1: args[3],
+					id2: args[4],
+					id3: args[5],
+					rating: args[6],
 				},
 			});
 			console.log("Outfit Rated");

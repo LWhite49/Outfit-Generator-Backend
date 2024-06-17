@@ -82,7 +82,7 @@ export const OutfitFeedDisplay = (props) => {
 									return;
 								}
 								// Call mutation to rate outfit
-								rateOutfitMutation.mutate(
+								rateOutfitMutation.mutate([
 									outfitFeed.pallet[
 										outfitFeed.outfits[
 											feedStatus.currIndex + i
@@ -113,8 +113,8 @@ export const OutfitFeedDisplay = (props) => {
 											feedStatus.currIndex + i
 										].shoe
 									].shoes._id,
-									1
-								);
+									1,
+								]);
 								// Add class to img to signal rating
 								event.target.classList.add(
 									"Outfit-Rating-Img-Pos-Clicked"
@@ -151,7 +151,7 @@ export const OutfitFeedDisplay = (props) => {
 									return;
 								}
 								// Call mutation to rate outfit
-								rateOutfitMutation.mutate(
+								rateOutfitMutation.mutate([
 									outfitFeed.pallet[
 										outfitFeed.outfits[
 											feedStatus.currIndex + i
@@ -182,8 +182,8 @@ export const OutfitFeedDisplay = (props) => {
 											feedStatus.currIndex + i
 										].shoe
 									].shoes._id,
-									0
-								);
+									0,
+								]);
 								// Add class to img to signal rating
 								event.target.classList.add(
 									"Outfit-Rating-Img-Neg-Clicked"
