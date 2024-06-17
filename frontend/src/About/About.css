@@ -351,6 +351,7 @@
 		margin-left: 20px;
 		max-width: 400px;
 		font-size: 14pt;
+		text-indent: -19px;
 	}
 	.Tech-Stack-Node-Image {
 		right: 24px;
@@ -390,5 +391,35 @@
 	}
 	.Tech-Stack-Node-Text {
 		max-width: 340px;
+	}
+}
+
+@media (max-width: 480px) {
+	.About-Header {
+		left: -40px;
+		font-size: 18pt;
+	}
+	.About-Image {
+		top: 16px;
+		left: 160px;
+		width: 50px;
+	}
+	.About-Memo {
+		font-size: 10pt;
+		line-height: 20px;
+		text-indent: -15px;
+	}
+	.About-Image-HTML {
+		display: none;
+	}
+	.About-Header-Devs {
+		left: 0px;
+		font-size: 18pt;
+	}
+	.Tech-Stack-Node-Text {
+		margin-left: 0px;
+		max-width: 150px;
+		font-size: 11pt;
+		line-height: 18px;
 	}
 }

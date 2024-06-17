@@ -12,7 +12,8 @@ import GithubImg from "../images/GithubImg.svg";
 import EmailImg from "../images/EmailImg.svg";
 import mongoDBSvg from "../images/mongoDBSvg.svg";
 import nodeJSSvg from "../images/nodeJSSvg.svg";
-import imageProcessingSvg from "../images/imageProcessingSvg.svg";
+import openCVSvg from "../images/opencvSvg.svg";
+import pythonSvg from "../images/pythonSvg.svg";
 import reactSvg from "../images/reactSvg.svg";
 
 export const About = () => {
@@ -311,21 +312,25 @@ export const About = () => {
 					<div className="Tech-Stack-Node-Text-Wrapper">
 						<p className="Tech-Stack-Node-Text">
 							<span className="Tech-Stack-Bullet">&bull;</span>
-							Patrick Save me I don't know how this works{" "}
+							Used OpenCV functions to process image data into
+							optimal format, including the resizing, flattening,
+							and shifting of color space{" "}
 						</p>
 						<p className="Tech-Stack-Node-Text">
 							<span className="Tech-Stack-Bullet">&bull;</span>
-							Maybe it uses like Pandas or some shit? Maybe name
-							drop some theorems used to apply the colors idk{" "}
+							Applied U2-Net object detection to segment salient
+							clothing items from images with backgrounds of
+							varying levels of clutter and negative space{" "}
 						</p>
 						<p className="Tech-Stack-Node-Text">
 							<span className="Tech-Stack-Bullet">&bull;</span>
-							Why did we choose those Libraries man idfk{" "}
+							Quantized image data into their most prominent
+							distinct colors via K-Means Clustering{" "}
 						</p>
 					</div>
 					<img
 						className="Tech-Stack-Node-Image"
-						src={imageProcessingSvg}
+						src={openCVSvg}
 						alt="Processing"
 					/>
 				</div>
@@ -353,7 +358,7 @@ export const About = () => {
 					</div>
 					<img
 						className="Tech-Stack-Node-Image"
-						src={imageProcessingSvg}
+						src={pythonSvg}
 						alt="Processing"
 					/>
 				</div>
