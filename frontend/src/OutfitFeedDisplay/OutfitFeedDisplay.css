@@ -125,6 +125,7 @@
 		gap: 16pt;
 	}
 	.Outfit-Feed-Item {
+		gap: 6px;
 		padding: 8px 10px;
 	}
 	.Outfit-Feed-Button {
@@ -137,6 +138,7 @@
 		margin-left: 0px;
 		height: 300px;
 	}
+	.Outfit-Button,
 	.Outfit-Rating-Img-Pos,
 	.Outfit-Rating-Img-Neg {
 		width: 54px;

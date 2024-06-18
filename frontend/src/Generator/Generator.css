@@ -8,7 +8,7 @@
 	padding-top: 10vh;
 	padding-top: max(10vh, 100px);
 	padding-bottom: 40vh;
-	overflow: hidden;
+	overflow: scroll;
 }
 .Generator-Settings {
 	display: flex;
@@ -19,8 +19,7 @@
 	border: 4px ridge #5d0b98;
 	border-radius: 30px;
 	background-color: #f6ecfe;
-	padding-top: max(1vh, 20px);
-	width: 80%;
+	padding: max(2vh, 30px) max(10vw, 100px);
 }
 .Generator-Settings-Header {
 	display: inline-flex;
@@ -45,12 +44,11 @@
 	gap: max(30px, 2vw);
 	margin-top: 6px;
 	margin-bottom: 16px;
-	border: 2px ridge #5d0b98;
+	border: 1px ridge #5d0b98;
+	border-bottom: 2px solid black;
 	border-radius: 10px;
 	background-color: #f5e7ff;
 	padding: 10px 24px 14px 24px;
-	width: max(24vw, 400px);
-	max-width: max(24vw, 400px);
 }
 .Gender-Slider-Container {
 	display: flex;
@@ -76,10 +74,10 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: max(24vw, 400px);
-	max-width: max(24vw, 400px);
 }
-.Size-Input-Container,
+.Size-Input-Container-Top,
+.Size-Input-Container-Bottom,
+.Size-Input-Container-Shoe,
 .Brand-Container {
 	display: flex;
 	flex-direction: row;
@@ -90,8 +88,11 @@
 	margin-bottom: max(1.2vh, 10px);
 	border-bottom: 2px ridge #5d0b98;
 	padding: 0px 4vw 0px 4vw;
-	width: max(24vw, 400px);
-	max-width: max(24vw, 400px);
+}
+.Size-Input-Container-Top,
+.Size-Input-Container-Bottom {
+	position: relative;
+	left: -40px;
 }
 .Brand-Container {
 	margin-bottom: 40px;
@@ -111,6 +112,10 @@
 	font-weight: bold;
 	font-size: 14pt;
 	text-align: center;
+}
+.Bottom-Size-Label {
+	position: relative;
+	top: 42px;
 }
 .Waist-Size-Label {
 	margin-right: 6px;
@@ -182,11 +187,14 @@
 	margin-bottom: 10px;
 	margin-left: 12px;
 	border: 1px ridge #5d0b98;
+	border-bottom: 2px solid black;
 	border-radius: 10px;
 	background-color: #f5e7ff;
 	padding: 0px 10px 0px 0px;
-	width: max(24vw, 400px);
-	max-width: max(24vw, 400px);
+}
+.Waist-Container-Wrap {
+	padding: 0px 13vw;
+	padding-bottom: 10px;
 }
 .Size-Button-Small-Selected {
 	padding: 6px 6px 6px 6px;

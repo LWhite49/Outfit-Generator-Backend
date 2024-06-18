@@ -79,6 +79,7 @@
 @media (max-width: 1499px) {
 	.ShoeDisplay {
 		--componentHeight: 200px;
+		margin: 6px 0px;
 	}
 	.Color-Display,
 	.Color-Display-First,
@@ -86,6 +87,6 @@
 		width: 16px;
 	}
 	.Shoe-Display-Size-Text {
-		font-size: 10pt;
+		font-size: 11pt;
 	}
 }

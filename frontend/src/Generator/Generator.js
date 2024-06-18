@@ -395,7 +395,7 @@ export const Generator = () => {
 					</div>
 				</div>
 				<div className="Size-Container">
-					<div className="Size-Input-Container">
+					<div className="Size-Input-Container-Top">
 						<p className="Size-Label">Top Sizes:</p>
 						<button
 							className={
@@ -475,7 +475,9 @@ export const Generator = () => {
 							XXL
 						</button>
 					</div>
-					<div className="Size-Input-Container">
+					<div
+						className="Size-Input-Container-Bottom"
+						style={{ borderBottom: "none" }}>
 						<p className="Bottom-Size-Label">Bottom Sizes:</p>
 						<button
 							className={
@@ -554,6 +556,10 @@ export const Generator = () => {
 							}}>
 							XXL
 						</button>
+					</div>
+					<div
+						className="Waist-Container-Wrap"
+						style={{ borderBottom: "2px ridge #5d0b98" }}>
 						<div className="Waist-Container">
 							<p className="Waist-Size-Label">Waist (in.):</p>
 							<button
@@ -589,7 +595,7 @@ export const Generator = () => {
 							</button>
 						</div>
 					</div>
-					<div className="Size-Input-Container">
+					<div className="Size-Input-Container-Shoe">
 						<p className="Size-Label">Shoe Sizes:</p>
 						<p className="Waist-Size-Label">Min:</p>
 						<input

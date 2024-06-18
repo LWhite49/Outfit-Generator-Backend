@@ -78,6 +78,7 @@
 @media (max-width: 1499px) {
 	.BottomDisplay {
 		--componentHeight: 200px;
+		margin: 6px 0px;
 	}
 	.Color-Display,
 	.Color-Display-First,
@@ -85,6 +86,6 @@
 		width: 16px;
 	}
 	.Bottom-Display-Size-Text {
-		font-size: 10pt;
+		font-size: 11pt;
 	}
 }
