@@ -287,6 +287,8 @@ export const Generator = () => {
 		setSize({ ...size, shoeSizes: shoeSizeArr });
 	};
 
+	// Conditionally assign variable that determins the divisor for the outfit feed display count
+	const displayDivisor = windowWidth > 1499 ? 500 : 365;
 	return (
 		<div className="Generator">
 			<div className="Generator-Settings">
@@ -628,7 +630,8 @@ export const Generator = () => {
 			</div>
 			{isLoading ||
 			(isLoadingExpand &&
-				feedStatus.currIndex + Math.floor(windowWidth / 500) ===
+				feedStatus.currIndex +
+					Math.floor(windowWidth / displayDivisor) ===
 					outfitFeed.outfits.length) ? (
 				<img
 					src={loadingBuddy}
@@ -637,7 +640,7 @@ export const Generator = () => {
 				/>
 			) : (
 				<OutfitFeedDisplay
-					displayCount={Math.floor(windowWidth / 500)}
+					displayCount={Math.floor(windowWidth / displayDivisor)}
 				/>
 			)}
 		</div>

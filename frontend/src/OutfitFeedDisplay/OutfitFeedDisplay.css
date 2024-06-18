@@ -3,7 +3,7 @@
 	flex-direction: row;
 	gap: 36px;
 	margin-top: max(5vh, 60px);
-	margin-bottom: max(20vh, 250px);
+	margin-bottom: 10px;
 }
 .Outfit-Feed-Item {
 	display: flex;
@@ -118,4 +118,27 @@
 
 .Outfit-Feed-Button-Right {
 	transform: rotate(180deg);
+}
+
+@media (max-width: 1499px) {
+	.Outfit-Feed-Display {
+		gap: 16pt;
+	}
+	.Outfit-Feed-Item {
+		padding: 8px 10px;
+	}
+	.Outfit-Feed-Button {
+		margin-right: 8px;
+		height: 300px;
+	}
+	.Outfit-Feed-Button-EndDiv {
+		position: relative;
+		left: -16px;
+		margin-left: 0px;
+		height: 300px;
+	}
+	.Outfit-Rating-Img-Pos,
+	.Outfit-Rating-Img-Neg {
+		width: 54px;
+	}
 }
