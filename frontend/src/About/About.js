@@ -5,8 +5,8 @@ import { FeedContext } from "../AppMain.js";
 import aboutUs from "../images/aboutUs.svg";
 import HTMLTagSvg from "../images/HTMLTag.svg";
 import LWImg from "../images/LWImg.jpg";
-import PAImg from "../images/PAImg.jpg";
-import JLImg from "../images/JLImg.jpg";
+import PAImg from "../images/PAImage.jpg";
+import JLImg from "../images/LLImage.jpg";
 import LinkedInImg from "../images/LinkedInImg.svg";
 import GithubImg from "../images/GithubImg.svg";
 import EmailImg from "../images/EmailImg.svg";
@@ -192,9 +192,7 @@ export const About = () => {
 						/>
 						<p className="Dev-Display-Name-Long">Luke Lacsamana</p>
 						<p className="Dev-Display-Role">Image Processing</p>
-						<p className="Dev-Display-Role">
-							Project Documentation
-						</p>
+						<p className="Dev-Display-Role">Project Deployment</p>
 						<div className="Dev-Display-Links">
 							<img
 								onClick={() => {
@@ -345,15 +343,15 @@ export const About = () => {
 					<div className="Tech-Stack-Node-Text-Wrapper">
 						<p className="Tech-Stack-Node-Text">
 							<span className="Tech-Stack-Bullet">&bull;</span>
-							Patrick Save me I don't know how this works{" "}
+							We are still designing the Machine learning Model,
+							but it will be built with Python{" "}
 						</p>
 						<p className="Tech-Stack-Node-Text">
 							<span className="Tech-Stack-Bullet">&bull;</span>
-							What Libraries and Algos did we use{" "}
-						</p>
-						<p className="Tech-Stack-Node-Text">
-							<span className="Tech-Stack-Bullet">&bull;</span>
-							Why did we use them and how do they work{" "}
+							This Model will recieve live feedback from users via
+							a like/dislike system, which will train the model
+							over time to generate outfits with better matching
+							colors{" "}
 						</p>
 					</div>
 					<img
