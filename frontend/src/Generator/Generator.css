@@ -83,16 +83,21 @@
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-	gap: max(1vw, 10px);
+	gap: 18px;
 	margin-top: max(1.2vh, 10px);
 	margin-bottom: max(1.2vh, 10px);
 	border-bottom: 2px ridge #5d0b98;
-	padding: 0px 4vw 0px 4vw;
+	padding: 0px 40px 0px 40px;
 }
 .Size-Input-Container-Top,
 .Size-Input-Container-Bottom {
 	position: relative;
 	left: -40px;
+}
+.Size-Input-Container-Shoe {
+	position: relative;
+	left: -36px;
+	gap: 10px;
 }
 .Brand-Container {
 	margin-bottom: 40px;
@@ -101,9 +106,10 @@
 
 .Size-Label,
 .Waist-Size-Label,
+.Size-Label-Shoe,
 .Shoe-Size-Label,
-.Bottom-Size-Label {
-	display: inline-block;
+.Bottom-Size-Label,
+.Top-Size-Label {
 	margin: 10px 20px 10px 10px;
 	width: 60px;
 	min-width: 60px;
@@ -113,9 +119,13 @@
 	font-size: 14pt;
 	text-align: center;
 }
+.Size-Label-Shoe {
+	position: relative;
+	left: 12px;
+}
 .Bottom-Size-Label {
 	position: relative;
-	top: 42px;
+	top: 46px;
 }
 .Waist-Size-Label {
 	margin-right: 6px;
@@ -193,7 +203,7 @@
 	padding: 0px 10px 0px 0px;
 }
 .Waist-Container-Wrap {
-	padding: 0px 13vw;
+	padding: 0px 160px;
 	padding-bottom: 10px;
 }
 .Size-Button-Small-Selected {
@@ -276,6 +286,10 @@
 	width: 300px;
 	height: 300px;
 }
+.Invis {
+	display: none;
+	position: absolute;
+}
 
 @keyframes loadingSpin {
 	0% {
@@ -297,5 +311,70 @@
 
 /* At 1499 pixels, the number of feed items displayed increases */
 
-@media (max-width: 1499px) {
+@media (max-width: 815px) {
+	.Generator-Settings {
+		padding: 30px 40px 30px 40px;
+	}
+	.Gender-Container {
+		gap: 48px;
+	}
+	.Slider-Label {
+		font-size: 14pt;
+	}
+	.Size-Label,
+	.Top-Size-Label,
+	.Bottom-Size-Label,
+	.Size-Label-Shoe {
+		margin-right: 10px;
+	}
+	.Size-Label-Shoe {
+		position: relative;
+		left: 38px;
+	}
+	.Waist-Size-Label {
+		margin-right: 6px;
+	}
+	.Size-Input-Container-Shoe {
+		justify-content: center;
+		gap: 8px;
+	}
+	.Size-Input-Container-Top,
+	.Size-Input-Container-Bottom {
+		gap: 10px;
+	}
+}
+
+@media (max-width: 690px) {
+	.Generator-Settings {
+		padding: 30px 0px 30px 0px;
+	}
+	.Generator-Settings-Header {
+		font-size: 20pt;
+	}
+	.Gender-Container {
+		gap: 10px;
+	}
+	.Size-Label {
+		margin-right: 0px;
+		font-size: 12pt;
+	}
+	.Top-Size-Label,
+	.Bottom-Size-Label,
+	.Size-Label-Shoe {
+		margin-right: 0px;
+		font-size: 12pt;
+	}
+	.Size-Label-Shoe {
+		position: relative;
+		left: 12px;
+	}
+	.Waist-Container-Wrap {
+		padding: 0px 90px 10px 90px;
+	}
+	.Size-Button,
+	.Size-Button-Small,
+	.Size-Button-Selected,
+	.Size-Button-Small-Selected {
+		font-size: 9pt;
+	}
 }

@@ -298,7 +298,7 @@ export const Generator = () => {
 						<label
 							forHTML="Top-Gender-Slider"
 							className="Slider-Label">
-							Top Style:
+							{windowWidth > 815 ? "Top Style:" : "Top:"}
 						</label>
 						<Switch
 							id="Top-Gender-Slider"
@@ -331,7 +331,7 @@ export const Generator = () => {
 						<label
 							forHTML="Bottom-Gender-Slider"
 							className="Slider-Label">
-							Bottom Style:
+							{windowWidth > 815 ? "Bottom Style:" : "Bottom:"}
 						</label>
 						<Switch
 							id="Bottom-Gender-Slider"
@@ -364,7 +364,7 @@ export const Generator = () => {
 						<label
 							forHTML="Shoe-Gender-Slider"
 							className="Slider-Label">
-							Shoe Style:
+							{windowWidth > 815 ? "Shoe Style:" : "Shoe:"}
 						</label>
 						<Switch
 							id="Shoe-Gender-Slider"
@@ -396,7 +396,7 @@ export const Generator = () => {
 				</div>
 				<div className="Size-Container">
 					<div className="Size-Input-Container-Top">
-						<p className="Size-Label">Top Sizes:</p>
+						<p className="Top-Size-Label">Top Sizes:</p>
 						<button
 							className={
 								topSizeButtonState["all"] === true
@@ -596,7 +596,7 @@ export const Generator = () => {
 						</div>
 					</div>
 					<div className="Size-Input-Container-Shoe">
-						<p className="Size-Label">Shoe Sizes:</p>
+						<p className="Size-Label-Shoe">Shoe Sizes:</p>
 						<p className="Waist-Size-Label">Min:</p>
 						<input
 							type="text"

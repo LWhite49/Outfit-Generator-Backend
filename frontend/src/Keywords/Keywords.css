@@ -1,108 +1,122 @@
-.Keywords{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+.Keywords {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
 }
-.Keyword-Input-Div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.Keyword-Input-Div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
-.Keyword-Input{
-    z-index: 3;
-    margin: 20px 0px 20px 0px;
-    box-shadow: 1px 1px 1px 1px #5D0B98;
-    background-color: #f6ecfe;
-    padding-top: 4px;
-    color: black;
-    font-size: 12pt;
-    font-family: 'Roboto', sans-serif;
-    text-shadow: -2px -2px 0 #F5E7FF,  
-    2px -2px 0 #F5E7FF,
-    -2px  2px 0 #F5E7FF,
-    4px  4px 0 #F5E7FF;
+.Keyword-Input {
+	z-index: 3;
+	margin: 20px 0px 20px 0px;
+	box-shadow: 1px 1px 1px 1px #5d0b98;
+	background-color: #f6ecfe;
+	padding-top: 4px;
+	color: black;
+	font-size: 12pt;
+	font-family: "Roboto", sans-serif;
+	text-shadow: -2px -2px 0 #f5e7ff, 2px -2px 0 #f5e7ff, -2px 2px 0 #f5e7ff,
+		4px 4px 0 #f5e7ff;
 }
-.Add-Button{
-    display: inline-block;
-    transition: background-color 0.3s, color 0.3s, border-radius, text-shadow 0.3s, border-width 0.3s;
-    cursor: pointer;
-    margin-right: 20px;
-    box-shadow: 1px 1px 1px 0px #5D0B98;
-    border: 1px ridge #5D0B98;
-    background-color: #F5E7FF;
-    padding: 4px 12px 6px 12px;
-    color: #F5E7FF;
-    font-weight: bold;
-    font-size: 11pt;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    text-shadow: -1px -1px 0 black,  
-    1px -1px 0 black,
-    -1px  1px 0 black,
-    1px  1px 0 black;
+.Add-Button {
+	display: inline-block;
+	transition: background-color 0.3s, color 0.3s, border-radius,
+		text-shadow 0.3s, border-width 0.3s;
+	cursor: pointer;
+	margin-right: 20px;
+	box-shadow: 1px 1px 1px 0px #5d0b98;
+	border: 1px ridge #5d0b98;
+	background-color: #f5e7ff;
+	padding: 4px 12px 6px 12px;
+	color: #f5e7ff;
+	font-weight: bold;
+	font-size: 11pt;
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+		1px 1px 0 black;
 }
-.Keyword-Input:focus{
-    outline: none;
-    box-shadow: 1px 1px 1px 2px #5D0B98;
+.Add-Button:hover {
+	border-color: #f5e7ff;
+	background-color: black;
+	color: #5d0b98;
+	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0px #f5e7ff, -1px 1px 0 #f5e7ff,
+		1px 1px 0 #f5e7ff;
 }
-
-.Selected-Word-Div{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  transition: background-color 0.15s, color 0.15s, border-radius .15s, text-shadow 0.15s, border-width 0.15s;
-  cursor: pointer;
-  border: 1px ridge #5D0B98;
-  border-radius: 5px;
-  background-color: #F5E7FF;
-  padding: 0px 4px 0px 4px;
-  color: #f5f5f5;
-  font-weight: bold;
-  font-size: 12pt;
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  text-shadow:
-  -1px -1px 0 black,
-  1px -1px 0px black,
-  -1px 1px 0 black,
-  1px 1px 0 black;
-}
-.Selected-Word-Div:hover{
-  border-color: #5D0B98;
-  background-color: lightgray;
-  color: black;
-  text-decoration: line-through;
-  text-shadow:
-  -1px -1px 0 #F5E7FF,
-  1px -1px 0 #F5E7FF,
-  -1px 1px 0 #F5E7FF,
-  1px 1px 0 #F5E7FF;
+.Keyword-Input:focus {
+	outline: none;
+	box-shadow: 1px 1px 1px 2px #5d0b98;
 }
 
-.Selected-Words{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    margin: 4px;
+.Selected-Word-Div {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	transition: background-color 0.15s, color 0.15s, border-radius 0.15s,
+		text-shadow 0.15s, border-width 0.15s;
+	cursor: pointer;
+	border: 1px ridge #5d0b98;
+	border-radius: 5px;
+	background-color: #f5e7ff;
+	padding: 0px 4px 0px 4px;
+	color: #f5f5f5;
+	font-weight: bold;
+	font-size: 12pt;
+	font-family: "Roboto", sans-serif;
+	text-align: center;
+	text-shadow: -1px -1px 0 black, 1px -1px 0px black, -1px 1px 0 black,
+		1px 1px 0 black;
+}
+.Selected-Word-Div:hover {
+	border-color: #5d0b98;
+	background-color: lightgray;
+	color: black;
+	text-decoration: line-through;
+	text-shadow: -1px -1px 0 #f5e7ff, 1px -1px 0 #f5e7ff, -1px 1px 0 #f5e7ff,
+		1px 1px 0 #f5e7ff;
+}
 
+.Selected-Words {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 18px;
+	margin: 4px;
 }
-.Selected-Word{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    z-index: 10;
-    margin: 4px;
+.Selected-Word {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 18px;
+	z-index: 10;
+	margin: 4px;
 }
-.Brand-x-Tag{
-    width: 20px;
-    height: 20px;
-    color: white;
+.Brand-x-Tag {
+	width: 20px;
+	height: 20px;
+	color: white;
+}
+
+@media (max-width: 815px) {
+	.Keyword-Input {
+		width: 160px;
+		font-size: 10pt;
+	}
+	.Add-Button {
+		font-size: 10pt;
+	}
+	.Keywords {
+		gap: 4px;
+	}
+	.Selected-Word {
+		font-size: 10pt;
+	}
 }
