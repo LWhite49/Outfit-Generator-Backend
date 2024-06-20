@@ -144,6 +144,30 @@
 	.NavbarLogo {
 		display: none;
 	}
+	.NavbarLogo-Loading {
+		display: none;
+	}
+	.Loading-Header {
+		margin-top: 10vw;
+		font-size: 24pt;
+	}
+	.Loading-Spinner {
+		left: calc(50% - 100px);
+		width: 200px;
+		height: 200px;
+	}
+}
+
+@media (max-width: 600px) {
+	.Loading-Header {
+		margin-top: 14vw;
+		font-size: 20pt;
+	}
+	.Loading-Spinner {
+		left: calc(50% - 75px);
+		width: 150px;
+		height: 150px;
+	}
 }
 @media (max-height: 1040px) {
 	.NavbarLogo {
