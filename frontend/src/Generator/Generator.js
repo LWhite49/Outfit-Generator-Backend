@@ -597,20 +597,24 @@ export const Generator = () => {
 					</div>
 					<div className="Size-Input-Container-Shoe">
 						<p className="Size-Label-Shoe">Shoe Sizes:</p>
-						<p className="Waist-Size-Label">Min:</p>
-						<input
-							type="text"
-							className="Shoe-Size-Input"
-							placeholder={shoeSizeRange[0]}
-							onChange={(e) => updateShoeSizeRange(e, 0)}
-						/>
-						<p className="Waist-Size-Label">Max:</p>
-						<input
-							type="text"
-							className="Shoe-Size-Input"
-							placeholder={shoeSizeRange[1]}
-							onChange={(e) => updateShoeSizeRange(e, 1)}
-						/>
+						<div className="Shoe-Size-Range-Container">
+							<p className="Shoe-Size-Range-Label">Min:</p>
+							<input
+								type="text"
+								className="Shoe-Size-Input"
+								placeholder={shoeSizeRange[0]}
+								onChange={(e) => updateShoeSizeRange(e, 0)}
+							/>
+						</div>
+						<div className="Shoe-Size-Range-Container">
+							<p className="Shoe-Size-Range-Label">Max:</p>
+							<input
+								type="text"
+								className="Shoe-Size-Input"
+								placeholder={shoeSizeRange[1]}
+								onChange={(e) => updateShoeSizeRange(e, 1)}
+							/>
+						</div>
 						<p className="Shoe-Size-Label">
 							<span className="Shoe-Size-Range-Emph">{"["}</span>
 							{shoeSizeRange[0]}

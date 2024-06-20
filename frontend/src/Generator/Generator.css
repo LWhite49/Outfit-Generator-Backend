@@ -19,7 +19,7 @@
 	border: 4px ridge #5d0b98;
 	border-radius: 30px;
 	background-color: #f6ecfe;
-	padding: max(2vh, 30px) max(10vw, 100px);
+	padding: max(4vh, 30px) max(12vw, 70px);
 }
 .Generator-Settings-Header {
 	display: inline-flex;
@@ -86,26 +86,57 @@
 	gap: 18px;
 	margin-top: max(1.2vh, 10px);
 	margin-bottom: max(1.2vh, 10px);
-	border-bottom: 2px ridge #5d0b98;
-	padding: 0px 40px 0px 40px;
+}
+.Brand-Container {
+	position: relative;
+	left: -16px;
+	padding-bottom: 20px;
 }
 .Size-Input-Container-Top,
 .Size-Input-Container-Bottom {
 	position: relative;
 	left: -40px;
 }
+.Size-Input-Container-Top::after {
+	position: absolute;
+	top: 75px;
+	left: 6px;
+	border-bottom: 2px ridge #5d0b98;
+	width: calc(100% + 62px);
+	content: "";
+}
+
+.Size-Button-Small,
+.Size-Button-Small-Selected {
+	margin-right: 200px;
+}
 .Size-Input-Container-Shoe {
 	position: relative;
-	left: -36px;
-	gap: 10px;
+	left: -50px;
+	gap: 38px;
+	padding-top: 10px;
+}
+.Size-Input-Container-Shoe::after {
+	position: absolute;
+	top: 95px;
+	left: 20px;
+	border-bottom: 2px ridge #5d0b98;
+	width: calc(100% + 60px);
+	content: "";
+}
+.Shoe-Size-Range-Container {
+	position: relative;
+	top: -6px;
 }
 .Brand-Container {
 	margin-bottom: 40px;
 	border-bottom: none;
+	padding-top: 20px;
 }
 
 .Size-Label,
 .Waist-Size-Label,
+.Shoe-Size-Range-Label,
 .Size-Label-Shoe,
 .Shoe-Size-Label,
 .Bottom-Size-Label,
@@ -119,6 +150,10 @@
 	font-size: 14pt;
 	text-align: center;
 }
+.Size-Label {
+	position: relative;
+	left: -52px;
+}
 .Size-Label-Shoe {
 	position: relative;
 	left: 12px;
@@ -129,6 +164,11 @@
 }
 .Waist-Size-Label {
 	margin-right: 6px;
+	font-size: 12pt;
+}
+.Shoe-Size-Range-Label {
+	position: relative;
+	left: -18px;
 	font-size: 12pt;
 }
 .Shoe-Size-Label {
@@ -240,7 +280,7 @@
 	box-shadow: #5d0b98 1px 1px 2px;
 	background-color: #f6ecfe;
 	padding: 2px 4px 2px 2px;
-	width: max(3vw, 50px);
+	width: 80px;
 }
 .Shoe-Size-Input:focus {
 	outline: none;
@@ -248,7 +288,8 @@
 }
 .wasRandom-Warning-Text {
 	margin-top: 0px;
-	margin-bottom: 40px;
+	margin-bottom: 0px;
+	max-width: 500px;
 	color: red;
 	font-size: 14pt;
 	font-family: "Roboto", sans-serif;
@@ -276,11 +317,10 @@
 	font-size: 18pt;
 }
 .Loading-Spinner-Gen {
-	position: absolute;
-	top: 1000px;
 	left: calc(50% - 150px);
 	animation: linear 2.8s infinite;
 	animation-name: loadingSpin;
+	margin-top: 60px;
 	margin-bottom: 60vh;
 	border-radius: 50%;
 	width: 300px;
@@ -320,6 +360,13 @@
 	}
 	.Slider-Label {
 		font-size: 14pt;
+	}
+	.Size-Input-Container-Top::after {
+		left: 20px;
+		width: calc(100% + 20px);
+	}
+	.Waist-Container-Wrap {
+		padding: 0px 110px 10px 110px;
 	}
 	.Size-Label,
 	.Top-Size-Label,

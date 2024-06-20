@@ -4,9 +4,12 @@
 	justify-content: center;
 	align-items: center;
 	gap: 20px;
+	width: 300px;
 }
 .Keyword-Input-Div {
 	display: flex;
+	position: relative;
+	left: -22px;
 	flex-direction: row;
 	align-items: center;
 }
@@ -84,6 +87,9 @@
 
 .Selected-Words {
 	display: flex;
+	position: absolute;
+	bottom: -20px;
+	left: 56px;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;

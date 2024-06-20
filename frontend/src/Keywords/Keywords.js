@@ -14,6 +14,12 @@ export const Keywords = () => {
 	// Define function that adds a word to the selectedWords array
 	const addWord = (word) => {
 		let internalWord = word.toLowerCase();
+		if (internalWord === "") {
+			return;
+		}
+		if (selectedWords.includes(internalWord)) {
+			return;
+		}
 		setSelectedWords(selectedWords.filter((w) => w !== internalWord));
 		setSelectedWords([...selectedWords, internalWord]);
 		setBrand([...brand, internalWord]);
