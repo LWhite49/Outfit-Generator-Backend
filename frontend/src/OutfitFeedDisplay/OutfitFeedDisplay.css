@@ -144,3 +144,32 @@
 		width: 54px;
 	}
 }
+
+@media (max-width: 500px) {
+	.Outfit-Feed-Display {
+		gap: 10px;
+	}
+	.Outfit-Feed-Button,
+	.Outfit-Feed-Button-EndDiv {
+		margin-right: 0px;
+		padding: 0px;
+		height: 200px;
+	}
+	.Outfit-Feed-Button-EndDiv {
+		margin-left: 6px;
+	}
+	.Outfit-Feed-Button-Left,
+	.Outfit-Feed-Button-Right {
+		padding: 4px 0px 4px 0px;
+		width: 30px;
+		height: 30px;
+	}
+	.Outfit-Rating-Button-Container {
+		gap: 20px;
+	}
+	.Outfit-Button,
+	.Outfit-Rating-Img-Pos,
+	.Outfit-Rating-Img-Neg {
+		width: 38px;
+	}
+}

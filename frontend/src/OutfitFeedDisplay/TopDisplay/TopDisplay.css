@@ -88,3 +88,18 @@
 		font-size: 11pt;
 	}
 }
+
+@media (max-width: 500px) {
+	.TopDisplay {
+		--componentHeight: 138px;
+		margin: 2px 0px;
+	}
+	.Color-Display,
+	.Color-Display-First,
+	.Color-Display-Last {
+		width: 10px;
+	}
+	.Top-Display-Size-Text {
+		font-size: 8pt;
+	}
+}

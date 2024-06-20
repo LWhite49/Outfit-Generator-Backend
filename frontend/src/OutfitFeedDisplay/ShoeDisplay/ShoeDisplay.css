@@ -90,3 +90,18 @@
 		font-size: 11pt;
 	}
 }
+
+@media (max-width: 500px) {
+	.ShoeDisplay {
+		--componentHeight: 138px;
+		margin: 2px 0px;
+	}
+	.Color-Display,
+	.Color-Display-First,
+	.Color-Display-Last {
+		width: 10px;
+	}
+	.Shoe-Display-Size-Text {
+		font-size: 8pt;
+	}
+}
