@@ -289,6 +289,7 @@ export const Generator = () => {
 
 	// Conditionally assign variable that determins the divisor for the outfit feed display count
 	const displayDivisor = windowWidth > 1499 ? 500 : 365;
+	const altTitleVis = windowWidth > 690 ? false : true;
 	return (
 		<div className="Generator">
 			<div className="Generator-Settings">
@@ -395,6 +396,12 @@ export const Generator = () => {
 					</div>
 				</div>
 				<div className="Size-Container">
+					<p
+						className={
+							altTitleVis ? "Alternate-Size-Header" : "Invis"
+						}>
+						Top Sizes:
+					</p>
 					<div className="Size-Input-Container-Top">
 						<p className="Top-Size-Label">Top Sizes:</p>
 						<button
@@ -475,6 +482,12 @@ export const Generator = () => {
 							XXL
 						</button>
 					</div>
+					<p
+						className={
+							altTitleVis ? "Alternate-Size-Header" : "Invis"
+						}>
+						Bottom Sizes:
+					</p>
 					<div
 						className="Size-Input-Container-Bottom"
 						style={{ borderBottom: "none" }}>
@@ -595,6 +608,12 @@ export const Generator = () => {
 							</button>
 						</div>
 					</div>
+					<p
+						className={
+							altTitleVis ? "Alternate-Size-Header" : "Invis"
+						}>
+						Shoe Sizes:
+					</p>
 					<div className="Size-Input-Container-Shoe">
 						<p className="Size-Label-Shoe">Shoe Sizes:</p>
 						<div className="Shoe-Size-Range-Container">
@@ -624,6 +643,9 @@ export const Generator = () => {
 						</p>
 					</div>
 				</div>
+				<p className={altTitleVis ? "Alternate-Size-Header" : "Invis"}>
+					Brands:
+				</p>
 				<div className="Brand-Container">
 					<p className="Size-Label">Brand:</p>
 					<Keywords />

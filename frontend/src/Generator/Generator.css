@@ -90,6 +90,8 @@
 .Brand-Container {
 	position: relative;
 	left: -16px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 	padding-bottom: 20px;
 }
 .Size-Input-Container-Top,
@@ -326,10 +328,6 @@
 	width: 300px;
 	height: 300px;
 }
-.Invis {
-	display: none;
-	position: absolute;
-}
 
 @keyframes loadingSpin {
 	0% {
@@ -349,14 +347,28 @@
 	}
 }
 
-/* At 1499 pixels, the number of feed items displayed increases */
+.Invis {
+	display: none;
+	position: absolute;
+}
+
+.Alternate-Size-Header {
+	margin-top: 6px;
+	margin-bottom: 0px;
+	font-weight: bold;
+	font-size: 14pt;
+	text-shadow: white 1px 1px 1px;
+}
 
 @media (max-width: 815px) {
 	.Generator-Settings {
-		padding: 30px 40px 30px 40px;
+		padding: 30px 50px 30px 50px;
 	}
 	.Gender-Container {
 		gap: 48px;
+	}
+	.Size-Label {
+		left: -26px;
 	}
 	.Slider-Label {
 		font-size: 14pt;
@@ -376,24 +388,33 @@
 	}
 	.Size-Label-Shoe {
 		position: relative;
-		left: 38px;
+		left: 0px;
 	}
 	.Waist-Size-Label {
 		margin-right: 6px;
 	}
 	.Size-Input-Container-Shoe {
 		justify-content: center;
-		gap: 8px;
+		gap: 0px;
 	}
 	.Size-Input-Container-Top,
 	.Size-Input-Container-Bottom {
 		gap: 10px;
 	}
+	.Size-Input-Container-Shoe {
+		gap: 14px;
+	}
+	.Shoe-Size-Input {
+		width: 50px;
+	}
+	.Shoe-Size-Range-Label {
+		position: relative;
+		left: -6px;
+	}
 }
-
 @media (max-width: 690px) {
 	.Generator-Settings {
-		padding: 30px 0px 30px 0px;
+		padding: 30px 10px 30px 10px;
 	}
 	.Generator-Settings-Header {
 		font-size: 20pt;
@@ -401,27 +422,60 @@
 	.Gender-Container {
 		gap: 10px;
 	}
-	.Size-Label {
-		margin-right: 0px;
+	.Slider-Label {
 		font-size: 12pt;
 	}
+	.Size-Input-Container-Top,
+	.Size-Input-Container-Bottom {
+		position: relative;
+		left: 0px;
+		margin-bottom: 0px;
+	}
+	.Size-Input-Container-Top::after {
+		top: 60px;
+		left: -8px;
+		width: calc(100% + 20px);
+	}
+	.Size-Input-Container-Shoe {
+		position: relative;
+		left: 0px;
+		gap: 10px;
+	}
+	.Size-Input-Container-Shoe::after {
+		top: 76px;
+		left: -48px;
+		width: calc(100% + 94px);
+	}
+	.Shoe-Size-Label {
+		margin-left: 0px;
+	}
+	.Shoe-Size-Input {
+		width: 40px;
+	}
+	.Shoe-Size-Range-Label {
+		margin: 0px 0px 6px 0px;
+	}
+	.Size-Label,
 	.Top-Size-Label,
 	.Bottom-Size-Label,
 	.Size-Label-Shoe {
-		margin-right: 0px;
-		font-size: 12pt;
-	}
-	.Size-Label-Shoe {
-		position: relative;
-		left: 12px;
+		display: none;
+		position: absolute;
 	}
 	.Waist-Container-Wrap {
-		padding: 0px 90px 10px 90px;
+		padding: 0px 50px 10px 50px;
+	}
+	.Brand-Container {
+		margin-bottom: 30px;
 	}
 	.Size-Button,
 	.Size-Button-Small,
 	.Size-Button-Selected,
 	.Size-Button-Small-Selected {
 		font-size: 9pt;
+	}
+	.wasRandom-Warning-Text {
+		width: 300px;
+		font-size: 12pt;
 	}
 }

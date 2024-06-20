@@ -126,3 +126,27 @@
 		font-size: 10pt;
 	}
 }
+
+@media (max-width: 690px) {
+	.Keyword-Input {
+		margin-top: 0px;
+		width: 120px;
+		font-size: 11pt;
+	}
+	.Add-Button {
+		position: relative;
+		top: -10px;
+		font-size: 11pt;
+	}
+	.Keyword-Input-Div {
+		position: relative;
+		left: 30px;
+	}
+	.Selected-Words {
+		gap: 6px;
+	}
+	.Selected-Word-Div {
+		gap: 2px;
+		font-size: 11pt;
+	}
+}
