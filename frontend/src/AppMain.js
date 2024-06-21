@@ -177,15 +177,13 @@ export const AppMain = () => {
 			);
 			let url = `http://localhost:3500/rateOutfit`;
 			let res = await axios.post(url, {
-				body: {
-					p1: args[0],
-					p2: args[1],
-					p3: args[2],
-					id1: args[3],
-					id2: args[4],
-					id3: args[5],
-					rating: args[6],
-				},
+				p1: args[0],
+				p2: args[1],
+				p3: args[2],
+				id1: args[3],
+				id2: args[4],
+				id3: args[5],
+				rating: args[6],
 			});
 			console.log("Outfit Rated");
 			return res.data;
