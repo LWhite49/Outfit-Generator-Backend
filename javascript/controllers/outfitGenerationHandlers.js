@@ -267,6 +267,7 @@ const rateOutfit = async (req, res) => {
 	// Send the colors to the PyScript
 	try {
 		console.log("Sending Rating to PyScript...");
+		console.log(p1,p2,p3,id1,id2,id3,rating);
 		const response = await updateModelViaPy(
 			p1,
 			p2,
