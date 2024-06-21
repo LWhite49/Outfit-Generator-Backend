@@ -166,15 +166,6 @@ export const AppMain = () => {
 	const rateOutfit = async (args) => {
 		try {
 			console.log("Rating Outfit...");
-			console.log(
-				args[0],
-				args[1],
-				args[2],
-				args[3],
-				args[4],
-				args[5],
-				args[6]
-			);
 			let url = `http://localhost:3500/rateOutfit`;
 			let res = await axios.post(url, {
 				p1: args[0],
