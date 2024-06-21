@@ -26,13 +26,13 @@ import pandas as pd
 # shoe_id = ast.literal_eval(sys.argv[6])
 # reaction = ast.literal_eval(sys.argv[7])
 
-print(json.loads(sys.argv[1]))
-print(json.loads(sys.argv[2]))
-print(json.loads(sys.argv[3]))
-print(json.loads(sys.argv[4]))
-print(json.loads(sys.argv[5]))
-print(json.loads(sys.argv[6]))
-print(json.loads(sys.argv[7]))
+print(sys.argv[1])
+print(sys.argv[2])
+print(sys.argv[3])
+print(sys.argv[4])
+print(sys.argv[5])
+print(sys.argv[6])
+print(sys.argv[7])
 
 # new_data = pd.DataFrame(columns=[[f'{x}ID', f'{x}_Color1', f'{x}_Color1_Area', f'{x}_Color2', f'{x}_Color2_Area', \
 #     f'{x}_Color3', f'{x}_Color3_Area', f'{x}_Color4', f'{x}_Color4_Area'] for x in ['Top', 'Bottom', 'Shoe']])
