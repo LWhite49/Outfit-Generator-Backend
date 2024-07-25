@@ -14,6 +14,7 @@ import numpy as np
 from color_assignment.conversions import hex_to_rgb
 from color_calculator import outfit_comparison
 import time
+import urllib
 
 def on_stop_click(event):
     global stop_flag
@@ -42,36 +43,43 @@ connectionString = os.getenv('DB_CONNECTION_PY')
 client = MongoClient(connectionString)
 
 db = client['test']
-collections = ['topmens', 'topwomens', 'bottommens', 'bottomwomens', 'shoemens', 'shoewomens']
 
-
-def random_item():
+def random_item(collection):
     '''Returns the color array of a random item selected from the database.'''
-    c = db[choice(collections)] # select a random collection
+    c = db[collection] 
     # sample a random item with a nonempty color array
     pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 1}}]
     result = list(c.aggregate(pipeline))
     if result:
         random_item = result[0]
-        # access and return the colors
-        colors = random_item['productColors']
-        return colors
+        # access and return the image as a np array
+        img_link = random_item['productImg']
+        f = urllib.request.urlopen(img_link)
+        return plt.imread(f)
     else:
         print('No items available with color array.')
         return None
-        
+
+if __name__ == '__main__':
+    m_sets = ['topmens', 'bottommens', 'shoemens']
+    f_sets = ['topwomens', 'bottomwomens', 'shoewomens']
+
+    # get set of clothes from random sex
+    outfit = []
+    for c in choice([m_sets, f_sets]):
+        outfit.append(random_item(c))
 
 if __name__ == "__main__":
 
     # create an empty dataframe that will hold data results
     # each row will have the four rgb values and the percentage of the image they take up for the two images compared, as well as the score given by the user
-    training_data = pd.DataFrame(columns=['Img1_R1','Img1_G1','Img1_B1','Img1_%1','Img1_R2','Img1_G2','Img1_B2','Img1_%2',\
-                                          'Img1_R3','Img1_G3','Img1_B3','Img1_%3','Img1_R4','Img1_G4','Img1_B4','Img1_%4',\
-                                          'Img2_R1','Img2_G1','Img2_B1','Img2_%1','Img2_R2','Img2_G2','Img2_B2','Img2_%2',\
-                                          'Img2_R3','Img2_G3','Img2_B3','Img2_%3','Img2_R4','Img2_G4','Img2_B4','Img2_%4',\
-                                          'Img1_Neutrality','Img2_Neutrality','Similarity','Complementariness','User_Score'])
+    # training_data = pd.DataFrame(columns=['Img1_R1','Img1_G1','Img1_B1','Img1_%1','Img1_R2','Img1_G2','Img1_B2','Img1_%2',\
+    #                                       'Img1_R3','Img1_G3','Img1_B3','Img1_%3','Img1_R4','Img1_G4','Img1_B4','Img1_%4',\
+    #                                       'Img2_R1','Img2_G1','Img2_B1','Img2_%1','Img2_R2','Img2_G2','Img2_B2','Img2_%2',\
+    #                                       'Img2_R3','Img2_G3','Img2_B3','Img2_%3','Img2_R4','Img2_G4','Img2_B4','Img2_%4',\
+    #                                       'Img1_Neutrality','Img2_Neutrality','Similarity','Complementariness','User_Score'])
     stop_flag = False
-    while not stop_flag and random_item():
+    while not stop_flag and random_item(choice(collections)):
         # get random colors
         colors1 = random_item()
         while not colors1 or len(colors1) < 4:
