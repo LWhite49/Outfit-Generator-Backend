@@ -16,24 +16,29 @@ from color_calculator import outfit_comparison
 import time
 import urllib
 
+# global variables
+stop_flag = False
+
+# # Function to update the plot when the slider value changes
+# def update(val):
+#     global user_score
+#     user_score = round(slider.val, 1)
+
+# Functions to handle button clicks
+# def on_button_click(event):
+#     global user_score 
+#     user_score = round(slider.val, 1)
+#     print(f"Slider value selected: {user_score}")
+#     plt.close()
+
+def on_like_click(event, outfit_array):
+    # TODO: send this outfit to the archive
+    pass
+
 def on_stop_click(event):
-    global stop_flag
     print("Loop stopped.")
     stop_flag = True
     plt.close()
-
-# Function to update the plot when the slider value changes
-def update(val):
-    global user_score
-    user_score = round(slider.val, 1)
-
-# Function to handle button click event
-def on_button_click(event):
-    global user_score 
-    user_score = round(slider.val, 1)
-    print(f"Slider value selected: {user_score}")
-    plt.close()
-
 
 # initialize and source env
 load_dotenv(os.path.dirname(SCRIPT_DIR) + '\color_assignment\.env')
@@ -43,6 +48,7 @@ connectionString = os.getenv('DB_CONNECTION_PY')
 client = MongoClient(connectionString)
 
 db = client['test']
+arcv = clinet['archive']
 
 def random_item(collection):
     '''Returns the color array of a random item selected from the database.'''
@@ -73,23 +79,23 @@ if __name__ == '__main__':
     f, axarr = plt.subplots(1, 3)
     for i in range(3):
         axarr[i].imshow(outfit[i])
-    
-    # Adjust layout to accommodate the slider and button
-    plt.subplots_adjust(bottom=0.3)
-    # plt.subplots_adjust(top=0.2)
 
-    # Create a slider widget
-    ax_slider = plt.axes([0.2, 0.1, 0.6, 0.03])  # [left, bottom, width, height]
-    slider = Slider(ax_slider, 'Slider', 0, 10, valinit=5, valstep=0.1)  # A slider from 1 to 10
-    slider.on_changed(update)
-
-    # Create a button widget
+    # Create button widgets
     ax_button = plt.axes([0.02, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
-    button = Button(ax_button, 'Submit')
-    button.on_clicked(on_button_click)
+    like = Button(ax_button, 'Like')
+    like.on_clicked(lambda event: on_like_click(event, outfit))
+    # TODO: use this syntax ^ for other functions to pass in outfit array
+
+    ax_button = plt.axes([0.28, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+    dislike = Button(ax_button, 'Dislike')
+    dislike.on_clicked(on_dislike_click)
+
+    ax_button = plt.axes([0.15, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+    skip = Button(ax_button, 'Skip')
+    skip.on_clicked(on_skip_click)
 
     # Create a button widget for "Stop"
-    ax_button_stop = plt.axes([0.15, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+    ax_button_stop = plt.axes([0.41, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
     button_stop = Button(ax_button_stop, 'Stop')
     button_stop.on_clicked(on_stop_click)
 
