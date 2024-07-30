@@ -63,13 +63,14 @@ const initTTL = async () => {
 		console.log(err);
 	}
 };
-// Define function that accepts a page and scrolls to the bottom of the content window
+// Define function that accepts a page and scrolls to the bottom of the content window or for 4 minutes, whichever comes first.
 const scrollToBottom = async (page) => {
 	try {
 		let bodyHandle = await page.$("body");
 		let lastHeight = await bodyHandle.evaluate((e) => e.scrollHeight);
 		let newHeight = lastHeight;
-		while (true) {
+		const startTime = new Date().getTime();
+		while (startTime + 240000 > new Date().getTime()) {
 			// Scroll to the bottom of the page
 			await page.evaluate(() => {
 				window.scrollBy(0, 2500 + 500 * Math.random());
@@ -132,9 +133,7 @@ const scrapeCollectionListings = async (
 		// Get the product pods
 
 		// Grab container
-		const container = await page.$(
-			'ul[class="styles__ProductListGrid-sc-4aad5806-1 hGGFgp"]'
-		);
+		const container = await page.$('ol[class="styles_productGrid__Cpzyf"]');
 		if (!container) {
 			console.log("No container found");
 			return;
@@ -166,7 +165,7 @@ const scrapeCollectionListings = async (
 						.querySelector(`p[class="${brandTarget}"]`)
 						?.innerText.toLowerCase(),
 					productSize:
-						"N/A" /* pod.querySelector(`p[class="${sizeTarget}"]`)?.innerText */,
+						"XXL" /* pod.querySelector(`p[class="${sizeTarget}"]`)?.innerText */,
 					productColors: [],
 					createdAt: new Date().toISOString(),
 				};
@@ -249,6 +248,8 @@ const scrapeAllCollections = async (l, u) => {
 		while (i < u) {
 			const browser = await puppeteer.launch({ headless: "new" });
 			const page = await browser.newPage();
+			await page.setDefaultNavigationTimeout(0);
+			await page.setDefaultTimeout(0);
 			console.log(`Launched browser to scrape ${collectionNames[i]}`);
 
 			// Assign elementTargetor abd collectionObj from iteration
