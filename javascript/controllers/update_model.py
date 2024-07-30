@@ -50,7 +50,7 @@ shoe_id = sys.argv[6]
 reaction = sys.argv[7]
 
 # pull associated document from clothes database
-# todo: right now there isn't a way to see what sex collection an item came from so we have to check the id against both
+#* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
 # top
 sex = 'M' # we will also attach a sex indicator to outfit sets
 collection = db['topmens']
@@ -60,6 +60,15 @@ if not top:
     collection = db['topwomens']
     top = collection.find_one({'_id': top_id}, projection={'_id': False})
     sex = 'F' # reassign sex
+    # TODO this reassignment ^ is assuming that outfits will be of a consistent sex throughout
+
+# insert top into archive
+collection = arcv['tops']
+if collection.find_one(top): # check that this item hasn't already been archived
+    print('Top already in archive.')
+else:
+    result = collection.insert_one(top)
+    top_arcv_id = result.inserted_id # save new, unique archival _id
 
 # bottom
 collection = db['bottommens']
@@ -68,6 +77,14 @@ if not bottom:
     collection = db['bottomwomens']
     bottom = collection.find_one({'_id': bottom_id}, projection={'_id': False})
 
+# insert bottom into archive
+collection = arcv['bottoms']
+if collection.find_one(bottom):
+    print('Bottom already in archive.')
+else:
+    result = collection.insert_one(bottom)
+    bottom_arcv_id = result.inserted_id
+
 # shoe
 collection = db['shoemens']
 shoe = collection.find_one({'_id': shoe_id}, projection={'_id': False})
@@ -75,20 +92,15 @@ if not shoe:
     collection = db['shoewomens']
     shoe = collection.find_one({'_id': shoe_id}, projection={'_id': False})
 
-# todo: if an item wasn't found we can get by just on the colors passed and make an object from that
-
-# copy items to archive
-collection = arcv['tops']
-result = collection.insert_one(top)
-top_arcv_id = result.inserted_id # save new, unique archival _id
-
-collection = arcv['bottoms']
-result = collection.insert_one(bottom)
-bottom_arcv_id = result.inserted_id
-
+# insert shoe into archive
 collection = arcv['shoes']
-result = collection.insert_one(shoe)
-shoe_arcv_id = result.inserted_id
+if collection.find_one(shoe):
+    print('Shoe already in archive.')
+else:
+    result = collection.insert_one(shoe)
+    shoe_arcv_id = result.inserted_id
+
+# todo: if an item wasn't found we can get by just on the colors passed and make an object from that
 
 # create a new document to represent outfit set
 outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_id': shoe_arcv_id, 'reaction': reaction}

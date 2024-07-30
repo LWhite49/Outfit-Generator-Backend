@@ -22,7 +22,11 @@ class ClothingDescriber():
     def get_colors(self, url: str) -> list[list[str, float]]:
         '''Takes in an image url and returns its predominant color groups in order. Color grouping info has the hex value and percentage, in that order. Failures will return -1.'''
         # get the image data from the url
-        response = urllib.request.urlopen(url)
+        try:
+            response = urllib.request.urlopen(url)
+        except: # catch invalid links
+            return -1
+            
         img = cv.imdecode(np.asarray(bytearray(response.read())), cv.IMREAD_COLOR)
         response.close()
 

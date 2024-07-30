@@ -33,6 +33,8 @@ stop_flag = False
 
 def on_like_click(event, outfit_array):
     # TODO: send this outfit to the archive
+    # outfit array is received in order top-bottom-shoe
+    
     pass
 
 def on_stop_click(event):

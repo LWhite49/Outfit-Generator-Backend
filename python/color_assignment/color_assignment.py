@@ -1,3 +1,7 @@
+'''Run this to assign colors to the database items. From command line, include collection names followed by an integer to limit application;
+for example, python color_assignment.py topwomens topmens 10 will populate 10 items for just those two collections. Just include a number to 
+do all collections a limited amount. Default is everything in all collections.'''
+
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from os import getenv
