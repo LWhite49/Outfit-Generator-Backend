@@ -17,6 +17,7 @@ import ast
 import pandas as pd
 
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from os import getenv
 
@@ -44,9 +45,9 @@ arcv = client['archive']
 print('Connected to archive database')
 
 # source outfit ids
-top_id = sys.argv[4]
-bottom_id = sys.argv[5]
-shoe_id = sys.argv[6]
+top_id = ObjectId(sys.argv[4]) # todo make this work
+bottom_id = ObjectId(sys.argv[5])
+shoe_id = ObjectId(sys.argv[6])
 reaction = sys.argv[7]
 
 # pull associated document from clothes database
