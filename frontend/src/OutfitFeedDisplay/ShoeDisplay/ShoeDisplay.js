@@ -1,6 +1,11 @@
 import "./ShoeDisplay.css";
+import { useContext } from "react";
+import { FeedContext } from "../../AppMain";
+import { Tooltip } from "react-tooltip";
+import reportSvg from "../../images/reportSvg.svg";
 // One individual itemDisplay Component will display that item by accepting an index state and a feed state
 export const ShoeDisplay = (props) => {
+	const { shoeGender, deleteOutfitMutation } = useContext(FeedContext);
 	// Source the top item to display
 	const shoeItem = props.item;
 	const invis = props.invis || false;
@@ -55,6 +60,34 @@ export const ShoeDisplay = (props) => {
 					{shoeItem.productSize}
 				</p>
 			</div>
+			<button
+				className="Report-Outfit-Button"
+				data-tooltip-id="reportShoe"
+				onClick={(e) => {
+					// Define colleciton and source outfit ID
+					const collection = shoeGender === "male" ? 2 : 5;
+					const outfitID = shoeItem.productImg;
+					// Call mutation to delete outfit
+					deleteOutfitMutation.mutate({
+						id: outfitID,
+						collection: collection,
+					});
+					// Add class to report button to signal report
+					e.target.classList.add("Report-Clicked");
+					// Remove the class in .5 seconds
+					const likeTimeout = setTimeout(() => {
+						// Remove the class
+						e.target.classList.remove("Report-Clicked");
+						// Clear the timeout
+						clearTimeout(likeTimeout);
+					}, 500);
+				}}>
+				<img
+					src={reportSvg}
+					alt="Report"
+					className="Report-Image"></img>
+			</button>
+			<Tooltip id="reportShoe" effect="solid" content="Report Shoe" />
 		</div>
 	);
 };

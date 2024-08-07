@@ -267,7 +267,7 @@ const rateOutfit = async (req, res) => {
 	// Send the colors to the PyScript
 	try {
 		console.log("Sending Rating to PyScript...");
-		console.log(p1,p2,p3,id1,id2,id3,rating);
+		console.log(p1, p2, p3, id1, id2, id3, rating);
 		const response = await updateModelViaPy(
 			p1,
 			p2,
@@ -286,5 +286,45 @@ const rateOutfit = async (req, res) => {
 	res.status(201).json({ message: "Outfit rated" });
 	return;
 };
+
+// This function handles a post request to delete an outfit
+const deleteItem = async (req, res) => {
+	// Source id and collection from request body
+	const id = req.body.id;
+	const collection = req.body.collection;
+	let collectionName;
+	switch (collection) {
+		case 0:
+			collectionName = TopMen;
+			break;
+		case 1:
+			collectionName = BottomMen;
+			break;
+		case 2:
+			collectionName = ShoeMen;
+			break;
+		case 3:
+			collectionName = TopWomen;
+			break;
+		case 4:
+			collectionName = BottomWomen;
+			break;
+		case 5:
+			collectionName = ShoeWomen;
+			break;
+	}
+
+	// Delete the item from the collection
+	try {
+		away = await collectionName.deleteOne({ productImg: id });
+		console.log("Deleted item from collection");
+		res.status(201).json({ message: "Item deleted" });
+	} catch (err) {
+		console.log(err, `Error deleting item from collection`);
+		res.status(401).json({ err: `${err}` });
+		return;
+	}
+};
+
 // Export route handlers
-module.exports = { generateOutfitFeed, rateOutfit };
+module.exports = { generateOutfitFeed, rateOutfit, deleteItem };

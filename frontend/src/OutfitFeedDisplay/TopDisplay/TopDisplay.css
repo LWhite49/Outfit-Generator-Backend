@@ -50,6 +50,39 @@
 	width: var(--componentHeight);
 	height: var(--componentHeight);
 }
+.Report-Outfit-Button {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	cursor: pointer;
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	width: 50px;
+	height: 50px;
+}
+.Report-Image {
+	width: 44px;
+}
+@keyframes pulseRep {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.5);
+		background-image: radial-gradient(
+			circle,
+			#f6ecfe 0%,
+			#ae6cdd 70%,
+			#5d0b98 100%
+		);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+.Report-Clicked {
+	animation: pulseRep 0.5s forwards;
+}
 /* Position this contianer by moving down a twenth of the component height, and left an eigth of container height */
 .Top-Display-Size-Container {
 	display: inline-block;

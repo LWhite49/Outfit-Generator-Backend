@@ -190,6 +190,29 @@ export const AppMain = () => {
 		mutationFn: rateOutfit,
 	});
 
+	// Create a mutationFn that makes a delete request to the server to delete an outfit using its id
+	const deleteOutfit = async (args) => {
+		try {
+			console.log("Deleting Outfit...");
+			let url = `http://localhost:3500/deleteItem`;
+			let res = await axios.post(url, {
+				id: args.id,
+				collection: args.collection,
+			});
+			console.log("Outfit Deleted");
+			return res.data;
+		} catch (err) {
+			console.log("Trouble Deleting outfit:", err);
+			return err;
+		}
+	};
+
+	// useMutation to delete an outfit
+	const deleteOutfitMutation = useMutation({
+		mutationKey: "DeleteOutfit",
+		mutationFn: deleteOutfit,
+	});
+
 	// Return loading screen when outfitFeed is empty
 	return Object.keys(outfitFeed).length > 0 ? (
 		<Router>
@@ -205,6 +228,7 @@ export const AppMain = () => {
 					isErrorExpand,
 					refetchExpandFeed,
 					rateOutfitMutation,
+					deleteOutfitMutation,
 					images,
 					subPage,
 					setSubPage,

@@ -4,6 +4,7 @@ import { FeedContext } from "../AppMain";
 import { TopDisplay } from "./TopDisplay/TopDisplay";
 import { BottomDisplay } from "./BottomDisplay/BottomDisplay";
 import { ShoeDisplay } from "./ShoeDisplay/ShoeDisplay";
+import { Tooltip } from "react-tooltip";
 import feedButtonMax from "../images/waistMaxIcon.svg";
 import feedButton from "../images/waistIncrementIcon.svg";
 import thumbsUp from "../images/thumbsUp.svg";
@@ -58,7 +59,10 @@ export const OutfitFeedDisplay = (props) => {
 
 	return (
 		<div className="Outfit-Feed-Display">
-			<button className="Outfit-Feed-Button" onClick={decrementFeed}>
+			<button
+				className="Outfit-Feed-Button"
+				onClick={decrementFeed}
+				data-tooltip-id="decrementFeed">
 				<img
 					className="Outfit-Feed-Button-Left"
 					src={
@@ -72,6 +76,7 @@ export const OutfitFeedDisplay = (props) => {
 					<div className="Outfit-Rating-Button-Container">
 						<button
 							className="Outfit-Rating-Button"
+							data-tooltip-id="positiveRate"
 							onClick={(event) => {
 								// Return if outfit has already been rated Pos recently
 								if (
@@ -124,6 +129,7 @@ export const OutfitFeedDisplay = (props) => {
 									// Check if the website is still on the same page, if not, clear the timeout
 									if (subPage !== "/generator") {
 										clearTimeout(likeTimeout);
+										return;
 									}
 									// Remove the class
 									event.target.classList.remove(
@@ -141,6 +147,7 @@ export const OutfitFeedDisplay = (props) => {
 						</button>
 						<button
 							className="Outfit-Rating-Button"
+							data-tooltip-id="negativeRate"
 							onClick={(event) => {
 								// Return if outfit has already been rated Neg recently
 								if (
@@ -268,6 +275,7 @@ export const OutfitFeedDisplay = (props) => {
 			</div>
 			<button
 				className="Outfit-Feed-Button-EndDiv"
+				data-tooltip-id="incrementFeed"
 				onClick={incrementFeed}>
 				<img
 					className="Outfit-Feed-Button-Right"
@@ -280,6 +288,36 @@ export const OutfitFeedDisplay = (props) => {
 					alt={"+"}
 				/>
 			</button>
+			<Tooltip
+				id="decrementFeed"
+				place="top"
+				effect="solid"
+				content="Previous Outfit"
+			/>
+			<Tooltip
+				id="incrementFeed"
+				place="top"
+				effect="solid"
+				content="Next Outfit"
+			/>
+			<Tooltip
+				id="positiveRate"
+				place="top"
+				effect="solid"
+				content="Like Outfit"
+			/>
+			<Tooltip
+				id="negativeRate"
+				place="top"
+				effect="solid"
+				content="Dislike Outfit"
+			/>
+			<Tooltip
+				id="reportRate"
+				place="top"
+				effect="solid"
+				content="Report Item"
+			/>
 		</div>
 	);
 };

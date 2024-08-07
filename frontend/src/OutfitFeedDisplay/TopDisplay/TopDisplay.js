@@ -1,6 +1,12 @@
 import "./TopDisplay.css";
+import { useContext } from "react";
+import { FeedContext } from "../../AppMain";
+import { Tooltip } from "react-tooltip";
+import reportSvg from "../../images/reportSvg.svg";
+
 // One individual itemDisplay Component will display that item by accepting an index state and a feed state
 export const TopDisplay = (props) => {
+	const { topGender, deleteOutfitMutation } = useContext(FeedContext);
 	// Source the top item to display
 	const topItem = props.item;
 	const invis = props.invis || false;
@@ -52,6 +58,34 @@ export const TopDisplay = (props) => {
 			<div className="Top-Display-Size-Container">
 				<p className="Top-Display-Size-Text"> {topItem.productSize}</p>
 			</div>
+			<button
+				className="Report-Outfit-Button"
+				data-tooltip-id="reportTop"
+				onClick={(e) => {
+					// Define colleciton and source outfit ID
+					const collection = topGender === "male" ? 0 : 3;
+					const outfitID = topItem.productImg;
+					// Call mutation to delete outfit
+					deleteOutfitMutation.mutate({
+						id: outfitID,
+						collection: collection,
+					});
+					// Add class to report button to signal report
+					e.target.classList.add("Report-Clicked");
+					// Remove the class in .5 seconds
+					const likeTimeout = setTimeout(() => {
+						// Remove the class
+						e.target.classList.remove("Report-Clicked");
+						// Clear the timeout
+						clearTimeout(likeTimeout);
+					}, 500);
+				}}>
+				<img
+					src={reportSvg}
+					alt="Report"
+					className="Report-Image"></img>
+			</button>
+			<Tooltip id="reportTop" effect="solid" content="Report Top" />
 		</div>
 	);
 };

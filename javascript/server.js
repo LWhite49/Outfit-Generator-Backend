@@ -7,6 +7,7 @@ const cors = require("cors");
 const {
 	generateOutfitFeed,
 	rateOutfit,
+	deleteItem,
 } = require("./controllers/outfitGenerationHandlers.js");
 
 // Connect to MongoDB
@@ -22,6 +23,7 @@ app.use(cors());
 // Specify Routes
 app.get("/generateOutfitFeed", generateOutfitFeed);
 app.post("/rateOutfit", rateOutfit);
+app.post("/deleteItem", deleteItem);
 
 // Launch Server
 const PORT = 3500;
