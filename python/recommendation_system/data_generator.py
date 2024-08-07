@@ -14,7 +14,7 @@ import numpy as np
 from color_assignment.conversions import hex_to_rgb
 from color_calculator import outfit_comparison
 import time
-import urllib
+import urllib.request
 
 # global variables
 stop_flag = False
@@ -50,7 +50,7 @@ connectionString = os.getenv('DB_CONNECTION_PY')
 client = MongoClient(connectionString)
 
 db = client['test']
-arcv = clinet['archive']
+arcv = client['archive']
 
 def random_item(collection):
     '''Returns the color array of a random item selected from the database.'''
@@ -72,39 +72,40 @@ if __name__ == '__main__':
     m_sets = ['topmens', 'bottommens', 'shoemens']
     f_sets = ['topwomens', 'bottomwomens', 'shoewomens']
 
-    # get set of clothes from random sex
-    outfit = []
-    for c in choice([m_sets, f_sets]):
-        outfit.append(random_item(c))
+    while not stop_flag:
+        # get set of clothes from random sex
+        outfit = []
+        for c in choice([m_sets, f_sets]):
+            outfit.append(random_item(c))
 
-    # display images side by side
-    f, axarr = plt.subplots(1, 3)
-    for i in range(3):
-        axarr[i].imshow(outfit[i])
+        # display images side by side
+        f, axarr = plt.subplots(1, 3)
+        for i in range(3):
+            axarr[i].imshow(outfit[i])
 
-    # Create button widgets
-    ax_button = plt.axes([0.02, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
-    like = Button(ax_button, 'Like')
-    like.on_clicked(lambda event: on_like_click(event, outfit))
-    # TODO: use this syntax ^ for other functions to pass in outfit array
+        # Create button widgets
+        ax_button = plt.axes([0.02, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+        like = Button(ax_button, 'Like')
+        like.on_clicked(lambda event: on_like_click(event, outfit))
+        # TODO: use this syntax ^ for other functions to pass in outfit array
 
-    ax_button = plt.axes([0.28, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
-    dislike = Button(ax_button, 'Dislike')
-    dislike.on_clicked(on_dislike_click)
+        ax_button = plt.axes([0.28, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+        dislike = Button(ax_button, 'Dislike')
+        dislike.on_clicked(on_dislike_click)
 
-    ax_button = plt.axes([0.15, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
-    skip = Button(ax_button, 'Skip')
-    skip.on_clicked(on_skip_click)
+        ax_button = plt.axes([0.15, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+        skip = Button(ax_button, 'Skip')
+        skip.on_clicked(on_skip_click)
 
-    # Create a button widget for "Stop"
-    ax_button_stop = plt.axes([0.41, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
-    button_stop = Button(ax_button_stop, 'Stop')
-    button_stop.on_clicked(on_stop_click)
+        # Create a button widget for "Stop"
+        ax_button_stop = plt.axes([0.41, 0.02, 0.1, 0.05])  # [left, bottom, width, height]
+        button_stop = Button(ax_button_stop, 'Stop')
+        button_stop.on_clicked(on_stop_click)
 
-    plt.show()
+        plt.show()
 
-    if stop_flag:
-        break
+        if stop_flag:
+            break
     
 
 # if __name__ == "__main__":
