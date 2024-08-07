@@ -53,6 +53,8 @@ def neutrality(color: str)->float:
 
 def outfit_comparison(palette1: list[list[str, float]], palette2: list[list[str, float]])->list[float, float, float, float]:
     '''Takes in the color arrays from two database items (which are formatted as [color label, pixel percentage, hex value]) and produce scores for their relative complementariness, similarity, and neutrality, in that order.'''
+    max_score = 1 # scale that things are scored on
+
     complementary_score = 0
     similarity_score = 0
     neutrality_score1 = 0
@@ -61,7 +63,7 @@ def outfit_comparison(palette1: list[list[str, float]], palette2: list[list[str,
     for subset1 in palette1:
         hex1 = subset1[0]  # Get the hex value from the first array
         area1 = subset1[1] # get the pixel percentage of this color
-        ratio = 10 * area1 # because we are scoring based on 10, we partition the maximum score of 10 based on the color percentage
+        ratio = max_score * area1 # because we are scoring based on 10, we partition the maximum score of 10 based on the color percentage
 
         neutrality_score1 += neutrality(hex1) * ratio
 
@@ -82,10 +84,13 @@ def outfit_comparison(palette1: list[list[str, float]], palette2: list[list[str,
     for subset2 in palette2:
         hex2 = subset2[0] 
         area2 = subset2[1]
-        ratio = 10 * area2
+        ratio = max_score * area2
         neutrality_score2 += neutrality(hex2) * ratio
+    
+    # relative neutrality is scored on a saddle function so that outfits are optimized to have one neutral one not
+    relative_neutrality = (neutrality_score1 + neutrality_score2 - ((2/max_score) * neutrality_score1 * neutrality_score2))
 
-    return complementary_score, similarity_score, neutrality_score1, neutrality_score2
+    return complementary_score, similarity_score, relative_neutrality
 
 if __name__ == "__main__":
     print(similarity('#287280', '#286e80'))

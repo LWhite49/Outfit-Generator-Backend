@@ -14,18 +14,18 @@ def score(item1, item2, item3 = None) -> float:
     sim_weight = 0.75
     neut_weight = 0.25
 
-    _, similarity, n1, n2 = outfit_comparison(item1, item2)
+    _, similarity, neutrality = outfit_comparison(item1, item2)
     if not item3:
-        return (sim_weight * similarity) + (neut_weight * (n1 + n2 - (0.2 * n1 * n2)))
+        return (sim_weight * similarity) + (neut_weight * neutrality)
     else:
-        _, similarity2, n1_2, n2_2 = outfit_comparison(item1, item3)
-        _, similarity3, n1_3, n2_3 = outfit_comparison(item2, item3)
+        _, similarity2, neutrality2 = outfit_comparison(item1, item3)
+        _, similarity3, neutrality3 = outfit_comparison(item2, item3)
 
-        score1 = (sim_weight * similarity) + (neut_weight * (n1 + n2 - (0.2 * n1 * n2)))
-        score2 = (sim_weight * similarity2) + (neut_weight * (n1_2 + n2_2 - (0.2 * n1_2 * n2_2)))
-        score3 = (sim_weight * similarity3) + (neut_weight * (n1_3 + n2_3 - (0.2 * n1_3 * n2_3)))
+        score1 = (sim_weight * similarity) + (neut_weight * neutrality)
+        score2 = (sim_weight * similarity2) + (neut_weight * neutrality2)
+        score3 = (sim_weight * similarity3) + (neut_weight * neutrality3)
 
-        return (similarity + similarity2 + similarity3) / 3
+        return (score + score2 + score3) / 3
 
 def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]], shoes: list[list[str, float]]) -> list[dict[str: int]]:
     outfits_returned = 20
