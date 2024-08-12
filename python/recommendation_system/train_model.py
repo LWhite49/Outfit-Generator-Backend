@@ -134,7 +134,7 @@ for i in range(len(preds)):
     else:
         preds[i] = 0
 
-print(accuracy_score(y_test, preds))
+# print("Linear regression accuracy:", accuracy_score(y_test, preds))
 
 # save trained model to pickle file
 with open('linear_regression.txt', 'wb') as file:
@@ -142,4 +142,13 @@ with open('linear_regression.txt', 'wb') as file:
 
 # print(model.score(outfits[X], outfits['reaction']))
 
-#* ======= MODEL 2 ======= 
+#* ======= MODEL 2 ======= RANDOM FOREST =======
+# expand color hexes into rgb
+# outfits_expanded.dropna()
+# print(outfits_expanded.dtypes)
+# print(any(outfits_expanded['top_color1'].isnull()))
+for i in range(1,5):
+    outfits_expanded[[f'top_color{i}_r', f'top_color{i}_g', f'top_color{i}_b']] = outfits_expanded[f'top_color{i}'].apply(hex_to_rgb)
+
+# print(outfits_expanded['top_color1'].apply(hex_to_rgb))
+print(outfits_expanded.dtypes)
