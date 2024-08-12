@@ -1,6 +1,11 @@
+import sys
+import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from os import getenv
 import pandas as pd
 import numpy as np
 import pickle
@@ -8,12 +13,13 @@ from color_calculator import outfit_comparison
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from color_assignment.conversions import hex_to_rgb
 
 # Initialize ENV
 load_dotenv()
 
 # Source ENV
-connectionString = getenv('DB_CONNECTION_PY')
+connectionString = os.getenv('DB_CONNECTION_PY')
 # Connect to Mongo
 client = MongoClient(connectionString)
 # Connect to DB
@@ -114,11 +120,13 @@ X = outfits[['TB_complementary', 'TB_similarity', 'TB_neutrality', \
      'BS_complementary', 'BS_similarity', 'BS_neutrality']]
 y = outfits['reaction']
 
+# train model
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 model = LinearRegression()
 model.fit(X_train, y_train)
 
+# test accuracy by rounding to like or dislike
 preds = model.predict(X_test)
 for i in range(len(preds)):
     if preds[i] >= 0.5:
@@ -128,7 +136,10 @@ for i in range(len(preds)):
 
 print(accuracy_score(y_test, preds))
 
+# save trained model to pickle file
 with open('linear_regression.txt', 'wb') as file:
     pickle.dump(model, file)
 
 # print(model.score(outfits[X], outfits['reaction']))
+
+#* ======= MODEL 2 ======= 
