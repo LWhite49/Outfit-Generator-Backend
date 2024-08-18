@@ -83,6 +83,8 @@ outfits[str_cols] = outfits[str_cols].astype('string')
 
 # separate into 2 dataframes, one with expanded columns and one with color arrays
 outfits_expanded = outfits.drop(columns=['top_id', 'bottom_id', 'shoe_id', 'top_colors', 'bottom_colors', 'shoe_colors'])
+for i in range(1,5):
+    rgb = pd.Series(outfits_expanded[f'top_color{i}'].apply(hex_to_rgb))
 outfits = outfits[['reaction', 'top_colors', 'bottom_colors', 'shoe_colors']]
 
 client.close()
@@ -147,8 +149,7 @@ with open('linear_regression.txt', 'wb') as file:
 # outfits_expanded.dropna()
 # print(outfits_expanded.dtypes)
 # print(any(outfits_expanded['top_color1'].isnull()))
-for i in range(1,5):
-    outfits_expanded[[f'top_color{i}_r', f'top_color{i}_g', f'top_color{i}_b']] = outfits_expanded[f'top_color{i}'].apply(hex_to_rgb)
+
 
 # print(outfits_expanded['top_color1'].apply(hex_to_rgb))
 print(outfits_expanded.dtypes)

@@ -20,4 +20,4 @@ def random_item(collection):
         print('No items available with color array.')
         return None
 
-model._pa
+print(model.predict(random_item('topmens')))

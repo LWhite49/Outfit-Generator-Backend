@@ -25,7 +25,7 @@ def score(item1, item2, item3 = None) -> float:
         score2 = (sim_weight * similarity2) + (neut_weight * neutrality2)
         score3 = (sim_weight * similarity3) + (neut_weight * neutrality3)
 
-        return (score + score2 + score3) / 3
+        return (score1 + score2 + score3) / 3
 
 def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]], shoes: list[list[str, float]]) -> list[dict[str: int]]:
     outfits_returned = 20
