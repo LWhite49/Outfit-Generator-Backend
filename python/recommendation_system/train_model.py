@@ -36,6 +36,7 @@ outfits = outfits[['top_id', 'bottom_id', 'shoe_id', 'reaction']]
 
 # function to flatten color array
 def flatten_array(arr, name):
+    ''''''
     arr = np.array(arr) # will need list as numpy array
     # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
     column_names = [f'{name}_{base}{i+1}' for i in range(arr.shape[0]) for base in ['color', 'weight']]
@@ -86,6 +87,9 @@ outfits_expanded = outfits.drop(columns=['top_id', 'bottom_id', 'shoe_id', 'top_
 for i in range(1,5):
     rgb = pd.Series(outfits_expanded[f'top_color{i}'].apply(hex_to_rgb))
 outfits = outfits[['reaction', 'top_colors', 'bottom_colors', 'shoe_colors']]
+
+for i in range(1,5):
+    rgb = pd.Series(outfits_expanded[f'top_color{i}'].apply(hex_to_rgb))
 
 client.close()
 
