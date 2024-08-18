@@ -4,6 +4,7 @@ file = open('linear_regression.txt', 'rb')
 model = pickle.load(file)
 file.close()
 
+
 def random_item(collection):
     '''Returns the color array of a random item selected from the database.'''
     c = db[collection] 
@@ -19,5 +20,6 @@ def random_item(collection):
     else:
         print('No items available with color array.')
         return None
+
 
 print(model.predict(random_item('topmens')))
