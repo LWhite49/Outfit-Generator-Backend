@@ -1,38 +1,45 @@
+from dotenv import load_dotenv
+from os import getenv
 from model_predict import predict
 from pymongo import MongoClient
+from random import choice
+from scipy import stats
 
 # Initialize ENV
 load_dotenv()
 
 # Source ENV
-connectionString = os.getenv('DB_CONNECTION_PY')
+connectionString = getenv('DB_CONNECTION_PY')
 # Connect to Mongo
 client = MongoClient(connectionString)
 # Connect to DB
-db = client['archive']
+db = client['test']
 
 
 
-def permutationNumberFinder():
+def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
 #     '''Estimates the number of permutations needed to achieve a high average score.'''
 #     ''' This function is based on the monte carlo simulation method. '''
 
     highScoreCount = 0 # number of high scoring outfits found
     simulationAmount = 0 # the amounnt of simulations ran until the target confidence level is reached
-    confidenceLevel = 0.95 # the target confidence level
     targetConfidenceReached = False # initially set to false
     highScoreThreshold = 0.8 # our threshold score for what we consider a good outfit
 
-    while not targetConfidenceReached:
+    highestScore = 0
+
+    outfitScores = []
+
+    for i in range(100):
         simulationAmount += 1
         setOutfitScore = 0
 
         # Generate 20 random outfits and calculate the average score
         for _ in range(20):
             # Generate random top, bottom, and shoe
-            top = random_item('top')
-            bottom = random_item('bottom')
-            shoe = random_item('shoe')
+            top = random_item(choice(['topmens', 'topwomens']))
+            bottom = random_item(choice(['bottommens', 'bottomwomens']))
+            shoe = random_item(choice(['shoemens', 'shoewomens']))
 
             if top and bottom and shoe:
                 setOutfitScore += predict(top, bottom, shoe)
@@ -41,6 +48,11 @@ def permutationNumberFinder():
                 return
         # Calculate the average score
         setOutfitScore /= 20
+
+        if setOutfitScore > highestScore:
+            highestScore = setOutfitScore
+
+        outfitScores.append(setOutfitScore)
 
         # Check if the averaged score is above the threshold specified
         if setOutfitScore > highScoreThreshold:
@@ -52,22 +64,30 @@ def permutationNumberFinder():
         # Check if the current confidence level meets or exceeds the target confidence level
         if current_confidence >= confidenceLevel:
             targetConfidenceReached = True
+    
+    sigma = stats.tstd(outfitScores)[0] # get sample standard deviation
+    print(f"Standard deviation of outfit scores: {sigma}")
+    z = stats.zscore([confidenceLevel])[0]
+    n = ((z ** 2) * (sigma ** 2)) / (acceptedError ** 2)
+    print(f"Highest score found: {highestScore}")
 
     # Print the number of permutations required to reach the target confidence level
-    print(f"Number of permutations required to reach {confidenceLevel * 100}% confidence: {simulationAmount}")
+    print(f"Number of permutations required to reach {confidenceLevel * 100}% confidence: {n}")
 
             
 
 
-def random_item(collection):
+def random_item(collectionName):
     '''Returns the color array of a random item selected from the database.'''
-    collection = db[collection] 
+    collection = db[collectionName] 
     # sample a random item with a nonempty color array
     pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 1}}]
     result = list(collection.aggregate(pipeline))
     if result:
-        return result[0]
+        return result[0]['productColors']
     else:
-        print('No items available with color array.')
+        print(f'No items available from {collectionName} with color array.')
         return None
 
+if __name__ == '__main__':
+    permutationNumberFinder(0.95, 0.03)
