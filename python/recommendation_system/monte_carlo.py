@@ -1,4 +1,3 @@
-import pickle
 from model_predict import predict
 from pymongo import MongoClient
 
@@ -30,6 +29,7 @@ def permutationNumberFinder():
 
         # Generate 20 random outfits and calculate the average score
         for _ in range(20):
+            # Generate random top, bottom, and shoe
             top = random_item('top')
             bottom = random_item('bottom')
             shoe = random_item('shoe')
@@ -39,7 +39,7 @@ def permutationNumberFinder():
             else:
                 print('Something went wrong with the random outfit generation.')
                 return
-
+        # Calculate the average score
         setOutfitScore /= 20
 
         # Check if the averaged score is above the threshold specified
@@ -61,10 +61,10 @@ def permutationNumberFinder():
 
 def random_item(collection):
     '''Returns the color array of a random item selected from the database.'''
-    c = db[collection] 
+    collection = db[collection] 
     # sample a random item with a nonempty color array
     pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 1}}]
-    result = list(c.aggregate(pipeline))
+    result = list(collection.aggregate(pipeline))
     if result:
         return result[0]
     else:
