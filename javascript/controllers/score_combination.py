@@ -96,11 +96,12 @@ def index_palettes(tops: list[list[str, float]], bottoms: list[list[str, float]]
     return indexed_fits
 
 tops = ast.literal_eval(sys.argv[1])
+print(len(tops))
 bottoms = ast.literal_eval(sys.argv[2])
 shoes = ast.literal_eval(sys.argv[3])
 
 outfits = index_palettes(tops, bottoms, shoes)
 shuffle(outfits)
 
-print(json.dumps(outfits))
+# print(json.dumps(outfits))
 sys.stdout.flush()

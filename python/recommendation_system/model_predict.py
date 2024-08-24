@@ -2,6 +2,7 @@ import pickle
 from train_model import flatten_array
 import pandas as pd
 from color_calculator import outfit_comparison
+from time import time
 
 file = open('linear_regression.txt', 'rb')
 model = pickle.load(file)
@@ -58,4 +59,6 @@ if __name__ == '__main__':
     bottom = [['aeb7b9', 0.38050385837494327], ['8b949b', 0.3521334543803904], ['666c72', 0.17782569223785746], ['0e0d0d', 0.0895369950068089]]
     top = [['dcbc36', 0.865478841870824], ['1b180d', 0.06369710467706013], ['d9c36a', 0.042093541202672606], ['7f6f31', 0.02873051224944321]]
     shoe = [['fbfafa', 0.5259423164962612], ['312e31', 0.1661071265069434], ['bfc2bd', 0.15496719059972533], ['a27254', 0.15298336639707005]]
-    print(predict(top, bottom, shoe))
+    t0 = time()
+    predict(top, bottom, shoe)
+    print(time() - t0)

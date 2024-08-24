@@ -15,11 +15,37 @@ client = MongoClient(connectionString)
 # Connect to DB
 db = client['test']
 
+def random_items(collectionName):
+    '''Returns the color array of a random item selected from the database.'''
+    collection = db[collectionName] 
+    # sample a random item with a nonempty color array
+    pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 20}}]
+    result = list(collection.aggregate(pipeline))
+    if result:
+        result = [item['productColors'] for item in result] # pull just colors
+        return result
+    # throw an error if the pipeline failed
+    raise Exception(f'Problem accumulating items from collection {collectionName}')
 
+# def random_item(collectionName):
+#     '''Returns the color array of a random item selected from the database.'''
+#     collection = db[collectionName] 
+#     # sample a random item with a nonempty color array
+#     pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 1}}]
+#     result = list(collection.aggregate(pipeline))
+#     if result:
+#         return result[0]['productColors']
+#     else:
+#         print(f'No items available from {collectionName} with color array.')
+#         return None
 
 def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
 #     '''Estimates the number of permutations needed to achieve a high average score.'''
 #     ''' This function is based on the monte carlo simulation method. '''
+    
+    tops = random_items(random.choice(['topmens', 'topwomens']))
+    bottoms = random_items(random.choice(['bottommens', 'bottomwomens']))
+    shoes = random_items(random.choice(['shoemens', 'shoewomens']))
 
     highScoreCount = 0 # number of high scoring outfits found
     simulationAmount = 0 # the amounnt of simulations ran until the target confidence level is reached
@@ -30,25 +56,31 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
 
     outfitScores = []
 
-    for i in range(100):
+
+    for i in range(55):
         simulationAmount += 1
         setOutfitScore = 0
 
+        outfits = []
         # Generate 20 random outfits and calculate the average score
         for _ in range(20):
             # Generate random top, bottom, and shoe
-            top = random_item(choice(['topmens', 'topwomens']))
-            bottom = random_item(choice(['bottommens', 'bottomwomens']))
-            shoe = random_item(choice(['shoemens', 'shoewomens']))
+            top = choice(tops)
+            bottom = choice(bottoms)
+            shoe = choice(shoes)
 
-            if top and bottom and shoe:
-                setOutfitScore += predict(top, bottom, shoe)
-            else:
-                print('Something went wrong with the random outfit generation.')
-                return
+            outfits.append([top, bottom, shoe])
+
+            # if top and bottom and shoe:
+            #     setOutfitScore += predict(top, bottom, shoe)
+            # else:
+            #     print('Something went wrong with the random outfit generation.')
+            #     return
+
+        
         # Calculate the average score
-        setOutfitScore /= 20
-
+        # setOutfitScore /= 20
+        
         if setOutfitScore > highestScore:
             highestScore = setOutfitScore
 
@@ -65,7 +97,7 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
         if current_confidence >= confidenceLevel:
             targetConfidenceReached = True
     
-    sigma = stats.tstd(outfitScores)[0] # get sample standard deviation
+    sigma = stats.tstd(outfitScores) # get sample standard deviation
     print(f"Standard deviation of outfit scores: {sigma}")
     z = stats.zscore([confidenceLevel])[0]
     n = ((z ** 2) * (sigma ** 2)) / (acceptedError ** 2)
@@ -73,21 +105,6 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
 
     # Print the number of permutations required to reach the target confidence level
     print(f"Number of permutations required to reach {confidenceLevel * 100}% confidence: {n}")
-
-            
-
-
-def random_item(collectionName):
-    '''Returns the color array of a random item selected from the database.'''
-    collection = db[collectionName] 
-    # sample a random item with a nonempty color array
-    pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 1}}]
-    result = list(collection.aggregate(pipeline))
-    if result:
-        return result[0]['productColors']
-    else:
-        print(f'No items available from {collectionName} with color array.')
-        return None
 
 if __name__ == '__main__':
     permutationNumberFinder(0.95, 0.03)
