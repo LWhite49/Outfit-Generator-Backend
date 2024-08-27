@@ -15,6 +15,8 @@ const TopWomen = require("./mongo-config/Top-Women.js");
 const BottomWomen = require("./mongo-config/Bottom-Women.js");
 const ShoeWomen = require("./mongo-config/Shoe-Women.js");
 
+// Source starting index
+const start = process.argv.length > 2 ? process.argv[2] : 0;
 // Puppeteer middleware
 puppeteer.use(StealthPlugin());
 puppeteer.use(AnonymizeUAPlugin());
@@ -52,7 +54,7 @@ const scrollToBottom = async (page) => {
 };
 // Define the GrailedScraper function that scrapes the Grailed website and returns an array of listings for the passed collection name.
 // It accepts a puppeteer page generated for the cluster task, since this will be used in cluster.task().
-const scrapeCollectionListings = async (page, targetorArr) => {
+const scrapeCollectionListings = async (page, targetorArr, index) => {
 	try {
 		// Source URL and declare the array to store the listings
 		let scrapeUrl = process.env.SCRAPE_URL + targetorArr[0];
@@ -96,7 +98,7 @@ const scrapeCollectionListings = async (page, targetorArr) => {
 		}
 
 		// Get listings from container
-		console.log("Getting listings...");
+		console.log(`Getting listings... #${index}`);
 		listings = await container.evaluate((c, targetorArr) => {
 			// Map each product pod to an array of listings
 			return Array.from(c.querySelectorAll("li")).map((pod) => {
@@ -174,14 +176,14 @@ const scrapeCollectionListings = async (page, targetorArr) => {
 // Each thread of the collection will also update the DB with the listings it has scraped.
 const scrapeAllCollections = async () => {
 	try {
-		for (let targetorArr of sizeTargetors) {
+		for (let index = start; index < sizeTargetors.length; index++) {
 			const browser = await puppeteer.launch({ headless: "new" });
 			const page = await browser.newPage();
 			await page.setDefaultNavigationTimeout(0);
 			await page.setDefaultTimeout(0);
 
 			// Scrape array of listings for passed collection name
-			await scrapeCollectionListings(page, targetorArr);
+			await scrapeCollectionListings(page, sizeTargetors[index], index);
 
 			// Close browser instance
 			await page.waitForTimeout(750);
