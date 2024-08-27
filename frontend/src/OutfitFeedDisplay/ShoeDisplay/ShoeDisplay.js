@@ -71,6 +71,7 @@ export const ShoeDisplay = (props) => {
 					deleteOutfitMutation.mutate({
 						id: outfitID,
 						collection: collection,
+						item: shoeItem,
 					});
 					// Add class to report button to signal report
 					e.target.classList.add("Report-Clicked");
