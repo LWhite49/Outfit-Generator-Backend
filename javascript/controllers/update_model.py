@@ -7,10 +7,10 @@
 # This doesn't actually have to return anything, maybe send a simple string if there was a failure for debugging purposes
 
 import sys
-# import os
+import os
 
-# relative_path = os.path.join(os.path.dirname(__file__), '../../python/recommendation_system')
-# sys.path.append(os.path.abspath(relative_path))
+relative_path = os.path.join(os.path.dirname(__file__), '../../python/')
+sys.path.append(os.path.abspath(relative_path))
 
 import json
 import ast

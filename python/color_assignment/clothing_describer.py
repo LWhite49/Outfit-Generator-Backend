@@ -9,9 +9,8 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import AgglomerativeClustering
-
-from conversions import rgb_to_hex
-from n_groups import n_groups
+from color_assignment.conversions import rgb_to_hex
+from color_assignment.n_groups import n_groups
 
 IM_HEIGHT, IM_WIDTH = 150, 150
 
