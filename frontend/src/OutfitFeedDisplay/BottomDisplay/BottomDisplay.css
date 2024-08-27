@@ -108,7 +108,8 @@
 .Report-Clicked {
 	animation: pulseRep 0.5s forwards;
 }
-@media (max-width: 1499px) {
+
+@media (max-width: 1999px) {
 	.BottomDisplay {
 		--componentHeight: 200px;
 		margin: 6px 0px;

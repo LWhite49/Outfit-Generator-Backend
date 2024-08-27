@@ -288,7 +288,7 @@ export const Generator = () => {
 	};
 
 	// Conditionally assign variable that determins the divisor for the outfit feed display count
-	const displayDivisor = windowWidth > 1499 ? 500 : 365;
+	const displayDivisor = windowWidth > 1999 ? 500 : 365;
 	const altTitleVis = windowWidth > 690 ? false : true;
 	return (
 		<div className="Generator">

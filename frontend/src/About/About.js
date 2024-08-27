@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { FeedContext } from "../AppMain.js";
 import aboutUs from "../images/aboutUs.svg";
 import HTMLTagSvg from "../images/HTMLTag.svg";
-import LWImg from "../images/LWImg.jpg";
+import LWImg from "../images/LWIMG.avif";
 import PAImg from "../images/PAImage.jpg";
 import JLImg from "../images/LLImage.jpg";
 import LinkedInImg from "../images/LinkedInImg.svg";

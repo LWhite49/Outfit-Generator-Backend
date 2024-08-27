@@ -107,7 +107,7 @@
 	display: none;
 }
 
-@media (max-width: 1499px) {
+@media (max-width: 1999px) {
 	.TopDisplay {
 		--componentHeight: 200px;
 		margin: 6px 0px;
