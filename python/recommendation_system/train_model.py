@@ -15,15 +15,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from color_assignment.conversions import hex_to_rgb
 
-# function to flatten color array
-def flatten_array(arr, name):
-    '''Takes in a color array and returns its exapnsion as a pandas series'''
-    arr = np.array(arr) # will need list as numpy array
-    # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
-    column_names = [f'{name}_{base}{i+1}' for i in range(arr.shape[0]) for base in ['color', 'weight']]
-    return pd.Series(arr.flatten(), index=column_names)
-
-
 if __name__ == '__main__':
 
     # Initialize ENV
@@ -46,29 +37,41 @@ if __name__ == '__main__':
     outfits = outfits[['top_id', 'bottom_id', 'shoe_id', 'reaction']]
 
     # pull archival tables of items into dataframes
-    # tops
+    #* tops
     cursor = db['tops'].find(projection=['productColors']) # only project relevant column
     tops = pd.DataFrame(list(cursor))
     # rename _id column for merging, colors column for distinctness
     tops = tops.rename(columns={'_id': 'top_id', 'productColors': 'top_colors'})
+
+    # function to flatten color array
+    def flatten_array(arr, name):
+        '''Takes in a color array and returns its expansion as a pandas series'''
+        arr = np.array(arr) # will need list as numpy array for flattening
+        # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
+        column_names = [f'{name}_{base}{i}' for i in range(1, 5) for base in ['color', 'weight']]
+        return pd.Series(arr.flatten(), index=column_names)
+
     # expand color array into 8 columns
     expanded = tops['top_colors'].apply(flatten_array, name='top') # get flattened series
     # add new columns to dataframe
     tops = pd.concat([tops, expanded], axis=1)
 
-    # bottoms
+    #* bottoms
     cursor = db['bottoms'].find(projection=['productColors'])
     bottoms = pd.DataFrame(list(cursor))
     bottoms = bottoms.rename(columns={'_id': 'bottom_id', 'productColors': 'bottom_colors'})
     expanded = bottoms['bottom_colors'].apply(flatten_array, name='bottom')
     bottoms = pd.concat([bottoms, expanded], axis=1)
 
-    # shoes
+    #* shoes
     cursor = db['shoes'].find(projection=['productColors'])
     shoes = pd.DataFrame(list(cursor))
     shoes = shoes.rename(columns={'_id': 'shoe_id', 'productColors': 'shoe_colors'})
     expanded = shoes['shoe_colors'].apply(flatten_array, name='shoe')
     shoes = pd.concat([shoes, expanded], axis=1)
+
+    # close client
+    client.close()
 
     # inner merge item tables into the outfits dataframe
     outfits = outfits.merge(tops, on='top_id')
@@ -85,16 +88,36 @@ if __name__ == '__main__':
                 'shoe_color1', 'shoe_color2', 'shoe_color3', 'shoe_color4']
     outfits[str_cols] = outfits[str_cols].astype('string')
 
-    # separate into 2 dataframes, one with expanded columns and one with color arrays
+    # separate into 2 dataframes, one with color arrays (i.e., all the colors in one array) and one with separate columns for each color
     outfits_expanded = outfits.drop(columns=['top_id', 'bottom_id', 'shoe_id', 'top_colors', 'bottom_colors', 'shoe_colors'])
-    for i in range(1,5):
-        rgb = pd.Series(outfits_expanded[f'top_color{i}'].apply(hex_to_rgb))
+
+    # function for breaking hex values into columns of r, g, and b
+    def expand_to_rgb(arr, name):
+
+        for i in range(1,5):
+            # build column names given item category (name)
+            # item_color1_r, item_color1_g, item_color1_b, item_color2_r ... etc
+            columns = []
+            for dim in ['r', 'g', 'b']:
+                column_name = f'{name}_color{i}'
+                column_name += f'_{dim}'
+                columns.append(column_name)
+
+            rgb = pd.Series(outfits_expanded[f'{name}_color{i}'].apply(hex_to_rgb), index=columns)
+
+            pd.concat([outfits_expanded, rgb], axis=1)
+            return outfits
+
+    for name in ['top', 'bottom', 'shoe']:
+        for i in range(1, 5):
+            try:
+                outfits_expanded[f'{name}_color{i}'] = outfits_expanded[f'{name}_color{i}'].apply(hex_to_rgb)
+            except:
+                raise Exception(f'Error for column {name}_color{i}')
+
+    outfits_expanded = outfits_expanded.join(pd.DataFrame(list()))
+
     outfits = outfits[['reaction', 'top_colors', 'bottom_colors', 'shoe_colors']]
-
-    for i in range(1,5):
-        rgb = pd.Series(outfits_expanded[f'top_color{i}'].apply(hex_to_rgb))
-
-    client.close()
 
     #* ======= MODEL 1 ======= LINEAR REGRESSION =======
     # get complementariness, similarity, and relative neutrality for each item combination
@@ -159,4 +182,4 @@ if __name__ == '__main__':
 
 
     # print(outfits_expanded['top_color1'].apply(hex_to_rgb))
-    print(outfits_expanded.dtypes)
+    # print(outfits_expanded.shoe_color4)

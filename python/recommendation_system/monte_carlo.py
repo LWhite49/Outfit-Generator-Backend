@@ -4,6 +4,8 @@ from model_predict import predict
 from pymongo import MongoClient
 from random import choice
 from scipy import stats
+import numpy as np
+import random
 
 # Initialize ENV
 load_dotenv()
@@ -19,7 +21,7 @@ def random_items(collectionName):
     '''Returns the color array of a random item selected from the database.'''
     collection = db[collectionName] 
     # sample a random item with a nonempty color array
-    pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 20}}]
+    pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 30}}]
     result = list(collection.aggregate(pipeline))
     if result:
         result = [item['productColors'] for item in result] # pull just colors
@@ -56,8 +58,7 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
 
     outfitScores = []
 
-
-    for i in range(55):
+    for i in range(500):
         simulationAmount += 1
         setOutfitScore = 0
 
@@ -70,6 +71,7 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
             shoe = choice(shoes)
 
             outfits.append([top, bottom, shoe])
+            setOutfitScore += predict(top, bottom, shoe)
 
             # if top and bottom and shoe:
             #     setOutfitScore += predict(top, bottom, shoe)
@@ -79,7 +81,7 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
 
         
         # Calculate the average score
-        # setOutfitScore /= 20
+        setOutfitScore /= 20
         
         if setOutfitScore > highestScore:
             highestScore = setOutfitScore
@@ -97,10 +99,10 @@ def permutationNumberFinder(confidenceLevel, acceptedError = 0.05):
         if current_confidence >= confidenceLevel:
             targetConfidenceReached = True
     
-    sigma = stats.tstd(outfitScores) # get sample standard deviation
-    print(f"Standard deviation of outfit scores: {sigma}")
-    z = stats.zscore([confidenceLevel])[0]
-    n = ((z ** 2) * (sigma ** 2)) / (acceptedError ** 2)
+    variance = np.var(outfitScores) # get sample standard deviation
+    print(f"Variance of outfit scores: {variance}")
+    z = stats.norm.ppf(confidenceLevel)
+    n = ((z ** 2) * variance) / (acceptedError ** 2)
     print(f"Highest score found: {highestScore}")
 
     # Print the number of permutations required to reach the target confidence level

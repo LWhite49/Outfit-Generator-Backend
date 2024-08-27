@@ -15,11 +15,11 @@ import sys
 import json
 import ast
 import pandas as pd
-
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from os import getenv
+from color_assignment.clothing_describer import ClothingDescriber
 
 # read inputs from site
 # top = ast.literal_eval(sys.argv[1])
@@ -52,6 +52,7 @@ reaction = int(sys.argv[7])
 
 # pull associated document from clothes database
 #* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
+
 # top
 sex_vote = 'M' # we will also attach a sex indicator to outfit sets
 collection = db['topmens']
@@ -63,6 +64,11 @@ if not top:
     sex_vote = 'F' # reassign sex
 
 sexes = [sex_vote] # keep an array of the sex of each item, with the more prevalent one being assigned to the set
+
+# if any item doesn't have colors assigned we will get them
+color_assigner = ClothingDescriber()
+if not(top['productColors']):
+    top['productColors'] = color_assigner.get_colors(top['productImg'])
 
 # insert top into archive
 collection = arcv['tops']
@@ -86,6 +92,10 @@ if not bottom:
 
 sexes.append(sex_vote)
 
+# check for bottom colors
+if not(bottom['productColors']):
+    bottom['productColors'] = color_assigner.get_colors(bottom['productImg'])
+
 # insert bottom into archive
 collection = arcv['bottoms']
 existing_item = collection.find_one(bottom)
@@ -107,6 +117,10 @@ if not shoe:
 
 sexes.append(sex_vote)
 
+# check for shoe colors
+if not(shoe['productColors']):
+    shoe['productColors'] = color_assigner.get_colors(shoe['productImg'])
+
 # insert shoe into archive
 collection = arcv['shoes']
 existing_item = collection.find_one(shoe)
@@ -120,7 +134,7 @@ else:
 # todo: if an item wasn't found we can get by just on the colors passed and make an object from that
 
 # create a new document to represent outfit set
-sex = max(set(sexes), key=sexes.count) # get predominant sex association
+sex = 'M' if sexes.count('M') > sexes.count('F') else 'F' # get predominant sex association
 outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_id': shoe_arcv_id, 'reaction': reaction}
 
 # add it to the database

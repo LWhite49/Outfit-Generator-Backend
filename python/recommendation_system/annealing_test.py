@@ -16,11 +16,11 @@ client = MongoClient(connectionString)
 # Connect to DB
 db = client['test']
 
-def random_items(collectionName):
+def random_items(collectionName, n=30):
     '''Returns the color array of a random item selected from the database.'''
     collection = db[collectionName] 
     # sample a random item with a nonempty color array
-    pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': 20}}]
+    pipeline = [{'$match': {'productColors': {'$ne': []}}}, {'$sample': {'size': n}}]
     result = list(collection.aggregate(pipeline))
     if result:
         result = [item['productColors'] for item in result] # pull just colors
@@ -62,9 +62,43 @@ def simulated_annealing(shirts, bottoms, shoes, iterations=1000, temperature=1.0
 
     return best_outfits, best_score
 
+def random_swaps(tops, bottoms, shoes, iterations=50):
+    # save entire pallettes as sets
+    all_tops = set(tops)
+    all_bottoms = set(bottoms)
+    all_shoes = set(shoes)
+    
+    # select initial random 10 outfits
+    outfit_tops = random.sample(tops, 10)
+    outfit_bottoms = random.sample(bottoms, 10)
+    outfit_shoes = random.sample(shoes, 10)
+    outfits = [[outfit_tops[i], outfit_bottoms[i], outfit_shoes[i]] for i in range(20)]
+    
+    # max_score = 
+    for _ in range(iterations):
+        outfit_tops = random.sample(tops, 20)
+        outfit_bottoms = random.sample(bottoms, 20)
+        outfit_shoes = random.sample(shoes, 20)
+        outfits = [[outfit_tops[i], outfit_bottoms[i], outfit_shoes[i]] for i in range(20)]
+
+        avg_score = np.mean([predict(*outfit) for outfit in outfits])
+        if avg_score > max_score:
+            max_score = avg_score
+    return max_score
+
+def top_x(tops, bottoms, shoes, n=10):
+    outfits = [[tops[i], bottoms[i], shoes[i]] for i in range(len(tops))]
+    scores = sorted([predict(*outfit) for outfit in outfits], reverse=True)
+    return scores[n-1]
+
+
 if __name__ == '__main__':
-    shirts = random_items(random.choice(['topmens', 'topwomens']))
-    bottoms = random_items(random.choice(['bottommens', 'bottomwomens']))
-    shoes = random_items(random.choice(['shoemens', 'shoewomens']))
-    optimal_outfits, optimal_score = simulated_annealing(shirts, bottoms, shoes)
+    shirts = random_items(random.choice(['topmens', 'topwomens']), 50)
+    bottoms = random_items(random.choice(['bottommens', 'bottomwomens']), 50)
+    shoes = random_items(random.choice(['shoemens', 'shoewomens']), 50)
+    # optimal_outfits, optimal_score = simulated_annealing(shirts, bottoms, shoes, iterations=100, cooling_rate=0.9)
+    # optimal_score = random_swaps(shirts, bottoms, shoes)
+    optimal_score = top_x(shirts, bottoms, shoes, 20)
     print(f"Optimal Average Score: {optimal_score}")
+
+client.close()
