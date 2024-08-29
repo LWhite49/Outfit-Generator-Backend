@@ -74,3 +74,6 @@ else:
         populate_collection(name)
 
 client.close()
+
+sys.stdout.flush()
+

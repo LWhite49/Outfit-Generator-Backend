@@ -37,7 +37,6 @@ const scoreColorsViaPy = async (p1, p2, p3) => {
 };
 
 // Define function that accepts three color pallet arrays and a bool score, updating the ML model with Python
-
 const updateModelViaPy = async (p1, p2, p3, id1, id2, id3, score) => {
 	return new Promise((resolve, reject) => {
 		pyProcess = spawn("python", [
