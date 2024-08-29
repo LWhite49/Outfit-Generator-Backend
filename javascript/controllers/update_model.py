@@ -9,7 +9,7 @@
 import sys
 import os
 
-relative_path = os.path.join(os.path.dirname(__file__), '../../python/')
+relative_path = os.path.join(os.path.dirname(__file__), '../../python/color_assignment')
 sys.path.append(os.path.abspath(relative_path))
 
 import json
@@ -19,7 +19,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from os import getenv
-from color_assignment.clothing_describer import ClothingDescriber
+from clothing_describer import ClothingDescriber
 
 # read inputs from site
 # top = ast.literal_eval(sys.argv[1])
