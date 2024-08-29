@@ -2,9 +2,14 @@
 for example, python color_assignment.py topwomens topmens 10 will populate 10 items for just those two collections. Just include a number to 
 do all collections a limited amount. Default is everything in all collections.'''
 
+import sys
+import os
+
+relative_path = os.path.join(os.path.dirname(__file__), '../../python/color_assignment')
+sys.path.append(os.path.abspath(relative_path))
+
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from os import getenv
 import time
 import sys
 from clothing_describer import ClothingDescriber
@@ -13,7 +18,7 @@ from clothing_describer import ClothingDescriber
 load_dotenv()
 
 # Source ENV
-connectionString = getenv('DB_CONNECTION_PY')
+connectionString = os.getenv('DB_CONNECTION_PY')
 # Connect to Mongo
 client = MongoClient(connectionString)
 # Connect to DB
