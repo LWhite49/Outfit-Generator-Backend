@@ -93,9 +93,9 @@ def top_x(tops, bottoms, shoes, n=10):
 
 
 if __name__ == '__main__':
-    shirts = random_items(random.choice(['topmens', 'topwomens']), 50)
-    bottoms = random_items(random.choice(['bottommens', 'bottomwomens']), 50)
-    shoes = random_items(random.choice(['shoemens', 'shoewomens']), 50)
+    shirts = random_items(random.choice(['topmens', 'topwomens']), 40)
+    bottoms = random_items(random.choice(['bottommens', 'bottomwomens']), 40)
+    shoes = random_items(random.choice(['shoemens', 'shoewomens']), 40)
     # optimal_outfits, optimal_score = simulated_annealing(shirts, bottoms, shoes, iterations=100, cooling_rate=0.9)
     # optimal_score = random_swaps(shirts, bottoms, shoes)
     optimal_score = top_x(shirts, bottoms, shoes, 20)
