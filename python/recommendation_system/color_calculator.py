@@ -1,8 +1,8 @@
 import sys
 import os
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.dirname(SCRIPT_DIR))
+relative_path = os.path.join(os.path.dirname(__file__), '../../python/color_assignment')
+sys.path.append(os.path.abspath(relative_path))
 
 import numpy as np
 from colormath.color_objects import XYZColor, sRGBColor, LabColor
@@ -15,7 +15,7 @@ def patch_asscalar(a):
 setattr(np, 'asscalar', patch_asscalar)
 
 from hsv import *
-from color_assignment.conversions import hex_to_rgb
+from conversions import hex_to_rgb
 
 def complementariness(color1: str, color2: str)->float:
     '''Return a value from 0-1 indicating how complementary two colors are.'''
