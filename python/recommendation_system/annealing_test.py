@@ -89,7 +89,7 @@ def random_swaps(tops, bottoms, shoes, iterations=50):
 def top_x(tops, bottoms, shoes, n=10):
     outfits = [[tops[i], bottoms[i], shoes[i]] for i in range(len(tops))]
     scores = sorted([predict(*outfit) for outfit in outfits], reverse=True)
-    return scores[n-1]
+    return scores[0]
 
 
 if __name__ == '__main__':
