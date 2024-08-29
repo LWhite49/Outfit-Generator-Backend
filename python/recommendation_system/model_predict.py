@@ -1,4 +1,5 @@
 import pickle
+from sklearn.preprocessing import MinMaxScaler
 from train_model import flatten_array
 import pandas as pd
 from color_calculator import outfit_comparison
@@ -53,7 +54,9 @@ def predict(top: list[list[str, float]], bottom: list[list[str, float]], shoe: l
         'TS_complementary', 'TS_similarity', 'TS_neutrality', \
         'BS_complementary', 'BS_similarity', 'BS_neutrality']]
 
-    return model.predict(X)
+    scaler = MinMaxScaler()
+
+    return scaler.fit_transform(model.predict(X).reshape(1, -1))
 
 if __name__ == '__main__':
     bottom = [['aeb7b9', 0.38050385837494327], ['8b949b', 0.3521334543803904], ['666c72', 0.17782569223785746], ['0e0d0d', 0.0895369950068089]]

@@ -89,7 +89,7 @@ def random_swaps(tops, bottoms, shoes, iterations=50):
 def top_x(tops, bottoms, shoes, n=10):
     outfits = [[tops[i], bottoms[i], shoes[i]] for i in range(len(tops))]
     scores = sorted([predict(*outfit) for outfit in outfits], reverse=True)
-    return scores[0]
+    return scores
 
 
 if __name__ == '__main__':
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     shoes = random_items(random.choice(['shoemens', 'shoewomens']), 40)
     # optimal_outfits, optimal_score = simulated_annealing(shirts, bottoms, shoes, iterations=100, cooling_rate=0.9)
     # optimal_score = random_swaps(shirts, bottoms, shoes)
-    optimal_score = top_x(shirts, bottoms, shoes, 20)
-    print(f"Optimal Average Score: {optimal_score}")
+    print(top_x(shirts, bottoms, shoes, 20))
+    # print(f"Optimal Average Score: {optimal_score}")
 
 client.close()
