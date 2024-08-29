@@ -15,6 +15,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from color_assignment.conversions import hex_to_rgb
 
+# function to flatten color array
+def flatten_array(arr, name):
+    '''Takes in a color array and returns its expansion as a pandas series'''
+    arr = np.array(arr) # will need list as numpy array for flattening
+    # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
+    column_names = [f'{name}_{base}{i}' for i in range(1, 5) for base in ['color', 'weight']]
+    return pd.Series(arr.flatten(), index=column_names)
+
 if __name__ == '__main__':
 
     # Initialize ENV
@@ -42,14 +50,6 @@ if __name__ == '__main__':
     tops = pd.DataFrame(list(cursor))
     # rename _id column for merging, colors column for distinctness
     tops = tops.rename(columns={'_id': 'top_id', 'productColors': 'top_colors'})
-
-    # function to flatten color array
-    def flatten_array(arr, name):
-        '''Takes in a color array and returns its expansion as a pandas series'''
-        arr = np.array(arr) # will need list as numpy array for flattening
-        # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
-        column_names = [f'{name}_{base}{i}' for i in range(1, 5) for base in ['color', 'weight']]
-        return pd.Series(arr.flatten(), index=column_names)
 
     # expand color array into 8 columns
     expanded = tops['top_colors'].apply(flatten_array, name='top') # get flattened series
