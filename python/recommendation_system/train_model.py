@@ -183,6 +183,9 @@ if __name__ == '__main__':
     model = RandomForestClassifier(300, criterion='entropy', max_features='log2')
     model.fit(X_train, y_train)
 
+    with open('random_forest.txt', 'wb') as file:
+        pickle.dump(model, file)
+
     # params = {'n_estimators': range(100,1001,100), 'criterion': ['gini', 'entropy', 'log_loss'], 'max_features': ['sqrt', 'log2', None]}
     # rfc = RandomForestClassifier()
     # print('Running grid search')
@@ -193,6 +196,7 @@ if __name__ == '__main__':
     preds = model.predict(X_test)
 
     print("Random forest accuracy:", accuracy_score(y_test, preds))
+    print(preds)
 
     # expand color hexes into rgb
     # outfits_expanded.dropna()

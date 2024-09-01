@@ -86,9 +86,16 @@ def random_swaps(tops, bottoms, shoes, iterations=50):
             max_score = avg_score
     return max_score
 
-def top_x(tops, bottoms, shoes, n=10):
-    outfits = [[tops[i], bottoms[i], shoes[i]] for i in range(len(tops))]
-    scores = sorted([predict(*outfit) for outfit in outfits], reverse=True)
+def top_x(tops, bottoms, shoes, n=20):
+    tops = tops.copy()
+    bottoms = bottoms.copy()
+    shoes = shoes.copy()
+
+    indexed_fits = []
+    while len(indexed_fits) < n:
+        top = random.choice(tops)
+        bottom = ran
+
     return scores
 
 
