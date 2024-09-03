@@ -8,7 +8,8 @@ from time import time
 # file = open('linear_regression.txt', 'rb')
 file = open('random_forest.txt', 'rb')
 model = pickle.load(file)
-print(model.classes_)
+file.close()
+# print(model.classes_)
 # file.close()
 
 def complementariness(item1, item2):
@@ -62,5 +63,3 @@ if __name__ == '__main__':
     t0 = time()
     print(predict(top, bottom, shoe))
     print(time() - t0)
-
-file.close()

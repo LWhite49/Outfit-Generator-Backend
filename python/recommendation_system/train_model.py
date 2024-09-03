@@ -155,24 +155,25 @@ if __name__ == '__main__':
     y = outfits['reaction']
 
     # train model
-    # X_train, X_test, y_train, y_test = train_test_split(X, y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    # model = LinearRegression()
-    # model.fit(X_train, y_train)
+    model = LinearRegression()
+    model.fit(X_train.values, y_train)
 
-    # # test accuracy by rounding to like or dislike
-    # preds = model.predict(X_test)
-    # for i in range(len(preds)):
-    #     if preds[i] >= 0.5:
-    #         preds[i] = 1
-    #     else:
-    #         preds[i] = 0
+    # test accuracy by rounding to like or dislike
+    preds = model.predict(X_test)
+    midp = max(preds) / 2
+    for i in range(len(preds)):
+        if preds[i] >= midp:
+            preds[i] = 1
+        else:
+            preds[i] = 0
 
-    # # print("Linear regression accuracy:", accuracy_score(y_test, preds))
+    print("Linear regression accuracy:", accuracy_score(y_test, preds))
 
-    # # save trained model to pickle file
-    # with open('linear_regression.txt', 'wb') as file:
-    #     pickle.dump(model, file)
+    # save trained model to pickle file
+    with open('linear_regression.txt', 'wb') as file:
+        pickle.dump(model, file)
 
     # print(model.score(outfits[X], outfits['reaction']))
 
@@ -180,23 +181,22 @@ if __name__ == '__main__':
     # using same scheme as previous
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    model = RandomForestClassifier(300, criterion='entropy', max_features='log2')
-    model.fit(X_train, y_train)
-
-    with open('random_forest.txt', 'wb') as file:
-        pickle.dump(model, file)
-
-    # params = {'n_estimators': range(100,1001,100), 'criterion': ['gini', 'entropy', 'log_loss'], 'max_features': ['sqrt', 'log2', None]}
+    # params = {'n_estimators': range(50,501,50), 'criterion': ['gini', 'entropy', 'log_loss'], 'max_features': ['sqrt', 'log2', None], 'min_samples_split': range(2,21)}
     # rfc = RandomForestClassifier()
     # print('Running grid search')
     # clf = GridSearchCV(rfc, params, n_jobs=-1, verbose=1)
     # clf.fit(X_train, y_train)
     # print(clf.best_params_)
 
+    model = RandomForestClassifier(500, criterion='entropy', max_features='sqrt')
+    model.fit(X_train.values, y_train)
+
+    with open('random_forest.txt', 'wb') as file:
+        pickle.dump(model, file)
+
     preds = model.predict(X_test)
 
     print("Random forest accuracy:", accuracy_score(y_test, preds))
-    print(preds)
 
     # expand color hexes into rgb
     # outfits_expanded.dropna()

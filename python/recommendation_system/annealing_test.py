@@ -87,16 +87,32 @@ def random_swaps(tops, bottoms, shoes, iterations=50):
     return max_score
 
 def top_x(tops, bottoms, shoes, n=20):
-    tops = tops.copy()
-    bottoms = bottoms.copy()
-    shoes = shoes.copy()
+    top_idxs = list(range(len(tops)))
+    bottom_idxs = list(range(len(bottoms)))
+    shoe_idxs = list(range(len(shoes)))
 
+    #! add break condition for if we run out of items before we get good outfits
+    #! use linear regression to find best ones with a couple iterations?
     indexed_fits = []
     while len(indexed_fits) < n:
-        top = random.choice(tops)
-        bottom = ran
+        # select random indexes from the pool
+        top_i = random.choice(top_idxs)
+        bottom_i = random.choice(bottom_idxs)
+        shoe_i = random.choice(shoe_idxs)
+        
+        # check if the algorithm predicts this outfit to be liked
+        if predict(tops[top_i], bottoms[bottom_i], shoes[shoe_i]) == 1:
+            # store items in a dictionary
+            fit = {'top': top_i, 'bottom': bottom_i, 'shoe': shoe_i}
+            # add to return array
+            indexed_fits.append(fit)
+            
+            # drop indices from pool
+            top_idxs.remove(top_i)
+            bottom_idxs.remove(bottom_i)
+            shoe_idxs.remove(shoe_i)
 
-    return scores
+    return indexed_fits
 
 
 if __name__ == '__main__':
@@ -105,7 +121,7 @@ if __name__ == '__main__':
     shoes = random_items(random.choice(['shoemens', 'shoewomens']), 40)
     # optimal_outfits, optimal_score = simulated_annealing(shirts, bottoms, shoes, iterations=100, cooling_rate=0.9)
     # optimal_score = random_swaps(shirts, bottoms, shoes)
-    print(top_x(shirts, bottoms, shoes, 20))
+    print(top_x(shirts, bottoms, shoes))
     # print(f"Optimal Average Score: {optimal_score}")
 
 client.close()
