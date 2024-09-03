@@ -8,7 +8,8 @@ import json
 import ast
 from numpy.random import randint
 from color_calculator import outfit_comparison
-from random import shuffle
+from model_predict import predict
+import random
 
 # def score(item1, item2, item3 = None) -> float:
 #     sim_weight = 0.75
@@ -128,7 +129,7 @@ bottoms = ast.literal_eval(sys.argv[2])
 shoes = ast.literal_eval(sys.argv[3])
 
 outfits = index_palettes(tops, bottoms, shoes)
-shuffle(outfits)
+# shuffle(outfits)
 
 print(json.dumps(outfits))
 sys.stdout.flush()
