@@ -1,11 +1,13 @@
 import pickle
 from sklearn.preprocessing import MinMaxScaler
-from train_model import flatten_array
+# from train_model import flatten_array
 import pandas as pd
 from color_calculator import outfit_comparison
 from time import time
+import sys
 
 # file = open('linear_regression.txt', 'rb')
+print(sys.path)
 file = open('random_forest.txt', 'rb')
 model = pickle.load(file)
 file.close()

@@ -15,7 +15,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
-from color_assignment.conversions import hex_to_rgb
+from conversions import hex_to_rgb
 
 # function to flatten color array
 def flatten_array(arr, name):
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     client = MongoClient(connectionString)
     # Connect to DB
     db = client['archive']
-    print('Connected to database')
+    # print('Connected to database')
 
     # connect to set of reacted outfits
     cursor = db['reacted_sets'].find()

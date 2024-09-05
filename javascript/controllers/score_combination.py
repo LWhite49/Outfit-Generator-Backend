@@ -1,14 +1,14 @@
 import sys
 import os
 
-relative_path = os.path.join(os.path.dirname(__file__), '../../python/recommendation_system')
+relative_path = os.path.join(os.path.dirname(__file__), '../../python/')
 sys.path.append(os.path.abspath(relative_path))
 
 import json
 import ast
 from numpy.random import randint
-from color_calculator import outfit_comparison
-from model_predict import predict
+from recommendation_system.color_calculator import outfit_comparison
+from recommendation_system.model_predict import predict
 import random
 
 # def score(item1, item2, item3 = None) -> float:
