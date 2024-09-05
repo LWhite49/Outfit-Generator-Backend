@@ -163,6 +163,7 @@ if __name__ == '__main__':
     # test accuracy by rounding to like or dislike
     preds = model.predict(X_test)
     midp = max(preds) / 2
+    print('Linear midp:', midp)
     for i in range(len(preds)):
         if preds[i] >= midp:
             preds[i] = 1

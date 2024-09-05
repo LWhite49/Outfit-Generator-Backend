@@ -12,11 +12,13 @@ from .color_calculator import outfit_comparison
 from time import time
 
 # print(os.getcwd())
-# file = open('linear_regression.txt', 'rb')
-file = open('../python/recommendation_system/random_forest.txt', 'rb')
-model = pickle.load(file)
+file = open('../python/recommendation_system/linear_regression.txt', 'rb')
+lr = pickle.load(file)
 file.close()
-# print(model.classes_)
+file = open('../python/recommendation_system/random_forest.txt', 'rb')
+rfc = pickle.load(file)
+file.close()
+# print(rfc.classes_)
 # file.close()
 
 def complementariness(item1, item2):
@@ -61,7 +63,7 @@ def predict(top: list[list[str, float]], bottom: list[list[str, float]], shoe: l
     # pull outfit items into series
     outfit = pd.Series({'top_colors': top, 'bottom_colors': bottom, 'shoe_colors': shoe})
 
-    return model.predict(X)[0]
+    return rfc.predict(X)[0]
 
 if __name__ == '__main__':
     bottom = [['aeb7b9', 0.38050385837494327], ['8b949b', 0.3521334543803904], ['666c72', 0.17782569223785746], ['0e0d0d', 0.0895369950068089]]
