@@ -1,14 +1,19 @@
+import sys
+import os
+
+# relative_path = os.path.join(os.path.dirname(__file__), '../../python/recommendation_system')
+# sys.path.append(os.path.abspath(relative_path))
+
 import pickle
 from sklearn.preprocessing import MinMaxScaler
 # from train_model import flatten_array
 import pandas as pd
-from color_calculator import outfit_comparison
+from .color_calculator import outfit_comparison
 from time import time
-import sys
 
+# print(os.getcwd())
 # file = open('linear_regression.txt', 'rb')
-print(sys.path)
-file = open('random_forest.txt', 'rb')
+file = open('../python/recommendation_system/random_forest.txt', 'rb')
 model = pickle.load(file)
 file.close()
 # print(model.classes_)

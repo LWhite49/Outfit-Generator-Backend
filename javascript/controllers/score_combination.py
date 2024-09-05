@@ -97,9 +97,9 @@ import random
 #     return indexed_fits
 
 def index_palettes(tops, bottoms, shoes, n=20):
-    top_idxs = range(len(tops))
-    bottom_idxs = range(len(bottoms))
-    shoe_idxs = range(len(shoes))
+    top_idxs = list(range(len(tops)))
+    bottom_idxs = list(range(len(bottoms)))
+    shoe_idxs = list(range(len(shoes)))
 
     #! add break condition for if we run out of items before we get good outfits
     #! use linear regression to find best ones with a couple iterations?
@@ -118,9 +118,9 @@ def index_palettes(tops, bottoms, shoes, n=20):
             indexed_fits.append(fit)
             
             # drop indices from pool
-            top_idxs.pop(top_i)
-            bottom_idxs.pop(bottom_i)
-            shoe_idxs.pop(shoe_i)
+            top_idxs.remove(top_i)
+            bottom_idxs.remove(bottom_i)
+            shoe_idxs.remove(shoe_i)
 
     return indexed_fits
 

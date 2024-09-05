@@ -36,7 +36,7 @@ if __name__ == '__main__':
     client = MongoClient(connectionString)
     # Connect to DB
     db = client['archive']
-    # print('Connected to database')
+    print('Connected to database')
 
     # connect to set of reacted outfits
     cursor = db['reacted_sets'].find()

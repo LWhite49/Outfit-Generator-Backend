@@ -11,7 +11,7 @@ connectionString = getenv('DB_CONNECTION_PY')
 client = MongoClient(connectionString)
 # Connect to DB
 db = client['test']
-# print('Connected to database')
+print('Connected to database')
 
 collections = ['topwomens', 'topmens', 'bottomwomens', 'bottommens', 'shoewomens', 'shoemens']
 # iterate through collections
