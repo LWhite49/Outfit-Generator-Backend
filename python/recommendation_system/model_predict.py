@@ -1,25 +1,9 @@
-import sys
-import os
-
-# relative_path = os.path.join(os.path.dirname(__file__), '../../python/recommendation_system')
-# sys.path.append(os.path.abspath(relative_path))
-
 import pickle
-from sklearn.preprocessing import MinMaxScaler
-# from train_model import flatten_array
 import pandas as pd
 from .color_calculator import outfit_comparison
 from time import time
 
-# print(os.getcwd())
-file = open('../python/recommendation_system/linear_regression.txt', 'rb')
-lr = pickle.load(file)
-file.close()
-file = open('../python/recommendation_system/random_forest.txt', 'rb')
-rfc = pickle.load(file)
-file.close()
-# print(rfc.classes_)
-# file.close()
+# functions for ease of implementing color relationship functionality
 
 def complementariness(item1, item2):
     return outfit_comparison(item1, item2)[0]
@@ -30,40 +14,39 @@ def similarity(item1, item2):
 def neutrality(item1, item2):
     return outfit_comparison(item1, item2)[2]
 
-# comparisons for top and bottom
+class Predictor():
+    def __init__(self):
+        '''Load trained models.'''
+        file = open('../python/recommendation_system/linear_regression.txt', 'rb')
+        self.lr = pickle.load(file)
+        file.close()
+        file = open('../python/recommendation_system/random_forest.txt', 'rb')
+        self.rfc = pickle.load(file)
+        file.close()
+    def predict(self, top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]]) -> int:
+        '''Given three color arrays (top, bottom, and shoe), predict whether the outfit will be liked (1) or disliked (0).'''
+        # calculate item relationships as a Pandas series
+        outfit = pd.Series({
+                'TB_complementary': complementariness(top, bottom),
+                'TB_similarity': similarity(top, bottom),
+                'TB_neutrality': neutrality(top, bottom),
+                'BS_complementary': complementariness(shoe, bottom),
+                'BS_similarity': similarity(shoe, bottom),
+                'BS_neutrality': neutrality(shoe, bottom),
+                'TS_complementary': complementariness(top, shoe),
+                'TS_similarity': similarity(top, shoe),
+                'TS_neutrality': neutrality(top, shoe)
+            })
 
+        # pull just values and shape into a single row
+        X = outfit[['TB_complementary', 'TB_similarity', 'TB_neutrality',
+                    'TS_complementary', 'TS_similarity', 'TS_neutrality',
+                    'BS_complementary', 'BS_similarity', 'BS_neutrality']].values.reshape(1, -1)
+        
+        # pull outfit items into series
+        outfit = pd.Series({'top_colors': top, 'bottom_colors': bottom, 'shoe_colors': shoe})
 
-# # comparisons for top and shoe
-# outfit['TS_complementary'] = outfit.apply(lambda row: complementariness(row['top_colors'], row['shoe_colors']), axis=1)
-# outfit['TS_similarity'] = outfit.apply(lambda row: similarity(row['top_colors'], row['shoe_colors']), axis=1)
-# outfit['TS_neutrality'] = outfit.apply(lambda row: neutrality(row['top_colors'], row['shoe_colors']), axis=1)
-
-# # comparisons for bottom and shoe
-# outfit['BS_complementary'] = outfit.apply(lambda row: complementariness(row['bottom_colors'], row['shoe_colors']), axis=1)
-# outfit['BS_similarity'] = outfit.apply(lambda row: similarity(row['bottom_colors'], row['shoe_colors']), axis=1)
-# outfit['BS_neutrality'] = outfit.apply(lambda row: neutrality(row['bottom_colors'], row['shoe_colors']), axis=1)
-
-def predict(top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]]):
-    outfit = pd.Series({
-            'TB_complementary': complementariness(top, bottom),
-            'TB_similarity': similarity(top, bottom),
-            'TB_neutrality': neutrality(top, bottom),
-            'BS_complementary': complementariness(shoe, bottom),
-            'BS_similarity': similarity(shoe, bottom),
-            'BS_neutrality': neutrality(shoe, bottom),
-            'TS_complementary': complementariness(top, shoe),
-            'TS_similarity': similarity(top, shoe),
-            'TS_neutrality': neutrality(top, shoe)
-        })
-
-    X = outfit[['TB_complementary', 'TB_similarity', 'TB_neutrality',
-                'TS_complementary', 'TS_similarity', 'TS_neutrality',
-                'BS_complementary', 'BS_similarity', 'BS_neutrality']].values.reshape(1, -1)
-    
-    # pull outfit items into series
-    outfit = pd.Series({'top_colors': top, 'bottom_colors': bottom, 'shoe_colors': shoe})
-
-    return rfc.predict(X)[0]
+        return rfc.predict(X)[0]
 
 if __name__ == '__main__':
     bottom = [['aeb7b9', 0.38050385837494327], ['8b949b', 0.3521334543803904], ['666c72', 0.17782569223785746], ['0e0d0d', 0.0895369950068089]]

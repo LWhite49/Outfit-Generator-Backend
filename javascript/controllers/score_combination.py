@@ -8,7 +8,7 @@ import json
 import ast
 from numpy.random import randint
 from recommendation_system.color_calculator import outfit_comparison
-from recommendation_system.model_predict import predict
+from recommendation_system.model_predict import Predictor
 import random
 
 # def score(item1, item2, item3 = None) -> float:
