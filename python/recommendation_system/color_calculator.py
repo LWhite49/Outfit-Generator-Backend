@@ -81,9 +81,9 @@ def outfit_comparison(palette1: list[list[str, float]], palette2: list[list[str,
             area2 = color2[1] # get the pixel percentage of this color
 
             # Calculate the complementariness score, based on the relative percentages which the two colors take up
-            complementary_prob = ratio * area2 * complementariness(hex1, hex2)
+            complementary_prob = area2 * complementariness(hex1, hex2)
             # Calulate the similarity in the same way
-            similarity_prob = ratio * area2 * similarity(hex1, hex2)
+            similarity_prob = area2 * similarity(hex1, hex2)
             
             # add these scores to the running score
             complementary_score += complementary_prob
@@ -93,8 +93,7 @@ def outfit_comparison(palette1: list[list[str, float]], palette2: list[list[str,
     for color2 in palette2:
         hex2 = color2[0] 
         area2 = color2[1]
-        ratio = max_score * area2
-        neutrality_score2 += neutrality(hex2) * ratio
+        neutrality_score2 += neutrality(hex2) * area2
     
     # relative neutrality is scored on a saddle function so that outfits are optimized to have one neutral one not
     # outfits where both are neutral or both not neutral receive a low relative neutrality

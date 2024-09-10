@@ -1,10 +1,4 @@
-# Hello patrick ;) 
-
-# First three inputs are arrays of 4 colors as extracted from productColors
-# three obect ids
-# Seventh input is a 0 or 1, where 0 is dislike and 1 is like
-
-# This doesn't actually have to return anything, maybe send a simple string if there was a failure for debugging purposes
+'''To be called as a child process implementing like/dislike functionality.'''
 
 import sys
 import os
@@ -21,7 +15,7 @@ from dotenv import load_dotenv
 from os import getenv
 from clothing_describer import ClothingDescriber
 
-# read inputs from site
+#* inputs from site (not all are used currently)
 # top = ast.literal_eval(sys.argv[1])
 # bottom = ast.literal_eval(sys.argv[2])
 # shoe = ast.literal_eval(sys.argv[3])
@@ -44,7 +38,7 @@ print('Connected to clothes database')
 arcv = client['archive']
 print('Connected to archive database')
 
-# source outfit ids
+# source outfit ids and reaction (like/dislike)
 top_id = ObjectId(sys.argv[4][1:len(sys.argv[4]) - 1])
 bottom_id = ObjectId(sys.argv[5][1:len(sys.argv[4]) - 1])
 shoe_id = ObjectId(sys.argv[6][1:len(sys.argv[4]) - 1])
@@ -52,6 +46,37 @@ reaction = int(sys.argv[7])
 
 # pull associated document from clothes database
 #* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
+
+color_assigner = ClothingDescriber()
+def get_and_copy(item_id, collection_type, colorizer=color_assigner):
+    '''Receives item id (passed from website) and collection type (a string 'top', 'bottom', or 'shoe' which indicates what collection this
+    function is being performed on). Gets the item document from the main database and copies it into the archival database, returning the new
+    archival id and the sex association of this item.'''
+    sex = 'M' # initial assumption bc we check the mens collection first
+    # connect to appropriate database
+    collection = db[collection_type + 'mens']
+    # pull document
+    item = collection.find_one({'_id': item_id}, projection={'_id': False})
+    # if this fails go to womens collection
+    if not top:
+        collection = db[collection_type + 'womens']
+        top = collection.find_one({'_id': item_id}, projection={'_id': False})
+        sex = 'F' # reassign sex
+    
+    # if this item doesn't have its color array assigned we will generate it
+    if not(item['productColors']):
+        item['productColors'] = colorizer.get_colors(item['productImg'])
+
+    # insert item into archive
+    collection = arcv[collection_type + 's']
+    # check that this item hasn't already been archived
+    existing_item = collection.find_one(item)
+    if existing_item:
+        print(f'{collection_type.upper()} already in archive.')
+        top_arcv_id = existing_item['_id']
+    else:
+        result = collection.insert_one(top)
+        top_arcv_id = result.inserted_id # save new, unique archival _id
 
 # top
 sex_vote = 'M' # we will also attach a sex indicator to outfit sets
@@ -143,18 +168,3 @@ collection = arcv['reacted_sets']
 collection.insert_one(outfit)
 
 client.close()
-# new_data = pd.DataFrame(columns=[[f'{x}ID', f'{x}_Color1', f'{x}_Color1_Area', f'{x}_Color2', f'{x}_Color2_Area', \
-#     f'{x}_Color3', f'{x}_Color3_Area', f'{x}_Color4', f'{x}_Color4_Area'] for x in ['Top', 'Bottom', 'Shoe']])
-
-# data_row = []
-# for item in zip(outfit, [top_id, bottom_id, shoe_id]):
-#     data_row.append(item[1])
-#     for i in range(4):
-#         data_row.append(item[0][i])
-
-# print(top_id, bottom_id, shoe_id)
-
-# tops = pd.read_csv('tops.csv')
-
-# # "[[39, 0.7626759825691902], [74, 0.9842073665159553], [94, 0.9927596179385189], [1, 0.826938610669784]]" "[[81, 0.04446910845485719], [80, 0.31393216907364074], [61, 0.1948204741327889], [21, 0.02505551032096842]]" "[[32, 0.18874528147337621], [10, 0.8188436866791314], [15, 0.032815546289438946], [73, 0.8232446951901217]]" "e54240" "f21bc7" "97214c" "1"
-# sys.stdout.flush()
