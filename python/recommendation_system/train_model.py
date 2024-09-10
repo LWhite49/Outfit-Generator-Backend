@@ -1,3 +1,5 @@
+'''Trains models based on past like and dislike data, pickling resulting objects for fast recall.'''
+
 import sys
 import os
 
@@ -16,14 +18,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
 from conversions import hex_to_rgb
-
-# function to flatten color array
-def flatten_array(arr, name):
-    '''Takes in a color array and returns its expansion as a pandas series'''
-    arr = np.array(arr) # will need list as numpy array for flattening
-    # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
-    column_names = [f'{name}_{base}{i}' for i in range(1, 5) for base in ['color', 'weight']]
-    return pd.Series(arr.flatten(), index=column_names)
 
 if __name__ == '__main__':
 
@@ -46,13 +40,20 @@ if __name__ == '__main__':
     # drop currently irrelevant columns
     outfits = outfits[['top_id', 'bottom_id', 'shoe_id', 'reaction']]
 
+    # function to flatten color array
+    def flatten_array(arr, name):
+        '''Takes in a color array and returns its expansion as a pandas series'''
+        arr = np.array(arr) # will need list as numpy array for flattening
+        # build array of column names so that the expansion will go like item_color1, item_weight1, item_color2, ..., etc
+        column_names = [f'{name}_{base}{i}' for i in range(1, 5) for base in ['color', 'weight']]
+        return pd.Series(arr.flatten(), index=column_names)
+
     # pull archival tables of items into dataframes
     #* tops
     cursor = db['tops'].find(projection=['productColors']) # only project relevant column
     tops = pd.DataFrame(list(cursor))
     # rename _id column for merging, colors column for distinctness
     tops = tops.rename(columns={'_id': 'top_id', 'productColors': 'top_colors'})
-
     # expand color array into 8 columns
     expanded = tops['top_colors'].apply(flatten_array, name='top') # get flattened series
     # add new columns to dataframe
@@ -93,6 +94,7 @@ if __name__ == '__main__':
     # separate into 2 dataframes, one with color arrays (i.e., all the colors in one array) and one with separate columns for each color
     outfits_expanded = outfits.drop(columns=['top_id', 'bottom_id', 'shoe_id', 'top_colors', 'bottom_colors', 'shoe_colors'])
 
+    #* currently unused
     # function for breaking hex values into columns of r, g, and b
     def expand_to_rgb(arr, name):
 
@@ -163,7 +165,7 @@ if __name__ == '__main__':
     # test accuracy by rounding to like or dislike
     preds = model.predict(X_test)
     midp = max(preds) / 2
-    print('Linear midp:', midp)
+    print('Linear midpoint:', midp)
     for i in range(len(preds)):
         if preds[i] >= midp:
             preds[i] = 1
@@ -176,15 +178,13 @@ if __name__ == '__main__':
     with open('linear_regression.txt', 'wb') as file:
         pickle.dump(model, file)
 
-    # print(model.score(outfits[X], outfits['reaction']))
-
     #* ======= MODEL 2 ======= RANDOM FOREST =======
     # using same scheme as previous
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
+    # grid search for finding parameters
     # params = {'n_estimators': range(50,501,50), 'criterion': ['gini', 'entropy', 'log_loss'], 'max_features': ['sqrt', 'log2', None], 'min_samples_split': range(2,21)}
     # rfc = RandomForestClassifier()
-    # print('Running grid search')
     # clf = GridSearchCV(rfc, params, n_jobs=-1, verbose=1)
     # clf.fit(X_train, y_train)
     # print(clf.best_params_)
@@ -198,12 +198,3 @@ if __name__ == '__main__':
     preds = model.predict(X_test)
 
     print("Random forest accuracy:", accuracy_score(y_test, preds))
-
-    # expand color hexes into rgb
-    # outfits_expanded.dropna()
-    # print(outfits_expanded.dtypes)
-    # print(any(outfits_expanded['top_color1'].isnull()))
-
-
-    # print(outfits_expanded['top_color1'].apply(hex_to_rgb))
-    # print(outfits_expanded.shoe_color4)

@@ -58,103 +58,33 @@ def get_and_copy(item_id, collection_type, colorizer=color_assigner):
     # pull document
     item = collection.find_one({'_id': item_id}, projection={'_id': False})
     # if this fails go to womens collection
-    if not top:
+    if not item:
         collection = db[collection_type + 'womens']
-        top = collection.find_one({'_id': item_id}, projection={'_id': False})
+        item = collection.find_one({'_id': item_id}, projection={'_id': False})
         sex = 'F' # reassign sex
     
     # if this item doesn't have its color array assigned we will generate it
     if not(item['productColors']):
         item['productColors'] = colorizer.get_colors(item['productImg'])
+        print(f'Colors assigned to {collection_type.capitalize()}.')
 
     # insert item into archive
     collection = arcv[collection_type + 's']
     # check that this item hasn't already been archived
     existing_item = collection.find_one(item)
     if existing_item:
-        print(f'{collection_type.upper()} already in archive.')
-        top_arcv_id = existing_item['_id']
+        print(f'{collection_type.capitalize()} already in archive.')
+        arcv_id = existing_item['_id']
     else:
-        result = collection.insert_one(top)
-        top_arcv_id = result.inserted_id # save new, unique archival _id
+        result = collection.insert_one(item)
+        arcv_id = result.inserted_id # get new, unique archival _id
+    
+    return arcv_id, sex
 
-# top
-sex_vote = 'M' # we will also attach a sex indicator to outfit sets
-collection = db['topmens']
-top = collection.find_one({'_id': top_id}, projection={'_id': False})
- # _id will be excluded from the returned document, as we will rely on new _id when inserting it into the archive
-if not top:
-    collection = db['topwomens']
-    top = collection.find_one({'_id': top_id}, projection={'_id': False})
-    sex_vote = 'F' # reassign sex
-
-sexes = [sex_vote] # keep an array of the sex of each item, with the more prevalent one being assigned to the set
-
-# if any item doesn't have colors assigned we will get them
-color_assigner = ClothingDescriber()
-if not(top['productColors']):
-    top['productColors'] = color_assigner.get_colors(top['productImg'])
-
-# insert top into archive
-collection = arcv['tops']
-# check that this item hasn't already been archived
-existing_item = collection.find_one(top)
-if existing_item:
-    print('Top already in archive.')
-    top_arcv_id = existing_item['_id']
-else:
-    result = collection.insert_one(top)
-    top_arcv_id = result.inserted_id # save new, unique archival _id
-
-# bottom
-sex_vote = 'M' 
-collection = db['bottommens']
-bottom = collection.find_one({'_id': bottom_id}, projection={'_id': False})
-if not bottom:
-    collection = db['bottomwomens']
-    bottom = collection.find_one({'_id': bottom_id}, projection={'_id': False})
-    sex_vote = 'F'
-
-sexes.append(sex_vote)
-
-# check for bottom colors
-if not(bottom['productColors']):
-    bottom['productColors'] = color_assigner.get_colors(bottom['productImg'])
-
-# insert bottom into archive
-collection = arcv['bottoms']
-existing_item = collection.find_one(bottom)
-if existing_item:
-    print('Bottom already in archive.')
-    bottom_arcv_id = existing_item['_id']
-else:
-    result = collection.insert_one(bottom)
-    bottom_arcv_id = result.inserted_id
-
-# shoe
-sex_vote = 'M'
-collection = db['shoemens']
-shoe = collection.find_one({'_id': shoe_id}, projection={'_id': False})
-if not shoe:
-    collection = db['shoewomens']
-    shoe = collection.find_one({'_id': shoe_id}, projection={'_id': False})
-    sex_vote = 'F'
-
-sexes.append(sex_vote)
-
-# check for shoe colors
-if not(shoe['productColors']):
-    shoe['productColors'] = color_assigner.get_colors(shoe['productImg'])
-
-# insert shoe into archive
-collection = arcv['shoes']
-existing_item = collection.find_one(shoe)
-if existing_item:
-    print('Shoe already in archive.')
-    shoe_arcv_id = existing_item['_id']
-else:
-    result = collection.insert_one(shoe)
-    shoe_arcv_id = result.inserted_id
+sexes = [None, None, None]
+top_arcv_id, sexes[0] = get_and_copy(top_id, 'top')
+bottom_arcv_id, sexes[1] = get_and_copy(bottom_id, 'bottom')
+shoe_arcv_id, sexes[2] = get_and_copy(shoe_id, 'shoe')
 
 # todo: if an item wasn't found we can get by just on the colors passed and make an object from that
 
@@ -166,5 +96,7 @@ outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_
 # TODO: don't include identical sets?
 collection = arcv['reacted_sets']
 collection.insert_one(outfit)
+
+print('Outfit reaction saved successfully.')
 
 client.close()

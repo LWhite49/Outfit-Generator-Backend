@@ -23,8 +23,8 @@ def index_palettes(tops, bottoms, shoes, n=20):
     bottom_idxs = list(range(len(bottoms)))
     shoe_idxs = list(range(len(shoes)))
 
-    #! add break condition for if we run out of items before we get good outfits
-    #! use linear regression to find best ones with a couple iterations?
+    # TODO: add break condition for if we run out of items before we get good outfits
+    #? use linear regression to find best ones with a couple iterations
     indexed_fits = []
     # iterate until we have n outfits
     while len(indexed_fits) < n:
