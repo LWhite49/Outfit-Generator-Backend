@@ -6,7 +6,7 @@ const coolFunction = () => {
 	return new Promise((resolve, reject) => {
 		// Start process
 		const pyProcess = spawn("python", [
-			path.join(__dirname, "/controllers", "color_assignment.py"),
+			path.join(__dirname, "/controllers", "color_assigner.py"),
 		]);
 		// Parse good output
 		pyProcess.stdout.on("data", (data) => {
