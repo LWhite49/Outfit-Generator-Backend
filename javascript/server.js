@@ -18,7 +18,23 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+	cors({
+		origin: function (origin, callback) {
+			// allow requests with no origin
+			if (!origin || origin.includes("wardrobewizard.app")) {
+				return callback(null, true);
+			} else {
+				return callback(
+					new Error(
+						"The CORS policy for this site does not allow access from the specified Origin."
+					)
+				);
+			}
+		},
+		methods: ["GET", "POST", "DELETE"],
+	})
+);
 
 // Specify Routes
 app.get("/generateOutfitFeed", generateOutfitFeed);
