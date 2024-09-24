@@ -8,7 +8,6 @@ import rembg
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.cluster import AgglomerativeClustering
 from conversions import rgb_to_hex
 from n_groups import n_groups
 

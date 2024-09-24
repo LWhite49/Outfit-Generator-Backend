@@ -22,7 +22,11 @@ app.use(
 	cors({
 		origin: function (origin, callback) {
 			// allow requests with no origin
-			if (!origin || origin.includes("wardrobewizard.app")) {
+			if (
+				!origin ||
+				origin.includes("wardrobewizard.app") ||
+				origin.includes("localhost")
+			) {
 				return callback(null, true);
 			} else {
 				return callback(
