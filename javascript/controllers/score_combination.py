@@ -8,7 +8,6 @@ sys.path.append(os.path.abspath(relative_path))
 
 import json
 import ast
-from numpy.random import randint
 from recommendation_system.color_calculator import outfit_comparison
 from recommendation_system.model_predict import Predictor
 import random
