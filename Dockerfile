@@ -12,7 +12,8 @@ RUN apt-get update && \
     apt-get install -y nodejs && \
     # Install Python 3.10
     # apt-get install -y python3.10 python3-pip && \
-    apt-get clean
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 
 # Check the installed versions
 # RUN node -v && npm -v && python3 -V && pip3 -V
