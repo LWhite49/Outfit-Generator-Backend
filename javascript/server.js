@@ -24,18 +24,15 @@ const args = process.argv.slice(2);
 
 // If Dev Server, accept all connections
 if (args.includes("dev")) {
+	console.log("Dev Server: No CORS");
 	app.use(
 		cors({
 			origin: "*",
 			methods: ["GET", "POST", "DELETE"],
-			credentials: false,
+			credentials: true,
 		})
 	);
-	console.log("Dev Server");
-}
-
-// If Prod Server, only accept connections from the frontend
-if (args.length === 0) {
+} else {
 	app.use(
 		cors({
 			origin: function (origin, callback) {
