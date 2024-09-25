@@ -32,15 +32,19 @@ cd = ClothingDescriber()
 def populate_collection(target_collection):
     c = db[target_collection]
 
+    print('Populating', target_collection, 'collection...')
+    sys.stdout.flush()
     # access all item in the collection which do not have the color array
     all_c = c.find({'productColors': []})
     
     # exit if there aren't any to be updated
     if len(list(all_c.clone())) == 0:
         print('No unpopulated items in this collection.')
+        sys.stdout.flush()
         return
 
     print('Connected to collection', target_collection)
+    sys.stdout.flush()
 
     counter = 0
     t0 = time.time()

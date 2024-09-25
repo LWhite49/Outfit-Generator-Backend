@@ -18,28 +18,39 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(
-	cors({
-		origin: function (origin, callback) {
-			// allow requests with no origin
-			if (
-				!origin ||
-				origin.includes("wardrobewizard.app") ||
-				origin.includes("localhost")
-			) {
-				return callback(null, true);
-			} else {
-				return callback(
-					new Error(
-						"The CORS policy for this site does not allow access from the specified Origin."
-					)
-				);
-			}
-		},
-		methods: ["GET", "POST", "DELETE"],
-	})
-);
 
+// Conditionally assign CORS based on passed argument
+const args = process.argv.slice(2);
+
+// If Dev Server, accept all connections
+if (args.includes("dev")) {
+	app.use(
+		cors({
+			origin: "*",
+			methods: ["GET", "POST", "DELETE"],
+			credentials: false,
+		})
+	);
+	console.log("Dev Server");
+}
+
+// If Prod Server, only accept connections from the frontend
+if (args.length === 0) {
+	app.use(
+		cors({
+			origin: function (origin, callback) {
+				if (!origin) return callback(null, true);
+				if (origin.includes("wardrobewizard.app")) {
+					return callback(null, true);
+				}
+				return callback(new Error("Not allowed by CORS"));
+			},
+			methods: ["GET", "POST", "DELETE"],
+			credentials: true,
+		})
+	);
+	console.log("Prod Server");
+}
 // Specify Routes
 app.get("/generateOutfitFeed", generateOutfitFeed);
 app.post("/rateOutfit", rateOutfit);
