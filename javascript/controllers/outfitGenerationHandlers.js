@@ -277,12 +277,14 @@ const rateOutfit = async (req, res) => {
 			rating
 		);
 		console.log("Updated ML Model Successfully:", response);
+		res.status(201).json({ message: "Outfit rated" });
 	} catch (err) {
 		console.log(err, `Error communicating with Py to update ML Model`);
+		res.status(401).json({ err: `${err}` });
 	}
 
 	// Send response
-	res.status(201).json({ message: "Outfit rated" });
+
 	return;
 };
 
