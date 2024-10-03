@@ -1,2 +1,4 @@
 javascript/.env
 javascript/depopScraper.js
+*.pyc
+__pycache__/

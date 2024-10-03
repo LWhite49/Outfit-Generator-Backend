@@ -32,7 +32,7 @@ COPY javascript/ .
 WORKDIR /app/python
 
 # Copy the Python requirements file and install dependencies
-COPY requirements.txt ./
+COPY backend_requirements.txt ./
 
 # test stuff
 RUN node -v && npm -v && python3.10 -V && pip3 -V
@@ -40,8 +40,8 @@ RUN node -v && npm -v && python3.10 -V && pip3 -V
 # Install Python packages in a virtual environment
 RUN python3.10 -m venv /app/python/venv && \
     /app/python/venv/bin/pip install --upgrade pip && \
-    /app/python/venv/bin/pip install Cython==3.0.10 && \
-    /app/python/venv/bin/pip install -r requirements.txt
+    # /app/python/venv/bin/pip install Cython==3.0.10 && \
+    /app/python/venv/bin/pip install -r backend_requirements.txt
 
 
 # Copy the rest of the Python application files

@@ -54,7 +54,7 @@ app.post("/rateOutfit", rateOutfit);
 app.post("/deleteItem", deleteItem);
 
 // Launch Server
-const PORT = 3500;
+const PORT = 10000;
 app.listen(PORT, () => {
 	console.log(
 		"Server is running on port " +
