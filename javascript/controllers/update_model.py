@@ -44,7 +44,7 @@ reaction = int(sys.argv[7])
 # pull associated document from clothes database
 #* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
 
-def get_and_copy(item_id, collection_type, colorizer=color_assigner):
+def get_and_copy(item_id, collection_type):
     '''Receives item id (passed from website) and collection type (a string 'top', 'bottom', or 'shoe' which indicates what collection this
     function is being performed on). Gets the item document from the main database and copies it into the archival database, returning the new
     archival id and the sex association of this item.'''
