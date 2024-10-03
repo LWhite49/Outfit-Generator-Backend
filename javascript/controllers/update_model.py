@@ -1,5 +1,3 @@
-'''To be called as a child process implementing like/dislike functionality.'''
-
 import sys
 import os
 
@@ -13,7 +11,6 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 from os import getenv
-from clothing_describer import ClothingDescriber
 
 #* inputs from site (not all are used currently)
 # top = ast.literal_eval(sys.argv[1])
@@ -47,7 +44,6 @@ reaction = int(sys.argv[7])
 # pull associated document from clothes database
 #* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
 
-color_assigner = ClothingDescriber()
 def get_and_copy(item_id, collection_type, colorizer=color_assigner):
     '''Receives item id (passed from website) and collection type (a string 'top', 'bottom', or 'shoe' which indicates what collection this
     function is being performed on). Gets the item document from the main database and copies it into the archival database, returning the new
@@ -62,11 +58,11 @@ def get_and_copy(item_id, collection_type, colorizer=color_assigner):
         collection = db[collection_type + 'womens']
         item = collection.find_one({'_id': item_id}, projection={'_id': False})
         sex = 'F' # reassign sex
-    
-    # if this item doesn't have its color array assigned we will generate it
-    if not(item['productColors']):
-        item['productColors'] = colorizer.get_colors(item['productImg'])
-        print(f'Colors assigned to {collection_type.capitalize()}.')
+
+    # if this item doesn't have its color array, return None to indicate the outfit should not be archived
+    if not item.get('productColors'):
+        print(f'{collection_type.capitalize()} does not have a color array.')
+        return None, None
 
     # insert item into archive
     collection = arcv[collection_type + 's']
@@ -86,17 +82,19 @@ top_arcv_id, sexes[0] = get_and_copy(top_id, 'top')
 bottom_arcv_id, sexes[1] = get_and_copy(bottom_id, 'bottom')
 shoe_arcv_id, sexes[2] = get_and_copy(shoe_id, 'shoe')
 
-# todo: if an item wasn't found we can get by just on the colors passed and make an object from that
+# if any of the items returned None (i.e., missing color array), skip archiving the outfit
+if not all([top_arcv_id, bottom_arcv_id, shoe_arcv_id]):
+    print('One or more items lacked a color array. Outfit will not be archived.')
+else:
+    # create a new document to represent outfit set
+    sex = 'M' if sexes.count('M') > sexes.count('F') else 'F' # get predominant sex association
+    outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_id': shoe_arcv_id, 'reaction': reaction}
 
-# create a new document to represent outfit set
-sex = 'M' if sexes.count('M') > sexes.count('F') else 'F' # get predominant sex association
-outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_id': shoe_arcv_id, 'reaction': reaction}
+    # add it to the database
+    # TODO: don't include identical sets?
+    collection = arcv['reacted_sets']
+    collection.insert_one(outfit)
 
-# add it to the database
-# TODO: don't include identical sets?
-collection = arcv['reacted_sets']
-collection.insert_one(outfit)
-
-print('Outfit reaction saved successfully.')
+    print('Outfit reaction saved successfully.')
 
 client.close()
