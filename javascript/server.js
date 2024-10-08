@@ -24,7 +24,7 @@ const args = process.argv.slice(2);
 
 // If Dev Server, accept all connections
 if (args.includes("dev")) {
-	console.log("Dev Server: No CORS");
+	console.log("Dev Server: Accepting all connections");
 	app.use(
 		cors({
 			origin: "*",

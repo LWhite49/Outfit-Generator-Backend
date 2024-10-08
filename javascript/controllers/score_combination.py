@@ -25,6 +25,7 @@ def index_palettes(tops, bottoms, shoes, n=20):
     # TODO: add break condition for if we run out of items before we get good outfits
     #? use linear regression to find best ones with a couple iterations
     indexed_fits = []
+    # Patrick THIS be the infinite loop matey
     # iterate until we have n outfits
     while len(indexed_fits) < n:
         # select random indexes from the pool

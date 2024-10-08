@@ -16,7 +16,7 @@ const path = require("path");
 
 const scoreColorsViaPy = async (p1, p2, p3) => {
 	return new Promise((resolve, reject) => {
-		pyProcess = spawn("python", [
+		const pyProcess = spawn("python", [
 			path.join(__dirname, "score_combination.py"),
 			JSON.stringify(p1),
 			JSON.stringify(p2),
@@ -31,7 +31,7 @@ const scoreColorsViaPy = async (p1, p2, p3) => {
 		// Parse error output
 		pyProcess.stderr.on("data", (data) => {
 			console.log(data.toString());
-			reject(data);
+			reject(JSON.parse(data));
 		});
 	});
 };
@@ -39,7 +39,7 @@ const scoreColorsViaPy = async (p1, p2, p3) => {
 // Define function that accepts three color pallet arrays and a bool score, updating the ML model with Python
 const updateModelViaPy = async (p1, p2, p3, id1, id2, id3, score) => {
 	return new Promise((resolve, reject) => {
-		pyProcess = spawn("python", [
+		const pyProcess = spawn("python", [
 			path.join(__dirname, "update_model.py"),
 			JSON.stringify(p1),
 			JSON.stringify(p2),
@@ -72,6 +72,7 @@ const generateOutfitFeed = async (req, res) => {
 	const sizeData = JSON.parse(req.query.size);
 	const brandData = JSON.parse(req.query.brand);
 
+	console.log("Received");
 	// Specify length of pallets and number of outfits
 	const palletSize = 40;
 	const outfitCount = 20;
@@ -126,6 +127,7 @@ const generateOutfitFeed = async (req, res) => {
 		shoeOptions.unshift({ $match: match });
 	}
 
+	console.log("Aggregating Pallets");
 	// Source the pallet items using rendered options
 	try {
 		// Aggregate Pallets from each collection in collections
