@@ -29,7 +29,7 @@ def complementariness(color1: str, color2: str)->float:
     if hue_diff > 180:
         hue_diff = 360 - hue_diff
 
-    # score will be the hue difference normalized by 180 degrees, because perfectly complementary colors 
+    # score will be the hue difference normalized by 180 degrees, because perfectly complementary colors have opp
     complementariness = hue_diff / 180.0
     return round(complementariness, 1)
 

@@ -12,11 +12,12 @@ import pandas as pd
 import numpy as np
 import pickle
 from color_calculator import outfit_comparison
-from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import r2_score
 from conversions import hex_to_rgb
 
 if __name__ == '__main__':
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     # close client
     client.close()
 
-    # inner merge item tables into the outfits dataframe
+    # inner join item tables into the outfits dataframe
     outfits = outfits.merge(tops, on='top_id')
     outfits = outfits.merge(bottoms, on='bottom_id')
     outfits = outfits.merge(shoes, on='shoe_id')
@@ -96,34 +97,33 @@ if __name__ == '__main__':
 
     #* currently unused
     # function for breaking hex values into columns of r, g, and b
-    def expand_to_rgb(arr, name):
+    # def expand_to_rgb(arr, name):
 
-        for i in range(1,5):
-            # build column names given item category (name)
-            # item_color1_r, item_color1_g, item_color1_b, item_color2_r ... etc
-            columns = []
-            for dim in ['r', 'g', 'b']:
-                column_name = f'{name}_color{i}'
-                column_name += f'_{dim}'
-                columns.append(column_name)
+    #     for i in range(1,5):
+    #         # build column names given item category (name)
+    #         # item_color1_r, item_color1_g, item_color1_b, item_color2_r ... etc
+    #         columns = []
+    #         for dim in ['r', 'g', 'b']:
+    #             column_name = f'{name}_color{i}'
+    #             column_name += f'_{dim}'
+    #             columns.append(column_name)
 
-            rgb = pd.Series(outfits_expanded[f'{name}_color{i}'].apply(hex_to_rgb), index=columns)
+    #         rgb = pd.Series(outfits_expanded[f'{name}_color{i}'].apply(hex_to_rgb), index=columns)
 
-            pd.concat([outfits_expanded, rgb], axis=1)
-            return outfits
+    #         pd.concat([outfits_expanded, rgb], axis=1)
+    #         return outfits
 
-    for name in ['top', 'bottom', 'shoe']:
-        for i in range(1, 5):
-            try:
-                outfits_expanded[f'{name}_color{i}'] = outfits_expanded[f'{name}_color{i}'].apply(hex_to_rgb)
-            except:
-                raise Exception(f'Error for column {name}_color{i}')
+    # for name in ['top', 'bottom', 'shoe']:
+    #     for i in range(1, 5):
+    #         try:
+    #             outfits_expanded[f'{name}_color{i}'] = outfits_expanded[f'{name}_color{i}'].apply(hex_to_rgb)
+    #         except:
+    #             raise Exception(f'Error for column {name}_color{i}')
 
-    outfits_expanded = outfits_expanded.join(pd.DataFrame(list()))
+    # outfits_expanded = outfits_expanded.join(pd.DataFrame(list()))
 
     outfits = outfits[['reaction', 'top_colors', 'bottom_colors', 'shoe_colors']]
 
-    #* ======= MODEL 1 ======= LINEAR REGRESSION =======
     # get complementariness, similarity, and relative neutrality for each item combination
     # split functionality for ease of application
     def complementariness(item1, item2):
@@ -150,6 +150,7 @@ if __name__ == '__main__':
     outfits['BS_similarity'] = outfits.apply(lambda row: similarity(row['bottom_colors'], row['shoe_colors']), axis=1)
     outfits['BS_neutrality'] = outfits.apply(lambda row: neutrality(row['bottom_colors'], row['shoe_colors']), axis=1)
 
+    #* ======= MODEL 1 ======= RANDOM FOREST =======
     # variables for fitting to the model
     X = outfits[['TB_complementary', 'TB_similarity', 'TB_neutrality', \
         'TS_complementary', 'TS_similarity', 'TS_neutrality', \
@@ -157,29 +158,6 @@ if __name__ == '__main__':
     y = outfits['reaction']
 
     # train model
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
-
-    model = LinearRegression()
-    model.fit(X_train.values, y_train)
-
-    # test accuracy by rounding to like or dislike
-    preds = model.predict(X_test)
-    midp = max(preds) / 2
-    print('Linear midpoint:', midp)
-    for i in range(len(preds)):
-        if preds[i] >= midp:
-            preds[i] = 1
-        else:
-            preds[i] = 0
-
-    print("Linear regression accuracy:", accuracy_score(y_test, preds))
-
-    # save trained model to pickle file
-    with open('linear_regression.txt', 'wb') as file:
-        pickle.dump(model, file)
-
-    #* ======= MODEL 2 ======= RANDOM FOREST =======
-    # using same scheme as previous
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
     # grid search for finding parameters
@@ -198,3 +176,36 @@ if __name__ == '__main__':
     preds = model.predict(X_test)
 
     print("Random forest accuracy:", accuracy_score(y_test, preds))
+
+    #* ======= MODEL 2 ======= REGRESSOR =======
+    # using same X and y as previous
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+    # grid search for finding parameters
+    # params = {'n_estimators': range(50,501,50), 'criterion': ['squared_error', 'absolute_error', 'poisson'], 'max_features': ['sqrt', 'log2', None], 'min_samples_split': range(2,21)}
+    # rfr = RandomForestRegressor()
+    # clf = GridSearchCV(rfr, params, n_jobs=-1, verbose=1)
+    # clf.fit(X_train, y_train)
+    # print(clf.best_params_)
+
+    model = RandomForestRegressor(criterion='squared_error', max_features='sqrt', min_samples_split=19, n_estimators=50)
+    model.fit(X_train.values, y_train)
+
+    # check r^2 value for the fit
+    preds = model.predict(X_test)
+    print("R2 value: ", r2_score(y_test, preds))
+
+    # test accuracy by rounding to like or dislike
+    midp = max(preds) / 2
+    print('Regression midpoint:', midp)
+    for i in range(len(preds)):
+        if preds[i] >= midp:
+            preds[i] = 1
+        else:
+            preds[i] = 0
+
+    print("Regression accuracy:", accuracy_score(y_test, preds))
+
+    # save trained model to pickle file
+    with open('regression.txt', 'wb') as file:
+        pickle.dump(model, file)
