@@ -321,6 +321,8 @@ const sizeTargetors = [
 		"XXL",
 		BottomWomen,
 	],
+	["category/womens/bottoms/?sizes=10-22.15-US", "24", BottomWomen],
+	["category/womens/bottoms/?sizes=10-22.17-US", "26", BottomWomen],
 	[
 		"category/womens/bottoms/?sort=relevance&sizes=10-22.1-US%2C10-22.19-US",
 		"28",
