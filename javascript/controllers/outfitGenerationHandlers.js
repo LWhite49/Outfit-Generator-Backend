@@ -349,5 +349,86 @@ const deleteItem = async (req, res) => {
 	}
 };
 
+// Method for accessing flagged items
+const getFlaggedItems = async (req, res) => {
+	// return all flagged items
+	try {
+		const flaggedItems = await ReportedItems.find({});
+		res.status(201).json(flaggedItems);
+	} catch (err) {
+		console.log(err, `Error retrieving flagged items`);
+		res.status(401).json({ err: `${err}` });
+		return;
+	}
+};
+
+// Method for assessing flagged item
+const assessFlaggedItem = async (req, res) => {
+	// Source id and collection from request body
+	const id = req.body.id;
+	const collection = req.body.collection;
+	const item = req.body.item;
+	const decision = req.body.decision;
+
+	if (decision == 0) {
+		// Delete the item from the collection
+		try {
+			away = await collectionName.deleteOne({ productImg: id });
+			console.log("Deleted item from collection");
+			res.status(201).json({ message: "Item deleted" });
+			return;
+		} catch (err) {
+			console.log(err, `Error deleting item from collection`);
+			res.status(401).json({ err: `${err}` });
+			return;
+		}
+	}
+
+	let collectionName;
+	switch (collection) {
+		case 0:
+			collectionName = TopMen;
+			break;
+		case 1:
+			collectionName = BottomMen;
+			break;
+		case 2:
+			collectionName = ShoeMen;
+			break;
+		case 3:
+			collectionName = TopWomen;
+			break;
+		case 4:
+			collectionName = BottomWomen;
+			break;
+		case 5:
+			collectionName = ShoeWomen;
+			break;
+	}
+
+	// Restore item to collection
+	try {
+		await collectionName.create({
+			productListing: item.productListing,
+			productImg: item.productImg,
+			productBrand: item.productBrand,
+			productSize: item.productSize,
+			productColors: item.productColors,
+			createdAt: item.createdAt,
+		});
+		console.log("Restored item to collection");
+		res.status(201).json({ message: "Item restored" });
+	} catch (err) {
+		console.log(err, `Error restoring item to collection`);
+		res.status(401).json({ err: `${err}` });
+		return;
+	}
+};
 // Export route handlers
-module.exports = { generateOutfitFeed, rateOutfit, deleteItem };
+module.exports = {
+	generateOutfitFeed,
+	rateOutfit,
+	deleteItem,
+	getFlaggedItems,
+	assessFlaggedItem,
+};

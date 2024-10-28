@@ -8,6 +8,8 @@ const {
 	generateOutfitFeed,
 	rateOutfit,
 	deleteItem,
+	getFlaggedItems,
+	assessFlaggedItem,
 } = require("./controllers/outfitGenerationHandlers.js");
 
 // Connect to MongoDB
@@ -52,6 +54,8 @@ if (args.includes("dev")) {
 app.get("/generateOutfitFeed", generateOutfitFeed);
 app.post("/rateOutfit", rateOutfit);
 app.post("/deleteItem", deleteItem);
+app.get("/getFlaggedItems", getFlaggedItems);
+app.post("/assessFlaggedItem", assessFlaggedItem);
 
 // Launch Server
 const PORT = 10000;
