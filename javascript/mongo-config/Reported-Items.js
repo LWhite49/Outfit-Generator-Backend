@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-// Grab Schema class from mongoose
+const { collection } = require("./Bottom-Men");
 const Schema = mongoose.Schema;
-// Create Schema for Men's Top collection
-const bottomWomenSchema = new Schema({
+
+const reportedItemsSchema = new Schema({
 	productListing: {
 		type: String,
 		required: true,
@@ -28,7 +28,10 @@ const bottomWomenSchema = new Schema({
 		type: Date,
 		required: true,
 	},
+	collectionType: {
+		type: String,
+		required: true,
+	},
 });
 
-// Export the schema
-module.exports = mongoose.model("BottomWomen", bottomWomenSchema);
+module.exports = mongoose.model("ReportedItems", reportedItemsSchema);

@@ -7,6 +7,7 @@ const ShoeMen = require("../mongo-config/Shoe-Men.js");
 const TopWomen = require("../mongo-config/Top-Women.js");
 const BottomWomen = require("../mongo-config/Bottom-Women.js");
 const ShoeWomen = require("../mongo-config/Shoe-Women.js");
+const ReportedItems = require("../mongo-config/Reported-Items.js");
 
 // Import the child process so we can run py scripts
 const { spawn } = require("child_process");
@@ -295,6 +296,7 @@ const deleteItem = async (req, res) => {
 	// Source id and collection from request body
 	const id = req.body.id;
 	const collection = req.body.collection;
+	const item = req.body.item;
 	let collectionName;
 	switch (collection) {
 		case 0:
@@ -321,9 +323,27 @@ const deleteItem = async (req, res) => {
 	try {
 		away = await collectionName.deleteOne({ productImg: id });
 		console.log("Deleted item from collection");
-		res.status(201).json({ message: "Item deleted" });
 	} catch (err) {
 		console.log(err, `Error deleting item from collection`);
+	}
+	// Add copy of item to reported items collection
+	try {
+		await ReportedItems.create({
+			productListing: item.productListing,
+			productImg: item.productImg,
+			productBrand: item.productBrand,
+			productSize: item.productSize,
+			createdAt: item.createdAt,
+			collectionType: collection,
+		});
+		// Update color
+		await ReportedItems.updateOne(
+			{ productImg: item.productImg },
+			{ $set: { productColors: item.productColors } }
+		);
+		console.log("Added item to reported items collection");
+	} catch (err) {
+		console.log(err, `Error adding item to reported items collection`);
 		res.status(401).json({ err: `${err}` });
 		return;
 	}
