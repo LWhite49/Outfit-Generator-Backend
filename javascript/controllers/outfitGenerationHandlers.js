@@ -373,7 +373,7 @@ const assessFlaggedItem = async (req, res) => {
 	if (decision == 0) {
 		// Delete the item from the collection
 		try {
-			away = await collectionName.deleteOne({ productImg: id });
+			await ReportedItems.deleteOne({ productImg: id });
 			console.log("Deleted item from collection");
 			res.status(201).json({ message: "Item deleted" });
 			return;
@@ -386,22 +386,22 @@ const assessFlaggedItem = async (req, res) => {
 
 	let collectionName;
 	switch (collection) {
-		case 0:
+		case "0":
 			collectionName = TopMen;
 			break;
-		case 1:
+		case "1":
 			collectionName = BottomMen;
 			break;
-		case 2:
+		case "2":
 			collectionName = ShoeMen;
 			break;
-		case 3:
+		case "3":
 			collectionName = TopWomen;
 			break;
-		case 4:
+		case "4":
 			collectionName = BottomWomen;
 			break;
-		case 5:
+		case "5":
 			collectionName = ShoeWomen;
 			break;
 	}
@@ -416,6 +416,9 @@ const assessFlaggedItem = async (req, res) => {
 			productColors: item.productColors,
 			createdAt: item.createdAt,
 		});
+
+		// Delete the item from the reported items collection
+		await ReportedItems.deleteOne({ productImg: id });
 		console.log("Restored item to collection");
 		res.status(201).json({ message: "Item restored" });
 	} catch (err) {
