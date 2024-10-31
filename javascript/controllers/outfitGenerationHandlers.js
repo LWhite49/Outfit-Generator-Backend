@@ -15,13 +15,16 @@ const path = require("path");
 
 // Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
 
-const scoreColorsViaPy = async (p1, p2, p3) => {
+const scoreColorsViaPy = async (p1, p2, p3, g1, g2, g3) => {
 	return new Promise((resolve, reject) => {
 		const pyProcess = spawn("python", [
 			path.join(__dirname, "score_combination.py"),
 			JSON.stringify(p1),
 			JSON.stringify(p2),
 			JSON.stringify(p3),
+			JSON.stringify(g1),
+			JSON.stringify(g2),
+			JSON.stringify(g3),
 		]);
 
 		// Parse good output
@@ -243,7 +246,10 @@ const generateOutfitFeed = async (req, res) => {
 		const outfitIndices = await scoreColorsViaPy(
 			topColors,
 			bottomColors,
-			shoeColors
+			shoeColors,
+			topGender,
+			bottomGender,
+			shoeGender
 		);
 		console.log("Received outfitIndices from PyScript:", outfitIndices);
 		returnOutfits.outfits = outfitIndices;
