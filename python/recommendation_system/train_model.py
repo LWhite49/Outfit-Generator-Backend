@@ -34,7 +34,7 @@ if __name__ == '__main__':
     print('Connected to database')
 
     # connect to set of reacted outfits
-    cursor = db['reacted_sets'].find()
+    cursor = db['reacted_sets'].find({'sex': "M"})
     # convert mongo cursor into dataframe
     outfits = pd.DataFrame(list(cursor))
 
@@ -168,10 +168,12 @@ if __name__ == '__main__':
     # print(clf.best_params_)
 
     model = RandomForestClassifier(500, criterion='entropy', max_features='sqrt')
-    model.fit(X_train.values, y_train)
+    model.fit(X_train, y_train)
 
-    with open('random_forest.txt', 'wb') as file:
-        pickle.dump(model, file)
+    print(model.feature_importances_)
+
+    # with open('random_forest.txt', 'wb') as file:
+    #     pickle.dump(model, file)
 
     preds = model.predict(X_test)
 
@@ -192,7 +194,7 @@ if __name__ == '__main__':
     model.fit(X_train.values, y_train)
 
     # check r^2 value for the fit
-    preds = model.predict(X_test)
+    preds = model.predict(X_test.values)
     print("R2 value: ", r2_score(y_test, preds))
 
     # test accuracy by rounding to like or dislike

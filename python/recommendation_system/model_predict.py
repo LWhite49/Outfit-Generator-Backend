@@ -21,11 +21,20 @@ def neutrality(item1, item2):
 class Predictor():
     def __init__(self):
         '''Load trained models.'''
-        file = open('../python/recommendation_system/regression.txt', 'rb')
-        self.rfr = pickle.load(file)
+        file = open('../python/recommendation_system/regression_men.txt', 'rb')
+        self.lr_M = pickle.load(file)
         file.close()
-        file = open('../python/recommendation_system/random_forest.txt', 'rb')
-        self.rfc = pickle.load(file)
+
+        file = open('../python/recommendation_system/regression_women.txt', 'rb')
+        self.lr_F = pickle.load(file)
+        file.close()
+        
+        file = open('../python/recommendation_system/random_forest_men.txt', 'rb')
+        self.rfc_M = pickle.load(file)
+        file.close()
+        
+        file = open('../python/recommendation_system/random_forest_women.txt', 'rb')
+        self.rfc_F = pickle.load(file)
         file.close()
 
     def reformat(self, top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]]) -> np.ndarray:
@@ -50,15 +59,21 @@ class Predictor():
         
         return X
 
-    def predict(self, top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]]) -> int:
+    def predict(self, top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]], sex: str) -> int:
         '''Given three color arrays (top, bottom, and shoe), predict whether the outfit will be liked (1) or disliked (0).'''
         X = self.reformat(top, bottom, shoe)
-        return self.rfc.predict(X)[0]
+        if sex == 'M':
+            return self.rfc_M.predict(X)[0]
+        else:
+            return self.rfc_F.predict(X)[0]
     
-    def regress(self, top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]]) -> float:
+    def regress(self, top: list[list[str, float]], bottom: list[list[str, float]], shoe: list[list[str, float]], sex: str) -> float:
         '''Given three color arrays (top, bottom, and shoe), estimate a score (from 0 to 1, roughly) reflecting how likely it is to be liked.'''
         X = self.reformat(top, bottom, shoe)
-        return self.rfr.predict(X)[0]
+        if sex == 'M':
+            return self.lr_M.predict(X)[0]
+        else:
+            return self.lr_F.predict(X)[0]
 
 if __name__ == '__main__':
     # code for testing
@@ -66,5 +81,6 @@ if __name__ == '__main__':
     top = [['dcbc36', 0.865478841870824], ['1b180d', 0.06369710467706013], ['d9c36a', 0.042093541202672606], ['7f6f31', 0.02873051224944321]]
     shoe = [['fbfafa', 0.5259423164962612], ['312e31', 0.1661071265069434], ['bfc2bd', 0.15496719059972533], ['a27254', 0.15298336639707005]]
     t0 = time()
-    print(predict(top, bottom, shoe))
+    p = Predictor()
+    print(p.predict(top, bottom, shoe, 'M'))
     print(time() - t0)
