@@ -348,6 +348,7 @@ const deleteItem = async (req, res) => {
 			{ $set: { productColors: item.productColors } }
 		);
 		console.log("Added item to reported items collection");
+		res.status(201).json({ message: "Item deleted" });
 	} catch (err) {
 		console.log(err, `Error adding item to reported items collection`);
 		res.status(401).json({ err: `${err}` });
