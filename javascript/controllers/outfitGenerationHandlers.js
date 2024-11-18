@@ -17,6 +17,7 @@ const path = require("path");
 
 const scoreColorsViaPy = async (p1, p2, p3, g1, g2, g3) => {
 	return new Promise((resolve, reject) => {
+		console.log("Spawning PyScript: ");
 		const pyProcess = spawn("python", [
 			path.join(__dirname, "score_combination.py"),
 			JSON.stringify(p1),
@@ -304,6 +305,7 @@ const deleteItem = async (req, res) => {
 	const collection = req.body.collection;
 	const item = req.body.item;
 	let collectionName;
+	console.log(`Deleting item ${id} from collection ${collection}`);
 	switch (collection) {
 		case 0:
 			collectionName = TopMen;

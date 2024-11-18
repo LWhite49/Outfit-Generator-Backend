@@ -31,7 +31,6 @@ if (args.includes("dev")) {
 		cors({
 			origin: "*",
 			methods: ["GET", "POST", "DELETE"],
-			credentials: true,
 		})
 	);
 } else {

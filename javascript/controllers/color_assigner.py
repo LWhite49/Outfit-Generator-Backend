@@ -12,6 +12,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import time
 import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../python/color_assignment'))
 from clothing_describer import ClothingDescriber
 
 # Initialize ENV
