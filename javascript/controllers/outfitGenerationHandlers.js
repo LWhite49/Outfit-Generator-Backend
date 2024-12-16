@@ -15,18 +15,27 @@ const path = require("path");
 
 // Define function that accepts two or three color pallet arrays, then sends them into the color processing algorithm, returning a float score
 
-const scoreColorsViaPy = async (p1, p2, p3, g1, g2, g3) => {
+const scoreColorsViaPy = async (p1, p2, p3, g1, g2, g3, n) => {
 	return new Promise((resolve, reject) => {
+		// Structure Data Object
+		const dataToPass = {
+			p1: p1,
+			p2: p2,
+			p3: p3,
+			g1: g1,
+			g2: g2,
+			g3: g3,
+			n: n
+		}
+
 		console.log("Spawning PyScript: ");
 		const pyProcess = spawn("python", [
-			path.join(__dirname, "score_combination.py"),
-			JSON.stringify(p1),
-			JSON.stringify(p2),
-			JSON.stringify(p3),
-			JSON.stringify(g1),
-			JSON.stringify(g2),
-			JSON.stringify(g3),
+			path.join(__dirname, "score_combination.py"),	
 		]);
+
+		// Send Data through stdin
+		pyProcess.stdin.write(JSON.stringify(dataToPass));
+		pyProcess.stdin.end();
 
 		// Parse good output
 		pyProcess.stdout.on("data", (data) => {
@@ -79,8 +88,8 @@ const generateOutfitFeed = async (req, res) => {
 
 	console.log("Received");
 	// Specify length of pallets and number of outfits
-	const palletSize = 40;
-	const outfitCount = 20;
+	const palletSize = JSON.parse(req.query.palletSize);
+	const outfitCount = JSON.parse(req.query.outfitCount);
 
 	// Parse gender queries to determine which collections to use
 	let collections = [];
@@ -250,7 +259,8 @@ const generateOutfitFeed = async (req, res) => {
 			shoeColors,
 			topGender,
 			bottomGender,
-			shoeGender
+			shoeGender,
+			outfitCount
 		);
 		console.log("Received outfitIndices from PyScript:", outfitIndices);
 		returnOutfits.outfits = outfitIndices;

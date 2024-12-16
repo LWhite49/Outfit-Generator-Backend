@@ -1,3 +1,4 @@
+
 '''To be called as a child process for the purpose of serving ordered outfits to the backend.'''
 
 import sys
@@ -25,7 +26,7 @@ def index_palettes(tops, bottoms, shoes, sex, n=20):
     indexed_fits = []
     iter_count = 0
     # iterate until we have n outfits, or 100 iterations
-    while len(indexed_fits) < n and iter_count < 100:
+    while len(indexed_fits) < n and iter_count < 50:
         if not top_idxs or not bottom_idxs or not shoe_idxs:
             break
 
@@ -82,15 +83,22 @@ def index_palettes(tops, bottoms, shoes, sex, n=20):
 
 if __name__ == '__main__':
     # get clothes from javascript
-    tops = ast.literal_eval(sys.argv[1])
-    bottoms = ast.literal_eval(sys.argv[2])
-    shoes = ast.literal_eval(sys.argv[3])
+    in_data = json.load(sys.stdin)
+    tops = in_data['p1']
+    bottoms = in_data['p2']
+    shoes = in_data['p3']
+    sexes = [in_data['g1'], in_data['g2'], in_data['g3']]
+    num_fits = in_data['n']
 
-    sexes = [g[3] for g in sys.argv[4:]] # extracting first letter from sex string passed in
+    # tops = ast.literal_eval(sys.argv[1])
+    # bottoms = ast.literal_eval(sys.argv[2])
+    # shoes = ast.literal_eval(sys.argv[3])
+
+    # sexes = [g[3] for g in sys.argv[4:]] # extracting first letter from sex string passed in
     sex = 'M' if sexes.count('m') > sexes.count('f') else 'F'
 
     # create outfits
-    outfits = index_palettes(tops, bottoms, shoes, sex)
+    outfits = index_palettes(tops, bottoms, shoes, sex, num_fits)
         
     print(json.dumps(outfits))
     sys.stdout.flush()
