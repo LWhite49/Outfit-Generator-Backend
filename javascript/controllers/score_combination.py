@@ -91,7 +91,6 @@ if __name__ == '__main__':
 
     # create outfits
     outfits = index_palettes(tops, bottoms, shoes, sex)
-
-    # send ordered set back to javascript
+        
     print(json.dumps(outfits))
     sys.stdout.flush()
