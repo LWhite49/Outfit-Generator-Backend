@@ -14,7 +14,7 @@ const {
 } = require("./controllers/outfitGenerationHandlers.js");
 
 // Import the user handlers
-const { getUsers } = require("./controllers/clerkUserHandlers.js");
+const { deleteUser } = require("./controllers/clerkUserHandlers.js");
 
 // Connect to MongoDB
 connectToMongoose();
@@ -65,7 +65,7 @@ app.get("/getFlaggedItems", getFlaggedItems);
 app.post("/assessFlaggedItem", assessFlaggedItem);
 
 // Routes for working with users
-app.get("/getUsers", getUsers);
+app.post("/deleteUser", deleteUser);
 
 // Launch Server
 const PORT = 10000;

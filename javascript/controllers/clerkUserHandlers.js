@@ -1,9 +1,16 @@
 const { clerkClient } = require("@clerk/express");
 
-// Route to get all users
-const getUsers = async (req, res) => {
-	const users = await clerkClient.users.getUserList();
-	res.json(users);
+// Function to delete user given their ID
+const deleteUser = async (req, res) => {
+	try {
+		console.log("Deleting user with ID: ", req.body.id);
+		await clerkClient.users.deleteUser(req.body.id);
+		console.log("User deleted");
+		res.json({ message: "User deleted" });
+	} catch (error) {
+		console.log(`User not found: ${error}`);
+		res.json({ message: `User not found: ${error}` });
+	}
 };
 
-module.exports = { getUsers };
+module.exports = { deleteUser };
