@@ -1,9 +1,10 @@
 const express = require("express");
-const mongoose = require("mongoose");
+
 const connectToMongoose = require("./connectMongoose.js");
+const { clerkMiddleware } = require("@clerk/express");
 const cors = require("cors");
 
-// Import the route handlers
+// Import the outfit handlers
 const {
 	generateOutfitFeed,
 	rateOutfit,
@@ -11,6 +12,9 @@ const {
 	getFlaggedItems,
 	assessFlaggedItem,
 } = require("./controllers/outfitGenerationHandlers.js");
+
+// Import the user handlers
+const { getUsers } = require("./controllers/clerkUserHandlers.js");
 
 // Connect to MongoDB
 connectToMongoose();
@@ -21,18 +25,21 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+app.use(clerkMiddleware());
+
 // Conditionally assign CORS based on passed argument
 const args = process.argv.slice(2);
 
-// If Dev Server, accept all connections
-if (args.includes("dev")) {
-	console.log("Dev Server: Accepting all connections");
+// If Mobile Server, accept all connections
+if (args.includes("mobile")) {
+	console.log("Mobile Server: Accepting all connections");
 	app.use(
 		cors({
 			origin: "*",
 			methods: ["GET", "POST", "DELETE"],
 		})
 	);
+	// Else, establish CORS
 } else {
 	app.use(
 		cors({
@@ -49,12 +56,16 @@ if (args.includes("dev")) {
 	);
 	console.log("Prod Server");
 }
-// Specify Routes
+
+// Routes for working with outfits
 app.get("/generateOutfitFeed", generateOutfitFeed);
 app.post("/rateOutfit", rateOutfit);
 app.post("/deleteItem", deleteItem);
 app.get("/getFlaggedItems", getFlaggedItems);
 app.post("/assessFlaggedItem", assessFlaggedItem);
+
+// Routes for working with users
+app.get("/getUsers", getUsers);
 
 // Launch Server
 const PORT = 10000;

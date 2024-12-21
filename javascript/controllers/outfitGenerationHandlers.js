@@ -25,12 +25,12 @@ const scoreColorsViaPy = async (p1, p2, p3, g1, g2, g3, n) => {
 			g1: g1,
 			g2: g2,
 			g3: g3,
-			n: n
-		}
+			n: n,
+		};
 
 		console.log("Spawning PyScript: ");
 		const pyProcess = spawn("python", [
-			path.join(__dirname, "score_combination.py"),	
+			path.join(__dirname, "score_combination.py"),
 		]);
 
 		// Send Data through stdin
