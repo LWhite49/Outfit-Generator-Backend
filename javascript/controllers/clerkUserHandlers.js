@@ -13,6 +13,11 @@ const initializeUser = async (req, res) => {
 					bottom_sizes: [],
 					shoe_sizes: [],
 				},
+				gender_data: {
+					top: 0,
+					bottom: 0,
+					shoe: 0,
+				},
 			},
 		});
 		console.log("User initialized");
