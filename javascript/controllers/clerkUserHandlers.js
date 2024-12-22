@@ -1,5 +1,27 @@
 const { clerkClient } = require("@clerk/express");
 
+// Function to initialize Clerk user metadata
+const initializeUser = async (req, res) => {
+	try {
+		console.log("Initializing user with ID: ", req.body.id);
+		await clerkClient.users.updateUser(req.body.id, {
+			public_metadata: {
+				user_vector: [0, 0, 0],
+				saved_outfits: [],
+				size_data: {
+					top_sizes: [],
+					bottom_sizes: [],
+					shoe_sizes: [],
+				},
+			},
+		});
+		console.log("User initialized");
+		res.json({ message: "User initialized" });
+	} catch (error) {
+		console.log(`User not found: ${error}`);
+		res.json({ message: `User not found: ${error}` });
+	}
+};
 // Function to delete user given their ID
 const deleteUser = async (req, res) => {
 	try {
@@ -13,4 +35,4 @@ const deleteUser = async (req, res) => {
 	}
 };
 
-module.exports = { deleteUser };
+module.exports = { deleteUser, initializeUser };

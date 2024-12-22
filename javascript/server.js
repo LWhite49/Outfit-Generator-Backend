@@ -14,7 +14,10 @@ const {
 } = require("./controllers/outfitGenerationHandlers.js");
 
 // Import the user handlers
-const { deleteUser } = require("./controllers/clerkUserHandlers.js");
+const {
+	initializeUser,
+	deleteUser,
+} = require("./controllers/clerkUserHandlers.js");
 
 // Connect to MongoDB
 connectToMongoose();
@@ -65,6 +68,7 @@ app.get("/getFlaggedItems", getFlaggedItems);
 app.post("/assessFlaggedItem", assessFlaggedItem);
 
 // Routes for working with users
+app.post("/initializeUser", initializeUser);
 app.post("/deleteUser", deleteUser);
 
 // Launch Server
