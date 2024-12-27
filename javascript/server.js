@@ -17,6 +17,7 @@ const {
 const {
 	initializeUser,
 	deleteUser,
+	saveOutfit,
 } = require("./controllers/clerkUserHandlers.js");
 
 // Connect to MongoDB
@@ -69,6 +70,7 @@ app.post("/assessFlaggedItem", assessFlaggedItem);
 
 // Routes for working with users
 app.post("/initializeUser", initializeUser);
+app.post("/saveOutfit", saveOutfit);
 app.post("/deleteUser", deleteUser);
 
 // Launch Server

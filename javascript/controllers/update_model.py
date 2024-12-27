@@ -40,7 +40,7 @@ top_id = ObjectId(sys.argv[4][1:len(sys.argv[4]) - 1])
 bottom_id = ObjectId(sys.argv[5][1:len(sys.argv[4]) - 1])
 shoe_id = ObjectId(sys.argv[6][1:len(sys.argv[4]) - 1])
 reaction = int(sys.argv[7])
-userId = str(sys.argv[8])
+userId = sys.argv[8]
 
 # pull associated document from clothes database
 #* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
