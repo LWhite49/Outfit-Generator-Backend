@@ -34,30 +34,24 @@ const saveOutfit = async (req, res) => {
 		console.log("Saving outfit to user with ID: ", req.body.id);
 		const user = await clerkClient.users.getUser(req.body.id);
 		const saveOutfits = user.publicMetadata.saved_outfits;
-		let existsFlag = false;
-		for (let i = 0; i < saveOutfits.length; i++) {
-			if (saveOutfits[i].top._id == req.body.top._id) {
-				existsFlag = true;
-				break;
-			}
+		if (saveOutfits.length == 4) {
+			saveOutfits.shift();
 		}
-		if (!existsFlag) {
-			saveOutfits.push({
-				top: req.body.top,
-				bottom: req.body.bottom,
-				shoes: req.body.shoes,
-			});
-			await clerkClient.users.updateUser(req.body.id, {
-				publicMetadata: {
-					saved_outfits: saveOutfits,
-				},
-			});
-			console.log("Outfit saved");
-			res.json({ message: "Outfit saved" });
-		} else {
-			console.log("Outfit already saved");
-			res.json({ message: "Outfit already saved" });
-		}
+
+		saveOutfits.push({
+			top: req.body.top,
+			bottom: req.body.bottom,
+			shoes: req.body.shoes,
+		});
+
+		await clerkClient.users.updateUser(req.body.id, {
+			publicMetadata: {
+				saved_outfits: saveOutfits,
+			},
+		});
+
+		console.log("Outfit saved");
+		res.json({ message: "Outfit saved" });
 	} catch (error) {
 		console.log(`User not found: ${error}`);
 		res.json({ message: `User not found: ${error}` });
