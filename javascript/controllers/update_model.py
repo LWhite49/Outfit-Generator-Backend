@@ -40,6 +40,7 @@ top_id = ObjectId(sys.argv[4][1:len(sys.argv[4]) - 1])
 bottom_id = ObjectId(sys.argv[5][1:len(sys.argv[4]) - 1])
 shoe_id = ObjectId(sys.argv[6][1:len(sys.argv[4]) - 1])
 reaction = int(sys.argv[7])
+userId = str(sys.argv[8])
 
 # pull associated document from clothes database
 #* right now there isn't a way to see what sex collection an item came from so we have to check the id against both
@@ -88,7 +89,7 @@ if not all([top_arcv_id, bottom_arcv_id, shoe_arcv_id]):
 else:
     # create a new document to represent outfit set
     sex = 'M' if sexes.count('M') > sexes.count('F') else 'F' # get predominant sex association
-    outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_id': shoe_arcv_id, 'reaction': reaction}
+    outfit = {'sex': sex, 'top_id': top_arcv_id, 'bottom_id': bottom_arcv_id, 'shoe_id': shoe_arcv_id, 'reaction': reaction, 'userId': userId}
 
     # add it to the database
     # TODO: don't include identical sets?

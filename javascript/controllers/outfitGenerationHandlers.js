@@ -51,7 +51,7 @@ const scoreColorsViaPy = async (p1, p2, p3, g1, g2, g3, n) => {
 };
 
 // Define function that accepts three color pallet arrays and a bool score, updating the ML model with Python
-const updateModelViaPy = async (p1, p2, p3, id1, id2, id3, score) => {
+const updateModelViaPy = async (p1, p2, p3, id1, id2, id3, score, userId) => {
 	return new Promise((resolve, reject) => {
 		const pyProcess = spawn("python", [
 			path.join(__dirname, "update_model.py"),
@@ -62,6 +62,7 @@ const updateModelViaPy = async (p1, p2, p3, id1, id2, id3, score) => {
 			JSON.stringify(id2),
 			JSON.stringify(id3),
 			JSON.stringify(score),
+			JSON.stringify(userId),
 		]);
 
 		// Parse good output
@@ -282,11 +283,11 @@ const rateOutfit = async (req, res) => {
 	const id2 = req.body.id2;
 	const id3 = req.body.id3;
 	const rating = req.body.rating;
+	const userId = req.body.userId || "0";
 
 	// Send the colors to the PyScript
 	try {
 		console.log("Sending Rating to PyScript...");
-		console.log(p1, p2, p3, id1, id2, id3, rating);
 		const response = await updateModelViaPy(
 			p1,
 			p2,
@@ -294,7 +295,8 @@ const rateOutfit = async (req, res) => {
 			id1,
 			id2,
 			id3,
-			rating
+			rating,
+			userId
 		);
 		console.log("Updated ML Model Successfully:", response);
 		res.status(201).json({ message: "Outfit rated" });
@@ -302,8 +304,6 @@ const rateOutfit = async (req, res) => {
 		console.log(err, `Error communicating with Py to update ML Model`);
 		res.status(401).json({ err: `${err}` });
 	}
-
-	// Send response
 
 	return;
 };
