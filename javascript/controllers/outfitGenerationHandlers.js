@@ -110,7 +110,9 @@ const generateOutfitFeed = async (req, res) => {
 
 	// Conditionally apply match specifications to each collection
 	if (true) {
-		let match = { $expr: { $gt: [{ $size: "$productColors" }, 0] } };
+		let match = {
+			$expr: { $gt: [{ $size: { $ifNull: ["$productColors", []] } }, 0] },
+		};
 		if (sizeData.topSizes.length > 0) {
 			match.productSize = { $in: sizeData.topSizes };
 		}
@@ -121,7 +123,9 @@ const generateOutfitFeed = async (req, res) => {
 	}
 
 	if (true) {
-		let match = { $expr: { $gt: [{ $size: "$productColors" }, 0] } };
+		let match = {
+			$expr: { $gt: [{ $size: { $ifNull: ["$productColors", []] } }, 0] },
+		};
 		if (sizeData.bottomSizes.length > 0) {
 			match.productSize = { $in: sizeData.bottomSizes };
 		}
@@ -132,7 +136,9 @@ const generateOutfitFeed = async (req, res) => {
 	}
 
 	if (true) {
-		let match = { $expr: { $gt: [{ $size: "$productColors" }, 0] } };
+		let match = {
+			$expr: { $gt: [{ $size: { $ifNull: ["$productColors", []] } }, 0] },
+		};
 		if (sizeData.shoeSizes.length > 0) {
 			match.productSize = { $in: sizeData.shoeSizes };
 		}
@@ -183,7 +189,16 @@ const generateOutfitFeed = async (req, res) => {
 					{
 						$match: {
 							productSize: { $in: sizeData.bottomSizes },
-							$expr: { $gt: [{ $size: "$productColors" }, 0] },
+							$expr: {
+								$gt: [
+									{
+										$size: {
+											$ifNull: ["$productColors", []],
+										},
+									},
+									0,
+								],
+							},
 						},
 					},
 				])
@@ -202,7 +217,16 @@ const generateOutfitFeed = async (req, res) => {
 					{
 						$match: {
 							productSize: { $in: sizeData.bottomSizes },
-							$expr: { $gt: [{ $size: "$productColors" }, 0] },
+							$expr: {
+								$gt: [
+									{
+										$size: {
+											$ifNull: ["$productColors", []],
+										},
+									},
+									0,
+								],
+							},
 						},
 					},
 				])
@@ -221,7 +245,16 @@ const generateOutfitFeed = async (req, res) => {
 					{
 						$match: {
 							productSize: { $in: sizeData.bottomSizes },
-							$expr: { $gt: [{ $size: "$productColors" }, 0] },
+							$expr: {
+								$gt: [
+									{
+										$size: {
+											$ifNull: ["$productColors", []],
+										},
+									},
+									0,
+								],
+							},
 						},
 					},
 				])
