@@ -46,6 +46,7 @@ const saveOutfit = async (req, res) => {
 
 		await clerkClient.users.updateUser(req.body.id, {
 			publicMetadata: {
+				...user.publicMetadata,
 				saved_outfits: saveOutfits,
 			},
 		});
